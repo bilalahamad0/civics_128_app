@@ -1,4 +1,4 @@
-const CACHE_NAME = 'civics-128-v2.2-offline';
+const CACHE_NAME = 'civics-128-v2.3-offline';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
