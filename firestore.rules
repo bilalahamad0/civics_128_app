@@ -1,0 +1,176 @@
+rules_version = '2';
+
+// ===============================================================
+// Assumed Data Model
+// ===============================================================
+//
+// Application: Civics 128 (USCIS Civics Test Master & Study App)
+// Database: Cloud Firestore
+//
+// Collection: users
+// Document Path: /databases/{database}/documents/users/{userId}
+// Document ID: {userId} (strictly matches request.auth.uid)
+//
+// Profile Fields:
+//   - id: string (optional, user ID, must match userId, immutable)
+//   - uid: string (optional, auth UID, must match userId, immutable)
+//   - email: string (required, valid RFC email format, 3-254 characters)
+//   - name: string (required, full / display name, 1-100 characters)
+//   - state: string (required, US state code or name, 2-50 characters)
+//   - selectedState: string (optional, active state preference, 2-50 characters)
+//   - createdAt: timestamp | string (optional, creation timestamp, immutable)
+//   - lastLoginAt: timestamp | string (optional, last authenticated login timestamp)
+//   - lastUpdated: timestamp | string (optional, last study sync timestamp)
+//
+// Study Progress Fields:
+//   - mastered: map | list (optional, mastered question IDs, max 200 items)
+//   - starred: map | list (optional, bookmarked/starred question IDs, max 200 items)
+//   - missedCounts: map | list (optional, incorrect answer counts, max 200 items)
+//   - simPasses: number (optional, mock interview passing count, non-negative integer <= 1000000)
+//   - simAttempts: number (optional, mock interview total attempts, non-negative integer <= 1000000)
+//   - courseworkLessonIndex: number (optional, curriculum lesson progress, 0-500)
+//   - speechRate: number (optional, audio synthesis speech rate multiplier, 0.1 - 5.0)
+//   - speechVoice: string | null (optional, preferred TTS voice name, max 100 characters)
+//   - soundFx: bool (optional, sound effects toggle)
+//   - lastCardId: number (optional, last viewed question index/ID, 0-500)
+//   - lastDeckFilter: string (optional, last active deck filter, max 50 characters)
+//   - activeTab: string (optional, last active app tab, max 50 characters)
+//   - currentCardIndex: number (optional, active flashcard index, 0-500)
+//
+// ===============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Default Deny Rule
+    // ===============================================================
+    // Deny all reads and writes across the entire database by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+
+    // Check if the request is from an authenticated user
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Check if the authenticated user owns the document path
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Validate that all required fields exist in incoming data
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    // Validate document contains only explicitly allowed schema fields
+    function hasOnlyAllowedUserFields(data) {
+      return data.keys().hasOnly([
+        'id', 'uid', 'email', 'name', 'state', 'selectedState',
+        'createdAt', 'lastLoginAt', 'lastUpdated',
+        'mastered', 'starred', 'missedCounts',
+        'simPasses', 'simAttempts', 'courseworkLessonIndex',
+        'speechRate', 'speechVoice', 'soundFx',
+        'lastCardId', 'lastDeckFilter', 'activeTab', 'currentCardIndex'
+      ]);
+    }
+
+    // Validate email format and length
+    function isValidEmail(email) {
+      return email is string &&
+             email.size() >= 3 &&
+             email.size() <= 254 &&
+             email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    // Validate timestamp or ISO-formatted date string
+    function isValidTimestampOrDateString(val) {
+      return val is timestamp ||
+             (val is string && val.size() <= 50 && val.matches("^\\d{4}-\\d{2}-\\d{2}.*$"));
+    }
+
+    // Ensure immutable fields are never altered or stripped on update
+    function areImmutableFieldsUnchanged() {
+      return (!('id' in resource.data) || ('id' in request.resource.data && request.resource.data.id == resource.data.id)) &&
+             (!('uid' in resource.data) || ('uid' in request.resource.data && request.resource.data.uid == resource.data.uid)) &&
+             (!('createdAt' in resource.data) || ('createdAt' in request.resource.data && request.resource.data.createdAt == resource.data.createdAt));
+    }
+
+    // ===============================================================
+    // Domain Validator: User Profile & Progress Document
+    // ===============================================================
+    // Mandatory Validator Function Pattern called on BOTH create and update
+    function isValidUserData(data, userId) {
+      return hasRequiredFields(['email', 'name', 'state']) &&
+             hasOnlyAllowedUserFields(data) &&
+
+             // Authentication & user ID binding
+             (!('id' in data) || (data.id is string && data.id == userId)) &&
+             (!('uid' in data) || (data.uid is string && data.uid == userId)) &&
+
+             // Profile fields validation
+             data.email is string && isValidEmail(data.email) &&
+             data.name is string && data.name.size() >= 1 && data.name.size() <= 100 &&
+             data.state is string && data.state.size() >= 2 && data.state.size() <= 50 &&
+             (!('selectedState' in data) || (data.selectedState is string && data.selectedState.size() >= 2 && data.selectedState.size() <= 50)) &&
+
+             // Timestamps & date strings
+             (!('createdAt' in data) || isValidTimestampOrDateString(data.createdAt)) &&
+             (!('lastLoginAt' in data) || isValidTimestampOrDateString(data.lastLoginAt)) &&
+             (!('lastUpdated' in data) || isValidTimestampOrDateString(data.lastUpdated)) &&
+
+             // Progress collections (support map or list up to 200 entries to prevent DoS)
+             (!('mastered' in data) ||
+               ((data.mastered is list && data.mastered.size() <= 200) ||
+                (data.mastered is map && data.mastered.keys().size() <= 200))) &&
+
+             (!('starred' in data) ||
+               ((data.starred is list && data.starred.size() <= 200) ||
+                (data.starred is map && data.starred.keys().size() <= 200))) &&
+
+             (!('missedCounts' in data) ||
+               ((data.missedCounts is map && data.missedCounts.keys().size() <= 200) ||
+                (data.missedCounts is list && data.missedCounts.size() <= 200))) &&
+
+             // Progress counters & indices
+             (!('simPasses' in data) || (data.simPasses is number && data.simPasses >= 0 && data.simPasses <= 1000000)) &&
+             (!('simAttempts' in data) || (data.simAttempts is number && data.simAttempts >= 0 && data.simAttempts <= 1000000)) &&
+             (!('courseworkLessonIndex' in data) || (data.courseworkLessonIndex is number && data.courseworkLessonIndex >= 0 && data.courseworkLessonIndex <= 500)) &&
+             (!('lastCardId' in data) || (data.lastCardId is number && data.lastCardId >= 0 && data.lastCardId <= 500)) &&
+             (!('currentCardIndex' in data) || (data.currentCardIndex is number && data.currentCardIndex >= 0 && data.currentCardIndex <= 500)) &&
+
+             // Settings & preferences
+             (!('speechRate' in data) || (data.speechRate is number && data.speechRate >= 0.1 && data.speechRate <= 5.0)) &&
+             (!('speechVoice' in data) || data.speechVoice == null || (data.speechVoice is string && data.speechVoice.size() <= 100)) &&
+             (!('soundFx' in data) || data.soundFx is bool) &&
+             (!('lastDeckFilter' in data) || (data.lastDeckFilter is string && data.lastDeckFilter.size() <= 50)) &&
+             (!('activeTab' in data) || (data.activeTab is string && data.activeTab.size() <= 50));
+    }
+
+    // ===============================================================
+    // Users Collection Security Rules
+    // ===============================================================
+    match /users/{userId} {
+      // Only the authenticated owner can read their profile and progress
+      allow read: if isOwner(userId);
+
+      // Authenticated owner can create their own document with valid schema
+      allow create: if isOwner(userId) &&
+                       isValidUserData(request.resource.data, userId);
+
+      // Authenticated owner can update their document if data is valid and immutable fields remain unchanged
+      allow update: if isOwner(userId) &&
+                       isValidUserData(request.resource.data, userId) &&
+                       areImmutableFieldsUnchanged();
+
+      // Only the authenticated owner can delete their own profile document
+      allow delete: if isOwner(userId);
+    }
+  }
+}

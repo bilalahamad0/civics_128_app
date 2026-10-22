@@ -80,6 +80,22 @@ def create_body_html():
           Sign In &amp; Unlock App →
         </button>
 
+        <div class="relative flex py-1 items-center">
+          <div class="flex-grow border-t border-slate-700"></div>
+          <span class="flex-shrink mx-3 text-[10px] text-slate-400 font-medium uppercase tracking-wider">or</span>
+          <div class="flex-grow border-t border-slate-700"></div>
+        </div>
+
+        <button type="button" id="btn-google-login" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm">
+          <svg class="w-4 h-4" viewBox="0 0 24 24">
+            <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/>
+            <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
+            <path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.8s.2-2.1.4-2.8L1.9 6.3C.7 8.7 0 10.3 0 12s.7 3.3 1.9 5.7l3.7-2.9z"/>
+            <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2-6.4-4.8L1.9 16.4C3.7 20.4 7.5 23 12 23z"/>
+          </svg>
+          Continue with Google
+        </button>
+
         <div class="text-center text-xs text-slate-400 pt-1">
           <span>Don't have an account? </span>
           <button type="button" id="link-goto-signup" class="text-blue-400 hover:text-blue-300 font-semibold underline">Create one for free →</button>
@@ -120,12 +136,28 @@ def create_body_html():
         </div>
 
         <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-[11px] text-slate-400 flex items-start gap-2">
-          <span>🔒</span>
-          <span>100% Free Lifetime Account. Passwords cryptographically hashed using SHA-256 in your browser vault.</span>
+          <span>☁️</span>
+          <span>Powered by Firebase Authentication &amp; Cloud Firestore. Encrypted and synced across iOS, macOS, Android, and Web in real time.</span>
         </div>
 
         <button type="submit" id="btn-submit-signup" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg shadow-emerald-900/40 transition">
           Create Free Account &amp; Enter →
+        </button>
+
+        <div class="relative flex py-1 items-center">
+          <div class="flex-grow border-t border-slate-700"></div>
+          <span class="flex-shrink mx-3 text-[10px] text-slate-400 font-medium uppercase tracking-wider">or</span>
+          <div class="flex-grow border-t border-slate-700"></div>
+        </div>
+
+        <button type="button" id="btn-google-signup" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm">
+          <svg class="w-4 h-4" viewBox="0 0 24 24">
+            <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/>
+            <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
+            <path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.8s.2-2.1.4-2.8L1.9 6.3C.7 8.7 0 10.3 0 12s.7 3.3 1.9 5.7l3.7-2.9z"/>
+            <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2-6.4-4.8L1.9 16.4C3.7 20.4 7.5 23 12 23z"/>
+          </svg>
+          Sign up with Google
         </button>
 
         <div class="text-center text-xs text-slate-400 pt-1">
@@ -201,9 +233,10 @@ def create_body_html():
           </button>
 
           <!-- User Profile & Log Out Pill -->
-          <button id="btn-user-profile" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-white border border-slate-700 shadow-sm transition" title="View Account Profile & Logout">
+          <button id="btn-user-profile" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-white border border-slate-700 shadow-sm transition" title="View Account Profile, Cloud Sync &amp; Logout">
             <div id="user-avatar-badge" class="w-6 h-6 rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 text-[10px] font-bold flex items-center justify-center text-white">US</div>
             <span id="user-display-name" class="max-w-[90px] truncate text-slate-200">User</span>
+            <span id="sync-indicator" class="text-[11px] text-emerald-400" title="Cloud Synced to Firebase">☁️</span>
             <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
 
@@ -1823,6 +1856,10 @@ def create_body_html():
         <div class="flex items-center justify-between">
           <span class="text-slate-400">Account Type:</span>
           <span class="font-semibold text-emerald-400">Free Lifetime Account</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-slate-400">Cloud Sync:</span>
+          <span id="profile-cloud-sync" class="font-semibold text-emerald-400 flex items-center gap-1"><span>☁️</span> Firestore Connected</span>
         </div>
         <div class="flex items-center justify-between">
           <span class="text-slate-400">Member Since:</span>

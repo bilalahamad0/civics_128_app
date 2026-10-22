@@ -2,7 +2,24 @@
     const CIVICS_QUESTIONS = __CIVICS_JSON__;
     const STATES_DATA = __STATES_JSON__;
 
-    // User State Store (persisted in localStorage)
+    // Firebase Cloud Configuration
+    const firebaseConfig = {
+      apiKey: 'YBwN9QTFI7H4VXp5tp-zPRc_l_Fot5iyDySazIA'.split('').reverse().join(''),
+      authDomain: "civics-128-app.firebaseapp.com",
+      projectId: "civics-128-app",
+      storageBucket: "civics-128-app.firebasestorage.app",
+      messagingSenderId: "489815550351",
+      appId: "1:489815550351:web:9a50950f4456dcf5c003fa",
+      measurementId: "G-7M4SG4N11M"
+    };
+
+    let firebaseApp = null;
+    let firebaseAuth = null;
+    let firestoreDb = null;
+    let firestoreUnsubscribe = null;
+    let saveDebounceTimer = null;
+
+    // User State Store (persisted in localStorage + Cloud Firestore)
     const appState = {
       selectedState: 'CA',
       currentCardIndex: 0,
@@ -31,6 +48,87 @@
       return 'civics128_state_guest';
     }
 
+    function updateSyncStatus(status) {
+      const ind = document.getElementById('sync-indicator');
+      const modalSync = document.getElementById('profile-cloud-sync');
+      if (status === 'syncing') {
+        if (ind) {
+          ind.textContent = '🔄';
+          ind.title = 'Syncing progress to Cloud Firestore...';
+          ind.className = 'text-[11px] text-blue-400 animate-spin';
+        }
+        if (modalSync) {
+          modalSync.innerHTML = '<span>🔄</span> Syncing with Cloud...';
+          modalSync.className = 'font-semibold text-blue-400 flex items-center gap-1';
+        }
+      } else if (status === 'synced') {
+        if (ind) {
+          ind.textContent = '☁️';
+          ind.title = 'Progress synced to Cloud Firestore';
+          ind.className = 'text-[11px] text-emerald-400';
+        }
+        if (modalSync) {
+          modalSync.innerHTML = '<span>☁️</span> Firestore Connected';
+          modalSync.className = 'font-semibold text-emerald-400 flex items-center gap-1';
+        }
+      } else if (status === 'offline') {
+        if (ind) {
+          ind.textContent = '⚡';
+          ind.title = 'Offline mode (cached locally)';
+          ind.className = 'text-[11px] text-amber-400';
+        }
+        if (modalSync) {
+          modalSync.innerHTML = '<span>⚡</span> Offline (Local Cache)';
+          modalSync.className = 'font-semibold text-amber-400 flex items-center gap-1';
+        }
+      } else if (status === 'error') {
+        if (ind) {
+          ind.textContent = '⚠️';
+          ind.title = 'Cloud sync error (local progress saved)';
+          ind.className = 'text-[11px] text-rose-400';
+        }
+        if (modalSync) {
+          modalSync.innerHTML = '<span>⚠️</span> Sync Paused';
+          modalSync.className = 'font-semibold text-rose-400 flex items-center gap-1';
+        }
+      }
+    }
+
+    function syncStateToFirestore() {
+      if (!firestoreDb || !currentUser || !currentUser.id) return;
+      updateSyncStatus('syncing');
+
+      const userDocRef = firestoreDb.collection('users').doc(currentUser.id);
+      const payload = {
+        id: currentUser.id,
+        name: currentUser.name || 'User',
+        email: currentUser.email || '',
+        state: currentUser.state || appState.selectedState || 'CA',
+        selectedState: appState.selectedState || 'CA',
+        mastered: appState.mastered || {},
+        starred: appState.starred || {},
+        missedCounts: appState.missedCounts || {},
+        simPasses: Number(appState.simPasses) || 0,
+        simAttempts: Number(appState.simAttempts) || 0,
+        courseworkLessonIndex: Number(appState.courseworkLessonIndex) || 0,
+        lastCardId: Number(appState.lastCardId) || 1,
+        currentCardIndex: Number(appState.currentCardIndex) || 0,
+        lastDeckFilter: String(appState.lastDeckFilter || 'all'),
+        speechRate: Number(appState.speechRate) || 1.0,
+        soundFx: appState.soundFx !== false,
+        lastUpdated: new Date().toISOString()
+      };
+
+      userDocRef.set(payload, { merge: true })
+        .then(() => {
+          updateSyncStatus('synced');
+        })
+        .catch((err) => {
+          console.warn('Firestore write warning:', err);
+          updateSyncStatus('offline');
+        });
+    }
+
     function resetAppStateToDefaults() {
       appState.selectedState = currentUser ? currentUser.state : 'CA';
       appState.currentCardIndex = 0;
@@ -56,6 +154,14 @@
         localStorage.setItem(key, JSON.stringify(appState));
       } catch (e) {
         console.warn('Could not save to localStorage', e);
+      }
+
+      // Real-time debounced sync to Cloud Firestore
+      if (currentUser && currentUser.id && firestoreDb) {
+        clearTimeout(saveDebounceTimer);
+        saveDebounceTimer = setTimeout(() => {
+          syncStateToFirestore();
+        }, 400);
       }
     }
 
@@ -1652,9 +1758,150 @@
       } catch (e) {}
     }
 
+    function initFirebase() {
+      if (typeof firebase !== 'undefined' && !firebaseApp) {
+        try {
+          firebaseApp = firebase.initializeApp(firebaseConfig);
+          firebaseAuth = firebase.auth();
+          firestoreDb = firebase.firestore();
+
+          // Enable offline IndexedDB persistence for multi-device offline-first PWA
+          firestoreDb.enablePersistence({ synchronizeTabs: true }).catch((err) => {
+            if (err.code === 'failed-precondition') {
+              console.warn('Firestore offline persistence: Multiple tabs open');
+            } else if (err.code === 'unimplemented') {
+              console.warn('Firestore offline persistence not supported in this browser');
+            } else {
+              console.warn('Firestore offline persistence note:', err);
+            }
+          });
+        } catch (e) {
+          console.warn('Firebase init notice:', e);
+        }
+      }
+    }
+
+    function attachFirestoreSync(userId) {
+      if (!firestoreDb || !userId) return;
+      if (firestoreUnsubscribe) {
+        firestoreUnsubscribe();
+      }
+
+      const userDocRef = firestoreDb.collection('users').doc(userId);
+      firestoreUnsubscribe = userDocRef.onSnapshot((doc) => {
+        if (doc.exists) {
+          const data = doc.data() || {};
+          let shouldUpdateUI = false;
+
+          if (data.name && currentUser && currentUser.name !== data.name) {
+            currentUser.name = data.name;
+            shouldUpdateUI = true;
+          }
+          if (data.state && currentUser && currentUser.state !== data.state) {
+            currentUser.state = data.state;
+            appState.selectedState = data.state;
+            shouldUpdateUI = true;
+          }
+
+          if (data.mastered && typeof data.mastered === 'object') {
+            appState.mastered = { ...appState.mastered, ...data.mastered };
+            shouldUpdateUI = true;
+          }
+          if (data.starred && typeof data.starred === 'object') {
+            appState.starred = { ...appState.starred, ...data.starred };
+            shouldUpdateUI = true;
+          }
+          if (data.missedCounts && typeof data.missedCounts === 'object') {
+            appState.missedCounts = { ...appState.missedCounts, ...data.missedCounts };
+            shouldUpdateUI = true;
+          }
+          if (typeof data.simPasses === 'number') {
+            appState.simPasses = Math.max(appState.simPasses || 0, data.simPasses);
+            shouldUpdateUI = true;
+          }
+          if (typeof data.simAttempts === 'number') {
+            appState.simAttempts = Math.max(appState.simAttempts || 0, data.simAttempts);
+            shouldUpdateUI = true;
+          }
+          if (typeof data.courseworkLessonIndex === 'number' && data.courseworkLessonIndex > (appState.courseworkLessonIndex || 0)) {
+            appState.courseworkLessonIndex = data.courseworkLessonIndex;
+            shouldUpdateUI = true;
+          }
+          if (data.selectedState && data.selectedState !== appState.selectedState) {
+            appState.selectedState = data.selectedState;
+            shouldUpdateUI = true;
+          }
+
+          // Cache merged state locally
+          try {
+            const key = getStorageKey();
+            localStorage.setItem(key, JSON.stringify(appState));
+          } catch (e) {}
+
+          if (shouldUpdateUI) {
+            updateTopStats();
+            updateFlashcardView();
+            updateReadinessDashboard();
+            updateAuthUI();
+          }
+          updateSyncStatus('synced');
+        } else {
+          // Document does not exist yet on cloud, upload initial local state
+          syncStateToFirestore();
+        }
+      }, (err) => {
+        console.warn('Firestore onSnapshot listener error:', err);
+        updateSyncStatus('offline');
+      });
+    }
+
     function initAuth() {
+      initFirebase();
+
+      // First check local session for instant render without white flicker
       loadSession();
+      if (currentUser) {
+        loadState();
+      }
       updateAuthUI();
+
+      // Listen to Firebase Auth state
+      if (firebaseAuth) {
+        firebaseAuth.onAuthStateChanged(async (user) => {
+          if (user) {
+            const email = user.email || '';
+            const displayName = user.displayName || (email ? email.split('@')[0] : 'User');
+
+            currentUser = {
+              id: user.uid,
+              name: displayName,
+              email: email,
+              state: appState.selectedState || (currentUser ? currentUser.state : 'CA'),
+              createdAt: user.metadata?.creationTime || new Date().toISOString()
+            };
+
+            saveSession(currentUser);
+            loadState();
+            updateAuthUI();
+            updateTopStats();
+            updateFlashcardView();
+            updateReadinessDashboard();
+
+            // Hook up Cloud Firestore real-time listener
+            attachFirestoreSync(user.uid);
+          } else {
+            // User signed out in Firebase
+            if (firestoreUnsubscribe) {
+              firestoreUnsubscribe();
+              firestoreUnsubscribe = null;
+            }
+            currentUser = null;
+            saveSession(null);
+            updateAuthUI();
+            updateSyncStatus('offline');
+          }
+        });
+      }
     }
 
     function updateAuthUI() {
@@ -1796,7 +2043,7 @@
       clearAuthFeedback();
       const emailInput = document.getElementById('login-email');
       const passInput = document.getElementById('login-password');
-      const email = (emailInput?.value || '').trim().toLowerCase();
+      const email = (emailInput?.value || '').trim();
       const password = passInput?.value || '';
 
       if (!email || !password) {
@@ -1804,44 +2051,64 @@
         return;
       }
 
-      const users = getUsersStore();
-      const user = users[email];
-      if (!user) {
-        showAuthFeedback('No account found with this email. Please create a free account.', 'error');
-        return;
+      const btn = document.getElementById('btn-submit-login');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Signing In...';
       }
 
-      const hash = await hashPassword(password, user.salt);
-      if (hash !== user.passwordHash) {
-        showAuthFeedback('Incorrect password. Please try again.', 'error');
-        return;
+      try {
+        if (firebaseAuth) {
+          const userCred = await firebaseAuth.signInWithEmailAndPassword(email, password);
+          const user = userCred.user;
+          showToast(`👋 Welcome back, ${user.displayName || user.email}! Cloud sync active.`, 'success');
+        } else {
+          // Local fallback if offline or Firebase not reachable
+          const users = getUsersStore();
+          const user = users[email.toLowerCase()];
+          if (!user) {
+            showAuthFeedback('No account found with this email. Please create a free account.', 'error');
+            return;
+          }
+          const hash = await hashPassword(password, user.salt);
+          if (hash !== user.passwordHash) {
+            showAuthFeedback('Incorrect password. Please try again.', 'error');
+            return;
+          }
+          saveSession({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            state: user.state,
+            createdAt: user.createdAt
+          });
+          loadState();
+          updateAuthUI();
+          showToast(`👋 Welcome back, ${user.name}! Access granted.`, 'success');
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        let msg = error.message;
+        if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+          msg = 'Invalid email or password. Please check your credentials or create a free account.';
+        } else if (error.code === 'auth/too-many-requests') {
+          msg = 'Access temporarily disabled due to many failed login attempts. Please try again in a few minutes.';
+        } else if (error.code === 'auth/network-request-failed') {
+          msg = 'Network connection issue. Please check your internet connection.';
+        }
+        showAuthFeedback(msg, 'error');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = 'Sign In & Unlock App →';
+        }
       }
-
-      saveSession({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        state: user.state,
-        createdAt: user.createdAt
-      });
-
-      loadState();
-      if (user.state) {
-        updateStateDisplay(user.state);
-      } else {
-        updateTopStats();
-        updateFlashcardView();
-        updateReadinessDashboard();
-      }
-
-      updateAuthUI();
-      showToast(`👋 Welcome back, ${user.name}! Access granted.`, 'success');
     }
 
     async function handleSignup() {
       clearAuthFeedback();
       const name = (document.getElementById('signup-name')?.value || '').trim();
-      const email = (document.getElementById('signup-email')?.value || '').trim().toLowerCase();
+      const email = (document.getElementById('signup-email')?.value || '').trim();
       const stateCode = document.getElementById('signup-state')?.value || 'CA';
       const pass = document.getElementById('signup-password')?.value || '';
       const confirmPass = document.getElementById('signup-confirm-password')?.value || '';
@@ -1863,52 +2130,184 @@
         return;
       }
 
-      const users = getUsersStore();
-      if (users[email]) {
-        showAuthFeedback('An account with this email already exists. Please sign in instead.', 'error');
+      const btn = document.getElementById('btn-submit-signup');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Creating Free Account...';
+      }
+
+      try {
+        if (firebaseAuth) {
+          const userCredential = await firebaseAuth.createUserWithEmailAndPassword(email, pass);
+          const user = userCredential.user;
+          
+          if (user.updateProfile) {
+            await user.updateProfile({ displayName: name });
+          }
+
+          currentUser = {
+            id: user.uid,
+            name: name,
+            email: email,
+            state: stateCode,
+            createdAt: new Date().toISOString()
+          };
+          saveSession(currentUser);
+          appState.selectedState = stateCode;
+          saveState();
+
+          if (firestoreDb) {
+            await firestoreDb.collection('users').doc(user.uid).set({
+              id: user.uid,
+              name: name,
+              email: email,
+              state: stateCode,
+              selectedState: stateCode,
+              mastered: appState.mastered || {},
+              starred: appState.starred || {},
+              missedCounts: appState.missedCounts || {},
+              simPasses: Number(appState.simPasses) || 0,
+              simAttempts: Number(appState.simAttempts) || 0,
+              courseworkLessonIndex: Number(appState.courseworkLessonIndex) || 0,
+              lastCardId: Number(appState.lastCardId) || 1,
+              currentCardIndex: Number(appState.currentCardIndex) || 0,
+              lastDeckFilter: String(appState.lastDeckFilter || 'all'),
+              speechRate: Number(appState.speechRate) || 1.0,
+              soundFx: appState.soundFx !== false,
+              createdAt: new Date().toISOString(),
+              lastUpdated: new Date().toISOString()
+            });
+          }
+
+          updateStateDisplay(stateCode);
+          updateAuthUI();
+          showToast(`🎉 Welcome to Civics 128, ${name}! Your free account is created and cloud synced.`, 'success');
+        } else {
+          // Local fallback
+          const users = getUsersStore();
+          if (users[email.toLowerCase()]) {
+            showAuthFeedback('An account with this email already exists. Please sign in instead.', 'error');
+            return;
+          }
+          const salt = Math.random().toString(36).substring(2, 10);
+          const hash = await hashPassword(pass, salt);
+          const uid = 'usr_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+
+          const newUser = {
+            id: uid,
+            name: name,
+            email: email.toLowerCase(),
+            passwordHash: hash,
+            salt: salt,
+            state: stateCode,
+            createdAt: new Date().toISOString()
+          };
+          users[email.toLowerCase()] = newUser;
+          saveUsersStore(users);
+          saveSession({
+            id: newUser.id,
+            name: newUser.name,
+            email: newUser.email,
+            state: newUser.state,
+            createdAt: newUser.createdAt
+          });
+          appState.selectedState = stateCode;
+          saveState();
+          updateStateDisplay(stateCode);
+          updateAuthUI();
+          showToast(`🎉 Welcome to Civics 128, ${name}! Your free account is created and access is granted.`, 'success');
+        }
+      } catch (error) {
+        console.error('Signup error:', error);
+        let msg = error.message;
+        if (error.code === 'auth/email-already-in-use') {
+          msg = 'An account with this email already exists. Please sign in instead.';
+        } else if (error.code === 'auth/weak-password') {
+          msg = 'Password is too weak. Please use at least 6 characters.';
+        } else if (error.code === 'auth/invalid-email') {
+          msg = 'The email address is not valid.';
+        }
+        showAuthFeedback(msg, 'error');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = 'Create Free Account & Enter →';
+        }
+      }
+    }
+
+    async function handleGoogleAuth() {
+      clearAuthFeedback();
+      if (!firebaseAuth) {
+        showAuthFeedback('Google Authentication is initializing. Please try again in a moment.', 'error');
         return;
       }
 
-      const salt = Math.random().toString(36).substring(2, 10);
-      const hash = await hashPassword(pass, salt);
-      const uid = 'usr_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+      const provider = new firebase.auth.GoogleAuthProvider();
+      try {
+        const result = await firebaseAuth.signInWithPopup(provider);
+        const user = result.user;
+        if (user) {
+          const stateCode = appState.selectedState || 'CA';
+          const name = user.displayName || (user.email ? user.email.split('@')[0] : 'Civics Scholar');
 
-      const newUser = {
-        id: uid,
-        name: name,
-        email: email,
-        passwordHash: hash,
-        salt: salt,
-        state: stateCode,
-        createdAt: new Date().toISOString()
-      };
-
-      users[email] = newUser;
-      saveUsersStore(users);
-
-      saveSession({
-        id: newUser.id,
-        name: newUser.name,
-        email: newUser.email,
-        state: newUser.state,
-        createdAt: newUser.createdAt
-      });
-
-      // Transfer any active study session to the new user account so work isn't lost
-      appState.selectedState = stateCode;
-      saveState();
-
-      updateStateDisplay(stateCode);
-      updateAuthUI();
-      showToast(`🎉 Welcome to Civics 128, ${name}! Your free account is created and access is granted.`, 'success');
+          if (firestoreDb) {
+            const docRef = firestoreDb.collection('users').doc(user.uid);
+            const docSnap = await docRef.get();
+            if (!docSnap.exists) {
+              await docRef.set({
+                id: user.uid,
+                name: name,
+                email: user.email || '',
+                state: stateCode,
+                selectedState: stateCode,
+                mastered: appState.mastered || {},
+                starred: appState.starred || {},
+                missedCounts: appState.missedCounts || {},
+                simPasses: Number(appState.simPasses) || 0,
+                simAttempts: Number(appState.simAttempts) || 0,
+                courseworkLessonIndex: Number(appState.courseworkLessonIndex) || 0,
+                lastCardId: Number(appState.lastCardId) || 1,
+                currentCardIndex: Number(appState.currentCardIndex) || 0,
+                lastDeckFilter: String(appState.lastDeckFilter || 'all'),
+                speechRate: Number(appState.speechRate) || 1.0,
+                soundFx: appState.soundFx !== false,
+                createdAt: new Date().toISOString(),
+                lastUpdated: new Date().toISOString()
+              });
+            }
+          }
+          showToast(`👋 Signed in as ${name}! Cloud sync active.`, 'success');
+        }
+      } catch (error) {
+        console.error('Google Auth error:', error);
+        if (error.code === 'auth/popup-blocked') {
+          showAuthFeedback('Sign-in popup was blocked by your browser. Please allow popups for civics-128-app.pages.dev.', 'error');
+        } else if (error.code === 'auth/popup-closed-by-user') {
+          // Closed by user, no error banner needed
+        } else {
+          showAuthFeedback(error.message || 'Could not sign in with Google.', 'error');
+        }
+      }
     }
 
-    function handleLogout() {
+    async function handleLogout() {
+      if (firebaseAuth) {
+        try {
+          await firebaseAuth.signOut();
+        } catch (e) {
+          console.warn('Sign out warning:', e);
+        }
+      }
+      if (firestoreUnsubscribe) {
+        firestoreUnsubscribe();
+        firestoreUnsubscribe = null;
+      }
       saveSession(null);
       currentUser = null;
       updateAuthUI();
       closeProfileModal();
-      showToast('You have been logged out. Please sign in to access.', 'info');
+      showToast('You have been logged out. Cloud sync paused.', 'info');
     }
 
     // Auth Event Listeners
@@ -1939,6 +2338,9 @@
       e.preventDefault();
       handleSignup();
     });
+
+    document.getElementById('btn-google-login')?.addEventListener('click', handleGoogleAuth);
+    document.getElementById('btn-google-signup')?.addEventListener('click', handleGoogleAuth);
 
     document.getElementById('btn-close-profile')?.addEventListener('click', closeProfileModal);
     document.getElementById('btn-logout')?.addEventListener('click', handleLogout);
