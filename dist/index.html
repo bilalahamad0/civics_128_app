@@ -4071,10 +4071,14 @@
       }
     }
 
-    function showAuthFeedback(msg, type = 'error') {
+    function showAuthFeedback(msg, type = 'error', isHtml = false) {
       const fb = document.getElementById('auth-feedback');
       if (!fb) return;
-      fb.textContent = msg;
+      if (isHtml) {
+        fb.innerHTML = msg;
+      } else {
+        fb.textContent = msg;
+      }
       fb.className = 'p-3 rounded-xl text-xs font-medium transition-all ' + 
         (type === 'error' 
           ? 'bg-rose-950/80 border border-rose-500/50 text-rose-200' 
@@ -4163,11 +4167,121 @@
 
       try {
         if (firebaseAuth) {
-          const userCred = await firebaseAuth.signInWithEmailAndPassword(email, password);
-          const user = userCred.user;
-          showToast(`👋 Welcome back, ${user.displayName || user.email}! Cloud sync active.`, 'success');
+          try {
+            const userCred = await firebaseAuth.signInWithEmailAndPassword(email, password);
+            const user = userCred.user;
+            showToast(`👋 Welcome back, ${user.displayName || user.email}! Cloud sync active.`, 'success');
+            return;
+          } catch (authError) {
+            console.warn('Firebase signIn attempt note:', authError.code);
+
+            // AUTO-MIGRATION CHECK:
+            // Check if user previously created this account in local browser storage before Firebase was connected
+            const localUsers = getUsersStore();
+            const localUser = localUsers[email.toLowerCase()];
+
+            if (localUser) {
+              const hash = await hashPassword(password, localUser.salt);
+              if (hash === localUser.passwordHash) {
+                // Password matches local SHA-256 vault! Seamlessly register into Firebase Auth
+                showToast('🚀 Migrating your existing account to Firebase Cloud...', 'info');
+                try {
+                  const newCred = await firebaseAuth.createUserWithEmailAndPassword(email, password);
+                  const user = newCred.user;
+
+                  if (user.updateProfile && localUser.name) {
+                    await user.updateProfile({ displayName: localUser.name });
+                  }
+
+                  // Gather existing local study progress
+                  const legacyStorageKey = 'civics128_state_' + localUser.id;
+                  let existingState = {};
+                  try {
+                    const raw = localStorage.getItem(legacyStorageKey) || localStorage.getItem('civics128_state');
+                    if (raw) existingState = JSON.parse(raw);
+                  } catch (e) {}
+
+                  // Merge into appState
+                  Object.assign(appState, existingState);
+                  appState.selectedState = localUser.state || appState.selectedState || 'CA';
+
+                  if (firestoreDb) {
+                    await firestoreDb.collection('users').doc(user.uid).set({
+                      id: user.uid,
+                      name: localUser.name || 'Civics Scholar',
+                      email: email,
+                      state: appState.selectedState,
+                      selectedState: appState.selectedState,
+                      mastered: appState.mastered || {},
+                      starred: appState.starred || {},
+                      missedCounts: appState.missedCounts || {},
+                      simPasses: Number(appState.simPasses) || 0,
+                      simAttempts: Number(appState.simAttempts) || 0,
+                      courseworkLessonIndex: Number(appState.courseworkLessonIndex) || 0,
+                      lastCardId: Number(appState.lastCardId) || 1,
+                      currentCardIndex: Number(appState.currentCardIndex) || 0,
+                      lastDeckFilter: String(appState.lastDeckFilter || 'all'),
+                      speechRate: Number(appState.speechRate) || 1.0,
+                      soundFx: appState.soundFx !== false,
+                      createdAt: localUser.createdAt || new Date().toISOString(),
+                      lastUpdated: new Date().toISOString()
+                    });
+                  }
+
+                  saveSession({
+                    id: user.uid,
+                    name: localUser.name || 'Civics Scholar',
+                    email: email,
+                    state: appState.selectedState,
+                    createdAt: localUser.createdAt || new Date().toISOString()
+                  });
+
+                  saveState();
+                  updateStateDisplay(appState.selectedState);
+                  updateAuthUI();
+                  showToast(`🎉 Welcome back, ${localUser.name}! Your account is now synced across all devices.`, 'success');
+                  return;
+                } catch (migrateErr) {
+                  console.error('Migration error:', migrateErr);
+                  if (migrateErr.code !== 'auth/email-already-in-use') {
+                    throw migrateErr;
+                  }
+                }
+              } else {
+                showAuthFeedback('Incorrect password for this account. Please try again.', 'error');
+                return;
+              }
+            }
+
+            // If not found in local store (e.g. on iOS or new device)
+            if (authError.code === 'auth/invalid-credential' || authError.code === 'auth/user-not-found' || authError.code === 'auth/wrong-password') {
+              const htmlMsg = `
+                <div class="space-y-2">
+                  <div class="font-semibold text-rose-200">No cloud account found with this email, or password was incorrect.</div>
+                  <div class="text-[11px] text-slate-300">If you created this account on another device before cloud sync, click below to activate it:</div>
+                  <button type="button" id="btn-activate-account" class="w-full py-2 px-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition shadow-md">
+                    ✨ Activate / Create Cloud Account with this Password →
+                  </button>
+                </div>
+              `;
+              showAuthFeedback(htmlMsg, 'error', true);
+              document.getElementById('btn-activate-account')?.addEventListener('click', () => {
+                quickRegisterFromLogin(email, password);
+              });
+              return;
+            }
+
+            let msg = authError.message;
+            if (authError.code === 'auth/too-many-requests') {
+              msg = 'Access temporarily disabled due to many failed login attempts. Please try again in a few minutes.';
+            } else if (authError.code === 'auth/network-request-failed') {
+              msg = 'Network connection issue. Please check your internet connection.';
+            }
+            showAuthFeedback(msg, 'error');
+            return;
+          }
         } else {
-          // Local fallback if offline or Firebase not reachable
+          // Local fallback if offline
           const users = getUsersStore();
           const user = users[email.toLowerCase()];
           if (!user) {
@@ -4192,13 +4306,87 @@
         }
       } catch (error) {
         console.error('Login error:', error);
-        let msg = error.message;
-        if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
-          msg = 'Invalid email or password. Please check your credentials or create a free account.';
-        } else if (error.code === 'auth/too-many-requests') {
-          msg = 'Access temporarily disabled due to many failed login attempts. Please try again in a few minutes.';
-        } else if (error.code === 'auth/network-request-failed') {
-          msg = 'Network connection issue. Please check your internet connection.';
+        showAuthFeedback(error.message || 'Login failed. Please try again.', 'error');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = 'Sign In & Unlock App →';
+        }
+      }
+    }
+
+    async function quickRegisterFromLogin(email, password) {
+      clearAuthFeedback();
+      const btn = document.getElementById('btn-submit-login');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Activating Account...';
+      }
+      try {
+        if (password.length < 6) {
+          showAuthFeedback('Password must be at least 6 characters long.', 'error');
+          return;
+        }
+
+        const defaultName = (email.split('@')[0] || 'Civics Scholar')
+          .replace(/[._-]/g, ' ')
+          .replace(/\b\w/g, l => l.toUpperCase());
+
+        const stateCode = appState.selectedState || 'CA';
+
+        if (firebaseAuth) {
+          const userCredential = await firebaseAuth.createUserWithEmailAndPassword(email, password);
+          const user = userCredential.user;
+
+          if (user.updateProfile) {
+            await user.updateProfile({ displayName: defaultName });
+          }
+
+          currentUser = {
+            id: user.uid,
+            name: defaultName,
+            email: email,
+            state: stateCode,
+            createdAt: new Date().toISOString()
+          };
+          saveSession(currentUser);
+          appState.selectedState = stateCode;
+          saveState();
+
+          if (firestoreDb) {
+            await firestoreDb.collection('users').doc(user.uid).set({
+              id: user.uid,
+              name: defaultName,
+              email: email,
+              state: stateCode,
+              selectedState: stateCode,
+              mastered: appState.mastered || {},
+              starred: appState.starred || {},
+              missedCounts: appState.missedCounts || {},
+              simPasses: Number(appState.simPasses) || 0,
+              simAttempts: Number(appState.simAttempts) || 0,
+              courseworkLessonIndex: Number(appState.courseworkLessonIndex) || 0,
+              lastCardId: Number(appState.lastCardId) || 1,
+              currentCardIndex: Number(appState.currentCardIndex) || 0,
+              lastDeckFilter: String(appState.lastDeckFilter || 'all'),
+              speechRate: Number(appState.speechRate) || 1.0,
+              soundFx: appState.soundFx !== false,
+              createdAt: new Date().toISOString(),
+              lastUpdated: new Date().toISOString()
+            });
+          }
+
+          updateStateDisplay(stateCode);
+          updateAuthUI();
+          showToast(`🎉 Cloud account activated for ${email}! Cross-device sync is now live.`, 'success');
+        }
+      } catch (err) {
+        console.error('Quick registration error:', err);
+        let msg = err.message;
+        if (err.code === 'auth/email-already-in-use') {
+          msg = 'An account with this email already exists in Firebase. Please check password.';
+        } else if (err.code === 'auth/weak-password') {
+          msg = 'Password must be at least 6 characters.';
         }
         showAuthFeedback(msg, 'error');
       } finally {

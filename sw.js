@@ -1,4 +1,4 @@
-const CACHE_NAME = 'civics-128-v3.0-firebase-cloud-sync';
+const CACHE_NAME = 'civics-128-v3.1-auto-migration';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
