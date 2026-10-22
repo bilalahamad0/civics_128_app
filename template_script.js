@@ -2468,10 +2468,11 @@
       const questionText = q.question.trim();
       const answersList = (q.answers && q.answers.length > 0) ? q.answers : [q.primaryAnswer];
       const answersText = (answersList.length > 1)
-        ? `Accepted answers: ${answersList.join('. ')}.`
+        ? `Accepted answers: ${answersList.join(', ')}.`
         : `Accepted answer: ${answersList[0]}.`;
       const tipText = `Study tip: ${q.explanation.trim()}`;
-      const speechText = `Lesson ${q.id}. ${questionText}. ${answersText} ${tipText}`;
+      // Use ellipses to insert natural conversational pauses between sections so it sounds calm and clear
+      const speechText = `Lesson ${q.id}. ... ${questionText} ... ${answersText} ... ${tipText}`;
 
       const captionEl = document.getElementById('cw-live-caption');
       if (captionEl) {
@@ -2492,7 +2493,10 @@
           courseworkUtterance = utterance; // Prevent garbage collection bug in Chrome
 
           const speedVal = parseFloat(document.getElementById('cw-speed-select')?.value || '1.0');
-          utterance.rate = isNaN(speedVal) ? 1.0 : speedVal;
+          // Web Speech default 1.0 sounds unnaturally fast (like 2x) for educational study.
+          // Calibrate base multiplier to 0.78 so 1.0x delivers an articulate, comfortable classroom cadence.
+          const baseRate = 0.78;
+          utterance.rate = Math.max(0.45, Math.min(1.4, (isNaN(speedVal) ? 1.0 : speedVal) * baseRate));
 
           const voices = window.speechSynthesis.getVoices();
           if (appState.speechVoice && voices.length > 0) {
@@ -2532,7 +2536,7 @@
 
           // Watchdog timer: estimate duration based on word count so animations complete even if onend gets swallowed
           const wordCount = cleanSpeech.split(/\s+/).length;
-          const estimatedMs = Math.max(5000, Math.round((wordCount / (2.5 * (utterance.rate || 1.0))) * 1000) + 2000);
+          const estimatedMs = Math.max(6000, Math.round((wordCount / (1.8 * (utterance.rate || 0.78))) * 1000) + 3000);
           speechWatchdogTimeout = setTimeout(() => {
             if (isCourseworkSpeaking) {
               handleCourseworkLessonEnd(q.id, qIndex);
@@ -2548,7 +2552,7 @@
       } else {
         // Visual-only lesson playback fallback for browsers without TTS
         const wordCount = cleanSpeech.split(/\s+/).length;
-        const visualMs = Math.max(5000, Math.round((wordCount / 2.5) * 1000));
+        const visualMs = Math.max(6000, Math.round((wordCount / 1.8) * 1000));
         speechWatchdogTimeout = setTimeout(() => {
           handleCourseworkLessonEnd(q.id, qIndex);
         }, visualMs);
