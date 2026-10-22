@@ -144,6 +144,33 @@
     .artifact-float {
       animation: floatArtifact 4s ease-in-out infinite;
     }
+    @keyframes answerPulseShake {
+      0% { transform: scale(1) translateX(0); }
+      15% { transform: scale(1.025) translateX(-3px); }
+      30% { transform: scale(1.025) translateX(3px); }
+      45% { transform: scale(1.015) translateX(-2px); }
+      60% { transform: scale(1.01) translateX(2px); }
+      75% { transform: scale(1.005) translateX(-1px); }
+      100% { transform: scale(1) translateX(0); }
+    }
+    .answer-highlight-active {
+      animation: answerPulseShake 0.65s ease-in-out;
+      border-color: #34d399 !important;
+      background-color: rgba(6, 78, 59, 0.6) !important;
+      box-shadow: 0 0 16px rgba(52, 211, 153, 0.4) !important;
+    }
+    @keyframes tipRevealFade {
+      0% { opacity: 0; transform: translateY(14px) scale(0.97); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .tip-reveal-active {
+      animation: tipRevealFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      border-color: #f59e0b !important;
+      box-shadow: 0 0 22px rgba(245, 158, 11, 0.35) !important;
+    }
+    .question-highlight-active {
+      text-shadow: 0 0 6px rgba(255, 255, 255, 0.9), 0 0 18px rgba(96, 165, 250, 0.6) !important;
+    }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">

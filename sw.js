@@ -1,4 +1,4 @@
-const CACHE_NAME = 'civics-128-v2.8-anime-sensei-stick';
+const CACHE_NAME = 'civics-128-v2.9-interactive-cinema';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

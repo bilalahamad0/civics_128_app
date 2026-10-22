@@ -2136,20 +2136,51 @@
 
       if ([5, 6, 7, 71, 72, 84, 85].includes(qid)) {
         return {
-          caption: "The Bill of Rights • First 10 Amendments",
-          svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="40" y="15" width="90" height="110" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.8" />
-            <rect x="150" y="15" width="90" height="110" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.8" />
-            <text x="85" y="35" fill="#78350f" font-size="11" font-weight="bold" text-anchor="middle">Amendments I-V</text>
-            <text x="85" y="55" fill="#92400e" font-size="9" text-anchor="middle">I. Speech &amp; Religion</text>
-            <text x="85" y="72" fill="#92400e" font-size="9" text-anchor="middle">II. Bear Arms</text>
-            <text x="85" y="89" fill="#92400e" font-size="9" text-anchor="middle">III. Quartering</text>
-            <text x="85" y="106" fill="#92400e" font-size="9" text-anchor="middle">IV. Search &amp; Seizure</text>
-            <text x="195" y="35" fill="#78350f" font-size="11" font-weight="bold" text-anchor="middle">Amendments VI-X</text>
-            <text x="195" y="55" fill="#92400e" font-size="9" text-anchor="middle">VI. Speedy Trial</text>
-            <text x="195" y="72" fill="#92400e" font-size="9" text-anchor="middle">VII. Jury Trial</text>
-            <text x="195" y="89" fill="#92400e" font-size="9" text-anchor="middle">VIII. Cruel Punishment</text>
-            <text x="195" y="106" fill="#92400e" font-size="9" text-anchor="middle">X. State Powers</text>
+          caption: "The Bill of Rights • First 10 Amendments (1791)",
+          svg: `<svg class="w-full h-full" viewBox="0 0 320 148" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Left Tablet: Amendments I – V -->
+            <rect x="6" y="4" width="150" height="140" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="2" />
+            <path d="M6,12 C6,7.5 9.5,4 14,4 L148,4 C152.5,4 156,7.5 156,12 L156,26 L6,26 Z" fill="#78350f" />
+            <text x="81" y="19" fill="#fef3c7" font-size="10.5" font-weight="bold" font-family="Georgia, serif" text-anchor="middle">AMENDMENTS I – V</text>
+            
+            <g font-family="-apple-system, BlinkMacSystemFont, sans-serif">
+              <text x="14" y="44" fill="#b45309" font-weight="bold" font-size="9.5">I.</text>
+              <text x="28" y="44" fill="#1c1917" font-size="9" font-weight="600">Speech, Press, Religion</text>
+              
+              <text x="14" y="66" fill="#b45309" font-weight="bold" font-size="9.5">II.</text>
+              <text x="28" y="66" fill="#1c1917" font-size="9" font-weight="600">Right to Bear Arms</text>
+              
+              <text x="14" y="88" fill="#b45309" font-weight="bold" font-size="9.5">III.</text>
+              <text x="28" y="88" fill="#1c1917" font-size="9" font-weight="600">No Quartering Troops</text>
+              
+              <text x="14" y="110" fill="#b45309" font-weight="bold" font-size="9.5">IV.</text>
+              <text x="28" y="110" fill="#1c1917" font-size="9" font-weight="600">Search &amp; Seizure</text>
+              
+              <text x="14" y="132" fill="#b45309" font-weight="bold" font-size="9.5">V.</text>
+              <text x="28" y="132" fill="#1c1917" font-size="9" font-weight="600">Due Process &amp; Rights</text>
+            </g>
+
+            <!-- Right Tablet: Amendments VI – X -->
+            <rect x="164" y="4" width="150" height="140" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="2" />
+            <path d="M164,12 C164,7.5 167.5,4 172,4 L306,4 C310.5,4 314,7.5 314,12 L314,26 L164,26 Z" fill="#78350f" />
+            <text x="239" y="19" fill="#fef3c7" font-size="10.5" font-weight="bold" font-family="Georgia, serif" text-anchor="middle">AMENDMENTS VI – X</text>
+            
+            <g font-family="-apple-system, BlinkMacSystemFont, sans-serif">
+              <text x="172" y="44" fill="#b45309" font-weight="bold" font-size="9.5">VI.</text>
+              <text x="194" y="44" fill="#1c1917" font-size="9" font-weight="600">Speedy Public Trial</text>
+              
+              <text x="172" y="66" fill="#b45309" font-weight="bold" font-size="9.5">VII.</text>
+              <text x="194" y="66" fill="#1c1917" font-size="9" font-weight="600">Trial by Jury</text>
+              
+              <text x="172" y="88" fill="#b45309" font-weight="bold" font-size="9.5">VIII.</text>
+              <text x="194" y="88" fill="#1c1917" font-size="9" font-weight="600">No Cruel Punishment</text>
+              
+              <text x="172" y="110" fill="#b45309" font-weight="bold" font-size="9.5">IX.</text>
+              <text x="194" y="110" fill="#1c1917" font-size="9" font-weight="600">Rights of the People</text>
+              
+              <text x="172" y="132" fill="#b45309" font-weight="bold" font-size="9.5">X.</text>
+              <text x="194" y="132" fill="#1c1917" font-size="9" font-weight="600">Powers to the States</text>
+            </g>
           </svg>`
         };
       }
@@ -2366,202 +2397,336 @@
       };
     }
 
-    let isCourseworkSpeaking = false;
-    let courseworkUtterance = null;
+    // Coursework Interactive Multi-Phase State Machine
+    let courseworkState = 'idle'; // 'idle' | 'playing' | 'paused' | 'completed'
+    let currentLessonPhase = 'none'; // 'none' | 'question' | 'gap1' | 'answers' | 'gap2' | 'tip' | 'done'
+    let phaseTimeout = null;
     let autoAdvanceTimeout = null;
     let speechWatchdogTimeout = null;
+    let activeUtterance = null;
 
-    function stopCourseworkAnimations() {
-      isCourseworkSpeaking = false;
-      courseworkUtterance = null;
+    function updatePlayButtonUI() {
+      const icon = document.getElementById('cw-play-icon');
+      const text = document.getElementById('cw-play-text');
+      if (!icon || !text) return;
+
+      if (courseworkState === 'playing') {
+        icon.textContent = '⏸';
+        text.textContent = 'Pause Lesson';
+      } else if (courseworkState === 'paused') {
+        icon.textContent = '▶';
+        text.textContent = 'Resume Lesson';
+      } else {
+        icon.textContent = '▶';
+        text.textContent = 'Play Lesson';
+      }
+    }
+
+    function clearAllCourseworkTimers() {
+      if (phaseTimeout) {
+        clearTimeout(phaseTimeout);
+        phaseTimeout = null;
+      }
       if (speechWatchdogTimeout) {
         clearTimeout(speechWatchdogTimeout);
         speechWatchdogTimeout = null;
       }
-
-      const icon = document.getElementById('cw-play-icon');
-      const text = document.getElementById('cw-play-text');
-      if (icon) icon.textContent = '▶';
-      if (text) text.textContent = 'Play Lesson';
-
-      document.getElementById('prof-mouth')?.classList.remove('mouth-talking');
-      document.getElementById('prof-arm')?.classList.remove('baton-pointing');
-    }
-
-    function pauseCourseworkLesson(clearTimer = true) {
-      if (clearTimer && autoAdvanceTimeout) {
+      if (autoAdvanceTimeout) {
         clearTimeout(autoAdvanceTimeout);
         autoAdvanceTimeout = null;
       }
-      if (speechWatchdogTimeout) {
-        clearTimeout(speechWatchdogTimeout);
-        speechWatchdogTimeout = null;
-      }
+    }
+
+    function stopCourseworkAnimations() {
+      document.getElementById('prof-mouth')?.classList.remove('mouth-talking');
+      document.getElementById('prof-arm')?.classList.remove('baton-pointing');
+      document.getElementById('cw-chalk-question')?.classList.remove('question-highlight-active');
+      document.querySelectorAll('#cw-chalk-answers .cw-answer-pill').forEach(el => {
+        el.classList.remove('answer-highlight-active');
+      });
+    }
+
+    function pauseCourseworkLesson() {
+      clearAllCourseworkTimers();
+      courseworkState = 'paused';
+
       if ('speechSynthesis' in window) {
         try {
           window.speechSynthesis.cancel();
         } catch (e) {}
       }
+
       stopCourseworkAnimations();
+      updatePlayButtonUI();
+
       const captionEl = document.getElementById('cw-live-caption');
       if (captionEl) {
-        captionEl.textContent = `Narration paused. Click "Play Lesson" to resume.`;
+        captionEl.textContent = `⏸ Lesson paused. Click "Resume Lesson" to continue.`;
       }
     }
 
-    function handleCourseworkLessonEnd(qid, qIndex) {
-      stopCourseworkAnimations();
+    function resumeCourseworkLesson() {
+      courseworkState = 'playing';
+      updatePlayButtonUI();
 
-      const captionEl = document.getElementById('cw-live-caption');
-      const autoAdvanceOn = document.getElementById('cw-toggle-autoadvance')?.checked;
-
-      if (autoAdvanceOn && qIndex < CIVICS_QUESTIONS.length - 1) {
-        if (captionEl) {
-          captionEl.textContent = `✅ Lesson ${qid} completed! Auto-advancing to Lesson ${qid + 1} in 3 seconds... (Click Pause to stay)`;
-        }
-        autoAdvanceTimeout = setTimeout(() => {
-          loadCourseworkLesson(qIndex + 1, true);
-        }, 3000);
+      if (currentLessonPhase === 'gap1') {
+        startLessonPhase('answers');
+      } else if (currentLessonPhase === 'gap2') {
+        startLessonPhase('tip');
+      } else if (currentLessonPhase === 'done' || currentLessonPhase === 'none') {
+        startLessonPhase('question');
       } else {
-        if (captionEl) {
-          captionEl.textContent = `✅ Lesson ${qid} completed! Try the Pop Quiz or click "Next" for Lesson ${qid + 1}.`;
-        }
+        // Re-run current active phase ('question', 'answers', or 'tip')
+        startLessonPhase(currentLessonPhase);
       }
     }
 
     function playCourseworkLesson() {
-      if (isCourseworkSpeaking) {
+      if (courseworkState === 'playing') {
         pauseCourseworkLesson();
         return;
       }
+
+      if (courseworkState === 'paused') {
+        resumeCourseworkLesson();
+        return;
+      }
+
+      // Fresh play from beginning
+      courseworkState = 'playing';
+      updatePlayButtonUI();
+      startLessonPhase('question');
+    }
+
+    function replayCourseworkLesson() {
+      clearAllCourseworkTimers();
+      if ('speechSynthesis' in window) {
+        try { window.speechSynthesis.cancel(); } catch (e) {}
+      }
+      stopCourseworkAnimations();
+      courseworkState = 'playing';
+      updatePlayButtonUI();
+      startLessonPhase('question');
+    }
+
+    function speakPhaseUtterance(text, onComplete) {
+      if (!('speechSynthesis' in window)) {
+        const words = text.split(/\s+/).length;
+        const durationMs = Math.max(2500, Math.round((words / 2.0) * 1000));
+        phaseTimeout = setTimeout(() => {
+          if (courseworkState === 'playing') onComplete();
+        }, durationMs);
+        return;
+      }
+
+      try {
+        window.speechSynthesis.cancel();
+
+        const cleanText = text.replace(/[\(\)\[\]]/g, '').trim();
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        activeUtterance = utterance;
+
+        const speedVal = parseFloat(document.getElementById('cw-speed-select')?.value || '1.0');
+        const baseRate = 0.78;
+        utterance.rate = Math.max(0.45, Math.min(1.4, (isNaN(speedVal) ? 1.0 : speedVal) * baseRate));
+
+        const voices = window.speechSynthesis.getVoices();
+        if (appState.speechVoice && voices.length > 0) {
+          const found = voices.find(v => v.name === appState.speechVoice);
+          if (found) utterance.voice = found;
+        } else if (voices.length > 0) {
+          const enVoice = voices.find(v => v.lang && (v.lang === 'en-US' || v.lang.startsWith('en')) && (v.name.includes('Samantha') || v.name.includes('Alex') || v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('US')));
+          if (enVoice) utterance.voice = enVoice;
+        }
+
+        let completed = false;
+        function finishPhase() {
+          if (completed) return;
+          completed = true;
+          if (speechWatchdogTimeout) {
+            clearTimeout(speechWatchdogTimeout);
+            speechWatchdogTimeout = null;
+          }
+          if (courseworkState === 'playing') {
+            onComplete();
+          }
+        }
+
+        utterance.onend = finishPhase;
+        utterance.onerror = (err) => {
+          // If canceled by pause, do NOT advance or error out
+          if (err.error === 'canceled' || courseworkState === 'paused') {
+            return;
+          }
+          console.warn('Utterance event error:', err);
+          finishPhase();
+        };
+
+        const words = cleanText.split(/\s+/).length;
+        const estimatedMs = Math.max(4000, Math.round((words / (1.5 * utterance.rate)) * 1000) + 2500);
+        speechWatchdogTimeout = setTimeout(() => {
+          if (courseworkState === 'playing') {
+            finishPhase();
+          }
+        }, estimatedMs);
+
+        setTimeout(() => {
+          try {
+            if (window.speechSynthesis.paused) window.speechSynthesis.resume();
+            window.speechSynthesis.speak(utterance);
+          } catch (e) {
+            console.warn('Speech speak error:', e);
+            finishPhase();
+          }
+        }, 30);
+
+      } catch (err) {
+        console.warn('SpeechSynthesis error:', err);
+        onComplete();
+      }
+    }
+
+    function startLessonPhase(phase) {
+      if (courseworkState !== 'playing') return;
+      currentLessonPhase = phase;
 
       const qIndex = appState.courseworkLessonIndex || 0;
       const rawQ = CIVICS_QUESTIONS[qIndex];
       if (!rawQ) return;
       const q = getResolvedQuestion(rawQ, appState.selectedState || 'CA');
 
-      if (autoAdvanceTimeout) {
-        clearTimeout(autoAdvanceTimeout);
-        autoAdvanceTimeout = null;
-      }
-      if (speechWatchdogTimeout) {
-        clearTimeout(speechWatchdogTimeout);
-        speechWatchdogTimeout = null;
-      }
-
-      // Resume AudioContext on direct user gesture
-      try {
-        getAudioContext()?.resume();
-      } catch (e) {}
-
-      // 1. Immediately activate responsive UI and animations
-      isCourseworkSpeaking = true;
-      const icon = document.getElementById('cw-play-icon');
-      const text = document.getElementById('cw-play-text');
-      if (icon) icon.textContent = '⏸';
-      if (text) text.textContent = 'Pause Lesson';
-
-      document.getElementById('prof-mouth')?.classList.add('mouth-talking');
-      document.getElementById('prof-arm')?.classList.add('baton-pointing');
-
-      // 2. Build spoken lesson text strictly aligned with chalkboard display
-      const questionText = q.question.trim();
-      const answersList = (q.answers && q.answers.length > 0) ? q.answers : [q.primaryAnswer];
-      const answersText = (answersList.length > 1)
-        ? `Accepted answers: ${answersList.join(', ')}.`
-        : `Accepted answer: ${answersList[0]}.`;
-      const tipText = `Study tip: ${q.explanation.trim()}`;
-      // Use ellipses to insert natural conversational pauses between sections so it sounds calm and clear
-      const speechText = `Lesson ${q.id}. ... ${questionText} ... ${answersText} ... ${tipText}`;
-
+      const questionEl = document.getElementById('cw-chalk-question');
+      const tipBox = document.getElementById('cw-tip-box');
+      const tipPlaceholder = document.getElementById('cw-tip-placeholder');
       const captionEl = document.getElementById('cw-live-caption');
-      if (captionEl) {
-        captionEl.textContent = `Lesson ${q.id}: ${questionText} | ${answersText} | ${tipText}`;
-      }
+      const profArm = document.getElementById('prof-arm');
+      const profMouth = document.getElementById('prof-mouth');
 
-      const cleanSpeech = speechText.replace(/[\(\)\[\]]/g, '').trim();
+      // Reset active highlights
+      questionEl?.classList.remove('question-highlight-active');
+      document.querySelectorAll('#cw-chalk-answers .cw-answer-pill').forEach(el => {
+        el.classList.remove('answer-highlight-active');
+      });
 
-      // 3. Drive Speech Synthesis if available
-      if ('speechSynthesis' in window) {
-        try {
-          if (window.speechSynthesis.paused) {
-            window.speechSynthesis.resume();
-          }
-          window.speechSynthesis.cancel();
+      if (phase === 'question') {
+        // Phase 1: Question
+        questionEl?.classList.add('question-highlight-active');
+        tipBox?.classList.add('hidden');
+        tipBox?.classList.remove('tip-reveal-active');
+        tipPlaceholder?.classList.remove('hidden');
 
-          const utterance = new SpeechSynthesisUtterance(cleanSpeech);
-          courseworkUtterance = utterance; // Prevent garbage collection bug in Chrome
+        profArm?.classList.add('baton-pointing');
+        profMouth?.classList.add('mouth-talking');
 
-          const speedVal = parseFloat(document.getElementById('cw-speed-select')?.value || '1.0');
-          // Web Speech default 1.0 sounds unnaturally fast (like 2x) for educational study.
-          // Calibrate base multiplier to 0.78 so 1.0x delivers an articulate, comfortable classroom cadence.
-          const baseRate = 0.78;
-          utterance.rate = Math.max(0.45, Math.min(1.4, (isNaN(speedVal) ? 1.0 : speedVal) * baseRate));
-
-          const voices = window.speechSynthesis.getVoices();
-          if (appState.speechVoice && voices.length > 0) {
-            const found = voices.find(v => v.name === appState.speechVoice);
-            if (found) utterance.voice = found;
-          } else if (voices.length > 0) {
-            const enVoice = voices.find(v => v.lang && (v.lang === 'en-US' || v.lang.startsWith('en')) && (v.name.includes('Samantha') || v.name.includes('Alex') || v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('US')));
-            if (enVoice) utterance.voice = enVoice;
-          }
-
-          utterance.onstart = () => {
-            isCourseworkSpeaking = true;
-            if (icon) icon.textContent = '⏸';
-            if (text) text.textContent = 'Pause Lesson';
-            document.getElementById('prof-mouth')?.classList.add('mouth-talking');
-            document.getElementById('prof-arm')?.classList.add('baton-pointing');
-          };
-
-          utterance.onend = () => {
-            handleCourseworkLessonEnd(q.id, qIndex);
-          };
-
-          utterance.onerror = (err) => {
-            console.warn('SpeechSynthesis utterance event error:', err);
-            handleCourseworkLessonEnd(q.id, qIndex);
-          };
-
-          // Small delay after cancel() to avoid Chrome cancel-before-speak race condition
-          setTimeout(() => {
-            try {
-              if (window.speechSynthesis.paused) window.speechSynthesis.resume();
-              window.speechSynthesis.speak(utterance);
-            } catch (err) {
-              console.warn('Speech speak error:', err);
-            }
-          }, 40);
-
-          // Watchdog timer: estimate duration based on word count so animations complete even if onend gets swallowed
-          const wordCount = cleanSpeech.split(/\s+/).length;
-          const estimatedMs = Math.max(6000, Math.round((wordCount / (1.8 * (utterance.rate || 0.78))) * 1000) + 3000);
-          speechWatchdogTimeout = setTimeout(() => {
-            if (isCourseworkSpeaking) {
-              handleCourseworkLessonEnd(q.id, qIndex);
-            }
-          }, estimatedMs);
-
-        } catch (e) {
-          console.warn('SpeechSynthesis error:', e);
-          speechWatchdogTimeout = setTimeout(() => {
-            handleCourseworkLessonEnd(q.id, qIndex);
-          }, 6000);
+        const cleanQ = q.question.trim();
+        const speechText = `Lesson ${q.id}. ${cleanQ}`;
+        if (captionEl) {
+          captionEl.textContent = `Lesson ${q.id}: ${cleanQ}`;
         }
-      } else {
-        // Visual-only lesson playback fallback for browsers without TTS
-        const wordCount = cleanSpeech.split(/\s+/).length;
-        const visualMs = Math.max(6000, Math.round((wordCount / 1.8) * 1000));
-        speechWatchdogTimeout = setTimeout(() => {
-          handleCourseworkLessonEnd(q.id, qIndex);
-        }, visualMs);
-      }
-    }
 
-    function replayCourseworkLesson() {
-      pauseCourseworkLesson();
-      playCourseworkLesson();
+        speakPhaseUtterance(speechText, () => {
+          profMouth?.classList.remove('mouth-talking');
+          questionEl?.classList.remove('question-highlight-active');
+
+          if (courseworkState !== 'playing') return;
+          currentLessonPhase = 'gap1';
+
+          if (captionEl) {
+            captionEl.textContent = `Lesson ${q.id}: Question spoken. Think of your oral answer...`;
+          }
+
+          // Generous gap to process question (1600ms)
+          phaseTimeout = setTimeout(() => {
+            if (courseworkState === 'playing') {
+              startLessonPhase('answers');
+            }
+          }, 1600);
+        });
+
+      } else if (phase === 'answers') {
+        // Phase 2: Accepted Oral Answers
+        // Highlight and shake/pulse accepted oral answers
+        document.querySelectorAll('#cw-chalk-answers .cw-answer-pill').forEach(el => {
+          el.classList.add('answer-highlight-active');
+        });
+
+        profArm?.classList.add('baton-pointing');
+        profMouth?.classList.add('mouth-talking');
+
+        const answersList = (q.answers && q.answers.length > 0) ? q.answers : [q.primaryAnswer];
+        const answersFormatted = answersList.join(', or, ');
+        const speechText = answersList.length > 1
+          ? `Accepted answers are: ${answersFormatted}.`
+          : `The accepted answer is: ${answersList[0]}.`;
+
+        if (captionEl) {
+          captionEl.textContent = `Accepted Answer${answersList.length > 1 ? 's' : ''}: ${answersList.join(' | ')}`;
+        }
+
+        speakPhaseUtterance(speechText, () => {
+          profMouth?.classList.remove('mouth-talking');
+          document.querySelectorAll('#cw-chalk-answers .cw-answer-pill').forEach(el => {
+            el.classList.remove('answer-highlight-active');
+          });
+
+          if (courseworkState !== 'playing') return;
+          currentLessonPhase = 'gap2';
+
+          if (captionEl) {
+            captionEl.textContent = `Practice repeating the answer aloud... (Next: Study Tip)`;
+          }
+
+          // Generous gap for user to repeat and practice aloud (1800ms)
+          phaseTimeout = setTimeout(() => {
+            if (courseworkState === 'playing') {
+              startLessonPhase('tip');
+            }
+          }, 1800);
+        });
+
+      } else if (phase === 'tip') {
+        // Phase 3: Study Tip
+        // Unhide Study Tip and animate into view with warm amber glow
+        tipPlaceholder?.classList.add('hidden');
+        tipBox?.classList.remove('hidden');
+        tipBox?.classList.add('tip-reveal-active');
+
+        profArm?.classList.add('baton-pointing');
+        profMouth?.classList.add('mouth-talking');
+
+        const cleanTip = q.explanation.trim();
+        const speechText = `Study tip: ${cleanTip}`;
+
+        if (captionEl) {
+          captionEl.textContent = `Study Tip: ${cleanTip}`;
+        }
+
+        speakPhaseUtterance(speechText, () => {
+          profMouth?.classList.remove('mouth-talking');
+          profArm?.classList.remove('baton-pointing');
+
+          if (courseworkState !== 'playing') return;
+          currentLessonPhase = 'done';
+          courseworkState = 'completed';
+          updatePlayButtonUI();
+
+          const autoAdvanceOn = document.getElementById('cw-toggle-autoadvance')?.checked;
+          if (autoAdvanceOn && qIndex < CIVICS_QUESTIONS.length - 1) {
+            if (captionEl) {
+              captionEl.textContent = `✅ Lesson ${q.id} completed! Auto-advancing in 3 seconds... (Click Pause to stay)`;
+            }
+            autoAdvanceTimeout = setTimeout(() => {
+              if (courseworkState !== 'paused') {
+                loadCourseworkLesson(qIndex + 1, true);
+              }
+            }, 3000);
+          } else {
+            if (captionEl) {
+              captionEl.textContent = `✅ Lesson ${q.id} completed! Try Pop Quiz or advance to Lesson ${q.id + 1}.`;
+            }
+          }
+        });
+      }
     }
 
     function syncCourseworkProgressUI() {
@@ -2642,17 +2807,35 @@
 
       if (answersEl) {
         answersEl.innerHTML = q.answers.map((ans, aIdx) => `
-          <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-emerald-950/30 border border-emerald-600/30 shadow-sm">
+          <div class="cw-answer-pill flex items-start gap-2.5 p-2.5 rounded-xl bg-emerald-950/30 border border-emerald-600/30 shadow-sm transition-all duration-300">
             <span class="text-emerald-400 font-bold text-base leading-none mt-0.5">✓</span>
             <span class="chalk-font chalk-green text-base sm:text-lg font-semibold leading-snug">${ans}</span>
           </div>
         `).join('');
       }
 
-      // Professor Speech Bubble
+      // Professor Speech Bubble (Pedagogical mentor guide - Study Tip shown ONLY once on main left panel)
       const bubbleEl = document.getElementById('cw-prof-bubble');
       if (bubbleEl) {
-        bubbleEl.textContent = `Welcome to Lesson ${q.id}! Study Tip: ${q.explanation}`;
+        if (q.is6520) {
+          bubbleEl.textContent = `Welcome to Lesson ${q.id}! ★ 65/20 Special Exemption designated question. Listen carefully to the accepted answers.`;
+        } else if (q.isStateSpecific) {
+          const stName = (STATES_DATA[appState.selectedState || 'CA'] || STATES_DATA['CA']).name;
+          bubbleEl.textContent = `Welcome to Lesson ${q.id}! 📍 Official state-specific question for ${stName}.`;
+        } else {
+          bubbleEl.textContent = `Welcome to Lesson ${q.id}! Listen to the question and repeat the accepted oral answers aloud.`;
+        }
+      }
+
+      // Hide Study Tip initially until reached in narration
+      const tipBox = document.getElementById('cw-tip-box');
+      const tipPlaceholder = document.getElementById('cw-tip-placeholder');
+      if (tipBox) {
+        tipBox.classList.add('hidden');
+        tipBox.classList.remove('tip-reveal-active');
+      }
+      if (tipPlaceholder) {
+        tipPlaceholder.classList.remove('hidden');
       }
 
       // Visual Artifact
@@ -2679,8 +2862,13 @@
       // Sync Progress
       syncCourseworkProgressUI();
 
-      // Audio Management
-      pauseCourseworkLesson(false);
+      // Audio & State Reset for New Lesson
+      clearAllCourseworkTimers();
+      courseworkState = 'idle';
+      currentLessonPhase = 'none';
+      stopCourseworkAnimations();
+      updatePlayButtonUI();
+
       const captionEl = document.getElementById('cw-live-caption');
       if (captionEl) {
         captionEl.textContent = `Lesson ${q.id}: Click "Play Lesson" to listen.`;
@@ -2919,6 +3107,16 @@
         document.getElementById('cw-speed-select')?.addEventListener('change', () => {
           if (isCourseworkSpeaking) {
             replayCourseworkLesson();
+          }
+        });
+
+        // Tip placeholder click to reveal
+        document.getElementById('cw-tip-placeholder')?.addEventListener('click', () => {
+          document.getElementById('cw-tip-placeholder')?.classList.add('hidden');
+          const tBox = document.getElementById('cw-tip-box');
+          if (tBox) {
+            tBox.classList.remove('hidden');
+            tBox.classList.add('tip-reveal-active');
           }
         });
 
