@@ -369,7 +369,7 @@
 
       if (tabId === 'readiness') {
         updateTopStats();
-      } else if (tabId === 'coursework' && typeof initCourseworkView === 'function') {
+      } else if (tabId === 'coursework') {
         initCourseworkView();
       }
     }
@@ -1995,6 +1995,957 @@
       });
     }
 
+    // =========================================================================
+    // 5. ANIMATED COURSEWORK & CINEMA CLASSROOM ENGINE
+    // =========================================================================
+
+    const COURSEWORK_UNITS = [
+      {
+        id: 1,
+        title: "Principles of American Democracy & The Constitution",
+        range: [1, 12],
+        description: "Form of government, supreme law, Bill of Rights, amendments, and economic system.",
+        icon: "🏛️"
+      },
+      {
+        id: 2,
+        title: "System of Government – Congress & Lawmaking",
+        range: [13, 35],
+        description: "Three branches, Legislative Branch, Senate, House of Representatives, and federal powers.",
+        icon: "⚖️"
+      },
+      {
+        id: 3,
+        title: "Executive Branch – The Presidency & Cabinet",
+        range: [36, 54],
+        description: "The President, Vice President, Cabinet, Commander in Chief, and succession.",
+        icon: "🦅"
+      },
+      {
+        id: 4,
+        title: "Judicial Branch – Supreme Court & Federal Courts",
+        range: [55, 60],
+        description: "Judicial review, Supreme Court justices, Chief Justice, and federal judges.",
+        icon: "⚖️"
+      },
+      {
+        id: 5,
+        title: "State Government & California Leadership",
+        range: [61, 67],
+        description: "State vs Federal powers, Governors, California leaders, and State Capitals.",
+        icon: "📍"
+      },
+      {
+        id: 6,
+        title: "Rights, Freedoms & Civic Responsibilities",
+        range: [68, 72],
+        description: "Voting amendments, civic duties, promises of citizenship, and naturalization rights.",
+        icon: "🗳️"
+      },
+      {
+        id: 7,
+        title: "American History – Colonies, Revolution & 1800s",
+        range: [73, 98],
+        description: "Indigenous peoples, 13 colonies, Independence (1776), Constitution (1787), Civil War, and Lincoln.",
+        icon: "📜"
+      },
+      {
+        id: 8,
+        title: "Modern History, Wars & National Symbols",
+        range: [99, 128],
+        description: "WWI, WWII, Civil Rights, MLK, 9/11, Flag, Anthem, Statue of Liberty, and Holidays.",
+        icon: "🗽"
+      }
+    ];
+
+    function getUnitForQuestionId(qid) {
+      return COURSEWORK_UNITS.find(u => qid >= u.range[0] && qid <= u.range[1]) || COURSEWORK_UNITS[0];
+    }
+
+    function getQuestionArtifact(q) {
+      const qid = q.id;
+      const st = STATES_DATA[appState.selectedState || 'CA'] || STATES_DATA['CA'];
+
+      if (q.isStateSpecific || [61, 62, 63, 67].includes(qid)) {
+        return {
+          caption: `${st.name} Leadership • Capital: ${st.capital}`,
+          svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="caGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#10b981" />
+                <stop offset="100%" stop-color="#047857" />
+              </linearGradient>
+              <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fbbf24" />
+                <stop offset="100%" stop-color="#d97706" />
+              </linearGradient>
+            </defs>
+            <path d="M70,15 L95,15 L125,75 L115,125 L90,120 L75,90 L60,50 Z" fill="url(#caGrad)" stroke="#34d399" stroke-width="2" />
+            <polygon points="88,48 91,54 97,54 92,58 94,64 88,60 82,64 84,58 79,54 85,54" fill="url(#goldGrad)" stroke="#fff" stroke-width="1" />
+            <text x="96" y="52" fill="#fde047" font-size="9" font-weight="bold">${st.capital} ★</text>
+            <rect x="140" y="16" width="132" height="108" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1.5" />
+            <text x="148" y="34" fill="#38bdf8" font-size="11" font-weight="bold">${st.name.toUpperCase()} (${appState.selectedState || 'CA'})</text>
+            <text x="148" y="50" fill="#94a3b8" font-size="8.5">Governor:</text>
+            <text x="148" y="63" fill="#86efac" font-size="10" font-weight="bold">${st.gov}</text>
+            <text x="148" y="78" fill="#94a3b8" font-size="8.5">U.S. Senators:</text>
+            <text x="148" y="91" fill="#fde047" font-size="9.5" font-weight="bold">${st.sens[0]}</text>
+            <text x="148" y="104" fill="#fde047" font-size="9.5" font-weight="bold">${st.sens[1] || 'U.S. Senate'}</text>
+          </svg>`
+        };
+      }
+
+      if ([1, 2, 3, 4, 10, 11, 12, 79, 80, 81, 82, 83].includes(qid)) {
+        return {
+          caption: "The U.S. Constitution (1787) • Supreme Law of the Land",
+          svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="scrollGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fef3c7" />
+                <stop offset="100%" stop-color="#fde68a" />
+              </linearGradient>
+            </defs>
+            <rect x="40" y="15" width="200" height="110" rx="8" fill="url(#scrollGrad)" stroke="#d97706" stroke-width="2" />
+            <path d="M35,15 C45,10 45,25 35,20 L35,120 C45,115 45,130 35,125 Z" fill="#b45309" />
+            <path d="M245,15 C235,10 235,25 245,20 L245,120 C235,115 235,130 245,125 Z" fill="#b45309" />
+            <text x="140" y="45" fill="#78350f" font-size="18" font-weight="bold" font-family="Georgia, serif" text-anchor="middle" font-style="italic">We the People</text>
+            <line x1="60" y1="60" x2="220" y2="60" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 2" />
+            <line x1="60" y1="72" x2="220" y2="72" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 2" />
+            <line x1="60" y1="84" x2="220" y2="84" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 2" />
+            <line x1="60" y1="96" x2="170" y2="96" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 2" />
+            <circle cx="205" cy="100" r="14" fill="#dc2626" stroke="#991b1b" stroke-width="1.5" />
+            <polygon points="205,92 208,98 214,98 209,102 211,108 205,104 199,108 201,102 196,98 202,98" fill="#fbbf24" />
+            <path d="M225,20 Q245,45 220,105 L218,107" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" />
+          </svg>`
+        };
+      }
+
+      if ([8, 9, 77, 78].includes(qid)) {
+        return {
+          caption: "Declaration of Independence (July 4, 1776)",
+          svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="45" y="12" width="190" height="116" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="2" />
+            <text x="140" y="32" fill="#78350f" font-size="11" font-weight="bold" font-family="Georgia, serif" text-anchor="middle">IN CONGRESS, JULY 4, 1776</text>
+            <text x="140" y="48" fill="#92400e" font-size="13" font-weight="bold" font-family="Georgia, serif" text-anchor="middle">The unanimous Declaration</text>
+            <line x1="60" y1="62" x2="220" y2="62" stroke="#d97706" stroke-width="1.2" stroke-dasharray="3 2" />
+            <line x1="60" y1="74" x2="220" y2="74" stroke="#d97706" stroke-width="1.2" stroke-dasharray="3 2" />
+            <line x1="60" y1="86" x2="220" y2="86" stroke="#d97706" stroke-width="1.2" stroke-dasharray="3 2" />
+            <text x="140" y="112" fill="#1e3a8a" font-size="15" font-family="'Brush Script MT', cursive, serif" font-weight="bold" text-anchor="middle">John Hancock</text>
+          </svg>`
+        };
+      }
+
+      if ([5, 6, 7, 71, 72, 84, 85].includes(qid)) {
+        return {
+          caption: "The Bill of Rights • First 10 Amendments",
+          svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="40" y="15" width="90" height="110" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.8" />
+            <rect x="150" y="15" width="90" height="110" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.8" />
+            <text x="85" y="35" fill="#78350f" font-size="11" font-weight="bold" text-anchor="middle">Amendments I-V</text>
+            <text x="85" y="55" fill="#92400e" font-size="9" text-anchor="middle">I. Speech &amp; Religion</text>
+            <text x="85" y="72" fill="#92400e" font-size="9" text-anchor="middle">II. Bear Arms</text>
+            <text x="85" y="89" fill="#92400e" font-size="9" text-anchor="middle">III. Quartering</text>
+            <text x="85" y="106" fill="#92400e" font-size="9" text-anchor="middle">IV. Search &amp; Seizure</text>
+            <text x="195" y="35" fill="#78350f" font-size="11" font-weight="bold" text-anchor="middle">Amendments VI-X</text>
+            <text x="195" y="55" fill="#92400e" font-size="9" text-anchor="middle">VI. Speedy Trial</text>
+            <text x="195" y="72" fill="#92400e" font-size="9" text-anchor="middle">VII. Jury Trial</text>
+            <text x="195" y="89" fill="#92400e" font-size="9" text-anchor="middle">VIII. Cruel Punishment</text>
+            <text x="195" y="106" fill="#92400e" font-size="9" text-anchor="middle">X. State Powers</text>
+          </svg>`
+        };
+      }
+
+      if ([13, 14, 15].includes(qid)) {
+        return {
+          caption: "3 Branches of Government • Checks & Balances",
+          svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(25, 20)">
+              <polygon points="35,0 70,20 0,20" fill="#3b82f6" />
+              <rect x="5" y="20" width="10" height="50" fill="#93c5fd" />
+              <rect x="25" y="20" width="10" height="50" fill="#93c5fd" />
+              <rect x="40" y="20" width="10" height="50" fill="#93c5fd" />
+              <rect x="55" y="20" width="10" height="50" fill="#93c5fd" />
+              <rect x="0" y="70" width="70" height="10" fill="#1d4ed8" />
+              <text x="35" y="93" fill="#60a5fa" font-size="8.5" font-weight="bold" text-anchor="middle">LEGISLATIVE</text>
+              <text x="35" y="103" fill="#94a3b8" font-size="7.5" text-anchor="middle">Congress</text>
+            </g>
+            <g transform="translate(105, 20)">
+              <polygon points="35,0 70,20 0,20" fill="#10b981" />
+              <rect x="5" y="20" width="10" height="50" fill="#6ee7b7" />
+              <rect x="25" y="20" width="10" height="50" fill="#6ee7b7" />
+              <rect x="40" y="20" width="10" height="50" fill="#6ee7b7" />
+              <rect x="55" y="20" width="10" height="50" fill="#6ee7b7" />
+              <rect x="0" y="70" width="70" height="10" fill="#047857" />
+              <text x="35" y="93" fill="#34d399" font-size="8.5" font-weight="bold" text-anchor="middle">EXECUTIVE</text>
+              <text x="35" y="103" fill="#94a3b8" font-size="7.5" text-anchor="middle">President</text>
+            </g>
+            <g transform="translate(185, 20)">
+              <polygon points="35,0 70,20 0,20" fill="#f59e0b" />
+              <rect x="5" y="20" width="10" height="50" fill="#fde68a" />
+              <rect x="25" y="20" width="10" height="50" fill="#fde68a" />
+              <rect x="40" y="20" width="10" height="50" fill="#fde68a" />
+              <rect x="55" y="20" width="10" height="50" fill="#fde68a" />
+              <rect x="0" y="70" width="70" height="10" fill="#b45309" />
+              <text x="35" y="93" fill="#fbbf24" font-size="8.5" font-weight="bold" text-anchor="middle">JUDICIAL</text>
+              <text x="35" y="103" fill="#94a3b8" font-size="7.5" text-anchor="middle">Supreme Court</text>
+            </g>
+            <path d="M85,35 Q140,15 195,35" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3 3" fill="none" />
+            <text x="140" y="132" fill="#e2e8f0" font-size="9" font-weight="bold" text-anchor="middle">⚖️ Checks &amp; Balances</text>
+          </svg>`
+        };
+      }
+
+      if (qid >= 16 && qid <= 35) {
+        return {
+          caption: "The U.S. Capitol • Legislative Branch (Congress)",
+          svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="75" width="240" height="45" fill="#334155" rx="3" />
+            <rect x="105" y="45" width="70" height="30" fill="#475569" />
+            <rect x="110" y="50" width="6" height="25" fill="#e2e8f0" />
+            <rect x="122" y="50" width="6" height="25" fill="#e2e8f0" />
+            <rect x="134" y="50" width="6" height="25" fill="#e2e8f0" />
+            <rect x="146" y="50" width="6" height="25" fill="#e2e8f0" />
+            <rect x="158" y="50" width="6" height="25" fill="#e2e8f0" />
+            <path d="M110,45 C110,18 170,18 170,45 Z" fill="#e2e8f0" />
+            <rect x="136" y="10" width="8" height="10" fill="#cbd5e1" />
+            <circle cx="140" cy="8" r="3" fill="#fbbf24" />
+            <rect x="35" y="80" width="55" height="25" fill="#1e293b" />
+            <text x="62" y="96" fill="#93c5fd" font-size="8" font-weight="bold" text-anchor="middle">HOUSE</text>
+            <rect x="190" y="80" width="55" height="25" fill="#1e293b" />
+            <text x="217" y="96" fill="#93c5fd" font-size="8" font-weight="bold" text-anchor="middle">SENATE</text>
+            <text x="140" y="132" fill="#94a3b8" font-size="9" font-weight="bold" text-anchor="middle">U.S. Capitol Building • Washington, D.C.</text>
+          </svg>`
+        };
+      }
+
+      if (qid >= 36 && qid <= 54) {
+        return {
+          caption: "The White House • Executive Branch (The Presidency)",
+          svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="40" y="45" width="200" height="60" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+            <rect x="38" y="40" width="204" height="6" fill="#e2e8f0" />
+            <path d="M100,50 C100,20 180,20 180,50 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+            <polygon points="140,16 182,32 98,32" fill="#f8fafc" stroke="#94a3b8" stroke-width="1" />
+            <rect x="108" y="50" width="6" height="55" fill="#cbd5e1" />
+            <rect x="124" y="50" width="6" height="55" fill="#cbd5e1" />
+            <rect x="150" y="50" width="6" height="55" fill="#cbd5e1" />
+            <rect x="166" y="50" width="6" height="55" fill="#cbd5e1" />
+            <path d="M0,120 Q140,105 280,120 L280,140 L0,140 Z" fill="#065f46" />
+            <line x1="140" y1="16" x2="140" y2="4" stroke="#64748b" stroke-width="1.5" />
+            <rect x="140" y="4" width="12" height="7" fill="#ef4444" />
+            <text x="140" y="134" fill="#94a3b8" font-size="9" font-weight="bold" text-anchor="middle">The White House • 1600 Pennsylvania Ave</text>
+          </svg>`
+        };
+      }
+
+      if (qid >= 55 && qid <= 60) {
+        return {
+          caption: "Supreme Court of the U.S. • Highest Federal Court",
+          svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="140,15 250,45 30,45" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+            <text x="140" y="38" fill="#475569" font-size="8.5" font-weight="bold" font-family="Georgia, serif" text-anchor="middle">EQUAL JUSTICE UNDER LAW</text>
+            <rect x="30" y="45" width="220" height="8" fill="#e2e8f0" />
+            <rect x="45" y="53" width="10" height="55" fill="#f1f5f9" stroke="#cbd5e1" />
+            <rect x="75" y="53" width="10" height="55" fill="#f1f5f9" stroke="#cbd5e1" />
+            <rect x="105" y="53" width="10" height="55" fill="#f1f5f9" stroke="#cbd5e1" />
+            <rect x="135" y="53" width="10" height="55" fill="#f1f5f9" stroke="#cbd5e1" />
+            <rect x="165" y="53" width="10" height="55" fill="#f1f5f9" stroke="#cbd5e1" />
+            <rect x="195" y="53" width="10" height="55" fill="#f1f5f9" stroke="#cbd5e1" />
+            <rect x="225" y="53" width="10" height="55" fill="#f1f5f9" stroke="#cbd5e1" />
+            <rect x="20" y="108" width="240" height="10" fill="#cbd5e1" />
+            <rect x="10" y="118" width="260" height="8" fill="#94a3b8" />
+            <text x="140" y="134" fill="#fbbf24" font-size="9" font-weight="bold" text-anchor="middle">⚖️ 9 Justices • Chief Justice of the United States</text>
+          </svg>`
+        };
+      }
+
+      if ([68, 69, 70, 107, 108].includes(qid)) {
+        return {
+          caption: "Civic Rights & Voting • Democratic Participation",
+          svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="80" y="50" width="120" height="75" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2" />
+            <rect x="110" y="45" width="60" height="8" rx="4" fill="#0f172a" stroke="#60a5fa" stroke-width="1.5" />
+            <rect x="120" y="15" width="40" height="36" rx="3" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+            <line x1="126" y1="23" x2="154" y2="23" stroke="#2563eb" stroke-width="2" />
+            <line x1="126" y1="31" x2="148" y2="31" stroke="#94a3b8" stroke-width="1.5" />
+            <circle cx="150" cy="31" r="3" fill="#10b981" />
+            <polygon points="140,75 144,83 152,83 146,88 148,96 140,91 132,96 134,88 128,83 136,83" fill="#fde047" />
+            <text x="140" y="112" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" letter-spacing="2">OFFICIAL VOTE</text>
+          </svg>`
+        };
+      }
+
+      if ((qid >= 73 && qid <= 76) || qid === 86) {
+        return {
+          caption: "13 Original Colonies (1776) • Atlantic Coast",
+          svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="10" width="260" height="120" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5" />
+            <path d="M50,20 Q90,40 100,70 T130,120" stroke="#f59e0b" stroke-width="3" fill="none" />
+            <circle cx="75" cy="30" r="4" fill="#60a5fa" /><text x="82" y="33" fill="#93c5fd" font-size="8">MA</text>
+            <circle cx="85" cy="45" r="4" fill="#60a5fa" /><text x="92" y="48" fill="#93c5fd" font-size="8">NY</text>
+            <circle cx="95" cy="60" r="4" fill="#60a5fa" /><text x="102" y="63" fill="#93c5fd" font-size="8">PA</text>
+            <circle cx="105" cy="75" r="4" fill="#60a5fa" /><text x="112" y="78" fill="#93c5fd" font-size="8">VA</text>
+            <circle cx="115" cy="95" r="4" fill="#60a5fa" /><text x="122" y="98" fill="#93c5fd" font-size="8">NC</text>
+            <circle cx="125" cy="115" r="4" fill="#60a5fa" /><text x="132" y="118" fill="#93c5fd" font-size="8">GA</text>
+            <g transform="translate(180, 50)">
+              <path d="M0,30 L50,30 L40,42 L10,42 Z" fill="#78350f" />
+              <line x1="25" y1="30" x2="25" y2="8" stroke="#451a03" stroke-width="2" />
+              <path d="M25,10 Q40,16 25,24 Z" fill="#ffffff" />
+              <text x="25" y="55" fill="#fde047" font-size="8" font-weight="bold" text-anchor="middle">Mayflower (1620)</text>
+            </g>
+          </svg>`
+        };
+      }
+
+      if (qid >= 87 && qid <= 98) {
+        return {
+          caption: "Civil War Era & Lincoln (1861–1865) • Emancipation",
+          svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(45, 20)">
+              <ellipse cx="40" cy="85" rx="36" ry="7" fill="#0f172a" />
+              <rect x="18" y="25" width="44" height="60" fill="#0f172a" />
+              <rect x="18" y="77" width="44" height="8" fill="#1e3a8a" />
+              <text x="40" y="105" fill="#cbd5e1" font-size="9" font-weight="bold" text-anchor="middle">A. Lincoln</text>
+            </g>
+            <rect x="135" y="18" width="115" height="104" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.8" />
+            <text x="192" y="36" fill="#78350f" font-size="9" font-weight="bold" text-anchor="middle">EMANCIPATION</text>
+            <text x="192" y="48" fill="#78350f" font-size="8.5" font-weight="bold" text-anchor="middle">PROCLAMATION (1863)</text>
+            <line x1="145" y1="60" x2="240" y2="60" stroke="#d97706" stroke-width="1.2" stroke-dasharray="3 2" />
+            <line x1="145" y1="72" x2="240" y2="72" stroke="#d97706" stroke-width="1.2" stroke-dasharray="3 2" />
+            <line x1="145" y1="84" x2="240" y2="84" stroke="#d97706" stroke-width="1.2" stroke-dasharray="3 2" />
+            <text x="192" y="105" fill="#dc2626" font-size="9" font-weight="bold" text-anchor="middle">"Forever Free"</text>
+          </svg>`
+        };
+      }
+
+      if (qid >= 99 && qid <= 118) {
+        return {
+          caption: "20th-Century History & The Civil Rights Movement",
+          svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(45, 15)">
+              <rect x="25" y="45" width="35" height="65" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+              <circle cx="42" cy="38" r="5" fill="#94a3b8" />
+              <line x1="42" y1="43" x2="42" y2="48" stroke="#64748b" stroke-width="2" />
+              <text x="42" y="75" fill="#fbbf24" font-size="8" font-weight="bold" text-anchor="middle">"I Have a</text>
+              <text x="42" y="87" fill="#fbbf24" font-size="8" font-weight="bold" text-anchor="middle">Dream"</text>
+              <text x="42" y="100" fill="#e2e8f0" font-size="7" text-anchor="middle">MLK (1963)</text>
+            </g>
+            <g transform="translate(145, 20)">
+              <circle cx="50" cy="45" r="35" fill="#0f172a" stroke="#3b82f6" stroke-width="2" />
+              <polygon points="50,22 56,36 71,36 59,46 63,60 50,51 37,60 41,46 29,36 44,36" fill="#fbbf24" stroke="#d97706" stroke-width="1" />
+              <text x="50" y="95" fill="#93c5fd" font-size="9" font-weight="bold" text-anchor="middle">Freedom &amp; Equality</text>
+              <text x="50" y="107" fill="#64748b" font-size="8" text-anchor="middle">1900s – Modern Era</text>
+            </g>
+          </svg>`
+        };
+      }
+
+      // Default: American Symbols & Holidays (119 to 128)
+      return {
+        caption: "Official National Symbols • Old Glory & Liberty Bell",
+        svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(25, 20)">
+            <rect x="0" y="0" width="105" height="65" fill="#ef4444" rx="3" />
+            <rect x="0" y="5" width="105" height="5" fill="#ffffff" />
+            <rect x="0" y="15" width="105" height="5" fill="#ffffff" />
+            <rect x="0" y="25" width="105" height="5" fill="#ffffff" />
+            <rect x="0" y="35" width="105" height="5" fill="#ffffff" />
+            <rect x="0" y="45" width="105" height="5" fill="#ffffff" />
+            <rect x="0" y="55" width="105" height="5" fill="#ffffff" />
+            <rect x="0" y="0" width="45" height="35" fill="#1e3a8a" />
+            <text x="22" y="22" fill="#ffffff" font-size="11" text-anchor="middle">★ ★ ★</text>
+            <text x="52" y="80" fill="#94a3b8" font-size="8.5" font-weight="bold" text-anchor="middle">Old Glory (50 Stars)</text>
+          </g>
+          <g transform="translate(155, 15)">
+            <path d="M30,10 L70,10 L75,65 Q85,75 50,75 Q15,75 25,65 Z" fill="#b45309" stroke="#78350f" stroke-width="1.5" />
+            <rect x="20" y="0" width="60" height="12" rx="2" fill="#713f12" />
+            <path d="M50,75 L47,60 L52,50 L48,40" stroke="#0f172a" stroke-width="2" fill="none" />
+            <text x="50" y="90" fill="#fde047" font-size="9" font-weight="bold" text-anchor="middle">Liberty Bell</text>
+            <text x="50" y="102" fill="#94a3b8" font-size="7.5" text-anchor="middle">Philadelphia, PA</text>
+          </g>
+        </svg>`
+      };
+    }
+
+    let isCourseworkSpeaking = false;
+    let courseworkUtterance = null;
+    let autoAdvanceTimeout = null;
+    let speechWatchdogTimeout = null;
+
+    function stopCourseworkAnimations() {
+      isCourseworkSpeaking = false;
+      courseworkUtterance = null;
+      if (speechWatchdogTimeout) {
+        clearTimeout(speechWatchdogTimeout);
+        speechWatchdogTimeout = null;
+      }
+
+      const icon = document.getElementById('cw-play-icon');
+      const text = document.getElementById('cw-play-text');
+      if (icon) icon.textContent = '▶';
+      if (text) text.textContent = 'Play Lesson';
+
+      document.getElementById('prof-mouth')?.classList.remove('mouth-talking');
+      document.getElementById('prof-arm')?.classList.remove('baton-pointing');
+    }
+
+    function pauseCourseworkLesson(clearTimer = true) {
+      if (clearTimer && autoAdvanceTimeout) {
+        clearTimeout(autoAdvanceTimeout);
+        autoAdvanceTimeout = null;
+      }
+      if (speechWatchdogTimeout) {
+        clearTimeout(speechWatchdogTimeout);
+        speechWatchdogTimeout = null;
+      }
+      if ('speechSynthesis' in window) {
+        try {
+          window.speechSynthesis.cancel();
+        } catch (e) {}
+      }
+      stopCourseworkAnimations();
+      const captionEl = document.getElementById('cw-live-caption');
+      if (captionEl) {
+        captionEl.textContent = `Narration paused. Click "Play Lesson" to resume.`;
+      }
+    }
+
+    function handleCourseworkLessonEnd(qid, qIndex) {
+      stopCourseworkAnimations();
+
+      const captionEl = document.getElementById('cw-live-caption');
+      const autoAdvanceOn = document.getElementById('cw-toggle-autoadvance')?.checked;
+
+      if (autoAdvanceOn && qIndex < CIVICS_QUESTIONS.length - 1) {
+        if (captionEl) {
+          captionEl.textContent = `✅ Lesson ${qid} completed! Auto-advancing to Lesson ${qid + 1} in 3 seconds... (Click Pause to stay)`;
+        }
+        autoAdvanceTimeout = setTimeout(() => {
+          loadCourseworkLesson(qIndex + 1, true);
+        }, 3000);
+      } else {
+        if (captionEl) {
+          captionEl.textContent = `✅ Lesson ${qid} completed! Try the Pop Quiz or click "Next" for Lesson ${qid + 1}.`;
+        }
+      }
+    }
+
+    function playCourseworkLesson() {
+      if (isCourseworkSpeaking) {
+        pauseCourseworkLesson();
+        return;
+      }
+
+      const qIndex = appState.courseworkLessonIndex || 0;
+      const rawQ = CIVICS_QUESTIONS[qIndex];
+      if (!rawQ) return;
+      const q = getResolvedQuestion(rawQ, appState.selectedState || 'CA');
+
+      if (autoAdvanceTimeout) {
+        clearTimeout(autoAdvanceTimeout);
+        autoAdvanceTimeout = null;
+      }
+      if (speechWatchdogTimeout) {
+        clearTimeout(speechWatchdogTimeout);
+        speechWatchdogTimeout = null;
+      }
+
+      // Resume AudioContext on direct user gesture
+      try {
+        getAudioContext()?.resume();
+      } catch (e) {}
+
+      // 1. Immediately activate responsive UI and animations
+      isCourseworkSpeaking = true;
+      const icon = document.getElementById('cw-play-icon');
+      const text = document.getElementById('cw-play-text');
+      if (icon) icon.textContent = '⏸';
+      if (text) text.textContent = 'Pause Lesson';
+
+      document.getElementById('prof-mouth')?.classList.add('mouth-talking');
+      document.getElementById('prof-arm')?.classList.add('baton-pointing');
+
+      const captionEl = document.getElementById('cw-live-caption');
+      if (captionEl) {
+        captionEl.textContent = `Lesson ${q.id}: "${q.question}" → Accepted: "${q.primaryAnswer}"`;
+      }
+
+      // 2. Build spoken lesson text
+      let speechText = `Lesson ${q.id}. ${q.question}. `;
+      if (q.answers && q.answers.length > 1) {
+        speechText += `The accepted answer is: ${q.primaryAnswer}. You may also say: ${q.answers.slice(1).join(', ')}. `;
+      } else {
+        speechText += `The accepted answer is: ${q.primaryAnswer}. `;
+      }
+      speechText += `Professor's study tip: ${q.explanation}.`;
+
+      const cleanSpeech = speechText.replace(/[\(\)\[\]]/g, '').trim();
+
+      // 3. Drive Speech Synthesis if available
+      if ('speechSynthesis' in window) {
+        try {
+          if (window.speechSynthesis.paused) {
+            window.speechSynthesis.resume();
+          }
+          window.speechSynthesis.cancel();
+
+          const utterance = new SpeechSynthesisUtterance(cleanSpeech);
+          courseworkUtterance = utterance; // Prevent garbage collection bug in Chrome
+
+          const speedVal = parseFloat(document.getElementById('cw-speed-select')?.value || '1.0');
+          utterance.rate = isNaN(speedVal) ? 1.0 : speedVal;
+
+          const voices = window.speechSynthesis.getVoices();
+          if (appState.speechVoice && voices.length > 0) {
+            const found = voices.find(v => v.name === appState.speechVoice);
+            if (found) utterance.voice = found;
+          } else if (voices.length > 0) {
+            const enVoice = voices.find(v => v.lang && (v.lang === 'en-US' || v.lang.startsWith('en')) && (v.name.includes('Samantha') || v.name.includes('Alex') || v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('US')));
+            if (enVoice) utterance.voice = enVoice;
+          }
+
+          utterance.onstart = () => {
+            isCourseworkSpeaking = true;
+            if (icon) icon.textContent = '⏸';
+            if (text) text.textContent = 'Pause Lesson';
+            document.getElementById('prof-mouth')?.classList.add('mouth-talking');
+            document.getElementById('prof-arm')?.classList.add('baton-pointing');
+          };
+
+          utterance.onend = () => {
+            handleCourseworkLessonEnd(q.id, qIndex);
+          };
+
+          utterance.onerror = (err) => {
+            console.warn('SpeechSynthesis utterance event error:', err);
+            handleCourseworkLessonEnd(q.id, qIndex);
+          };
+
+          // Small delay after cancel() to avoid Chrome cancel-before-speak race condition
+          setTimeout(() => {
+            try {
+              if (window.speechSynthesis.paused) window.speechSynthesis.resume();
+              window.speechSynthesis.speak(utterance);
+            } catch (err) {
+              console.warn('Speech speak error:', err);
+            }
+          }, 40);
+
+          // Watchdog timer: estimate duration based on word count so animations complete even if onend gets swallowed
+          const wordCount = cleanSpeech.split(/\s+/).length;
+          const estimatedMs = Math.max(5000, Math.round((wordCount / (2.5 * (utterance.rate || 1.0))) * 1000) + 2000);
+          speechWatchdogTimeout = setTimeout(() => {
+            if (isCourseworkSpeaking) {
+              handleCourseworkLessonEnd(q.id, qIndex);
+            }
+          }, estimatedMs);
+
+        } catch (e) {
+          console.warn('SpeechSynthesis error:', e);
+          speechWatchdogTimeout = setTimeout(() => {
+            handleCourseworkLessonEnd(q.id, qIndex);
+          }, 6000);
+        }
+      } else {
+        // Visual-only lesson playback fallback for browsers without TTS
+        const wordCount = cleanSpeech.split(/\s+/).length;
+        const visualMs = Math.max(5000, Math.round((wordCount / 2.5) * 1000));
+        speechWatchdogTimeout = setTimeout(() => {
+          handleCourseworkLessonEnd(q.id, qIndex);
+        }, visualMs);
+      }
+    }
+
+    function replayCourseworkLesson() {
+      pauseCourseworkLesson();
+      playCourseworkLesson();
+    }
+
+    function syncCourseworkProgressUI() {
+      const totalMastered = Object.keys(appState.mastered).filter(k => appState.mastered[k]).length;
+      const totalQs = CIVICS_QUESTIONS.length;
+      const pct = Math.round((totalMastered / totalQs) * 100);
+
+      const progEl = document.getElementById('cw-overall-progress');
+      const progPctEl = document.getElementById('cw-progress-percent');
+      const pillEl = document.getElementById('cw-progress-pill');
+
+      if (progEl) progEl.style.width = `${pct}%`;
+      if (progPctEl) progPctEl.textContent = `${pct}% Completed (${totalMastered} / ${totalQs})`;
+
+      const qIndex = appState.courseworkLessonIndex || 0;
+      if (pillEl) {
+        pillEl.textContent = `Lesson ${qIndex + 1} of ${totalQs} • ${totalMastered} / ${totalQs} Mastered across Curriculum`;
+      }
+    }
+
+    function loadCourseworkLesson(index, autoPlay = false) {
+      if (index < 0) index = 0;
+      if (index >= CIVICS_QUESTIONS.length) index = CIVICS_QUESTIONS.length - 1;
+
+      appState.courseworkLessonIndex = index;
+      saveState();
+
+      const rawQ = CIVICS_QUESTIONS[index];
+      const q = getResolvedQuestion(rawQ, appState.selectedState || 'CA');
+      const unit = getUnitForQuestionId(q.id);
+
+      // Header Unit elements
+      const badgeEl = document.getElementById('cw-unit-badge');
+      const titleEl = document.getElementById('cw-unit-title');
+      const unitSelect = document.getElementById('cw-unit-select');
+      const lessonSelect = document.getElementById('cw-lesson-select');
+
+      if (badgeEl) badgeEl.textContent = `Unit ${unit.id} of 8: ${unit.icon}`;
+      if (titleEl) titleEl.textContent = unit.title;
+      if (unitSelect) unitSelect.value = unit.id;
+      if (lessonSelect) lessonSelect.value = index;
+
+      // Chalkboard Header
+      const numEl = document.getElementById('cw-chalk-lesson-num');
+      const tagEl = document.getElementById('cw-chalk-tag');
+      const catEl = document.getElementById('cw-chalk-category');
+
+      if (numEl) numEl.textContent = `LESSON ${q.id} OF 128`;
+      if (catEl) catEl.textContent = `${q.category} • ${q.subcategory}`;
+
+      if (tagEl) {
+        if (q.is6520) {
+          tagEl.textContent = '★ 65/20 Special Exemption (Designated Question)';
+          tagEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-950/90 text-amber-300 border border-amber-600/50';
+        } else if (q.isStateSpecific) {
+          const stName = (STATES_DATA[appState.selectedState || 'CA'] || STATES_DATA['CA']).name;
+          tagEl.textContent = `📍 ${stName} State Official Question`;
+          tagEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-950/90 text-emerald-300 border border-emerald-600/50';
+        } else if (q.origin === 'new') {
+          tagEl.textContent = '🆕 New in 128 Pool';
+          tagEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-950/90 text-indigo-300 border border-indigo-600/50';
+        } else if (q.origin === 'amended') {
+          tagEl.textContent = '✏️ Amended / Expanded Wording';
+          tagEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-950/90 text-amber-300 border border-amber-600/50';
+        } else {
+          tagEl.textContent = 'Official 128 Exam';
+          tagEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-950/90 text-emerald-300 border border-emerald-600/50';
+        }
+      }
+
+      // Chalkboard Question & Answers
+      const qEl = document.getElementById('cw-chalk-question');
+      const answersEl = document.getElementById('cw-chalk-answers');
+      const tipEl = document.getElementById('cw-chalk-tip');
+
+      if (qEl) qEl.textContent = q.question;
+      if (tipEl) tipEl.textContent = q.explanation;
+
+      if (answersEl) {
+        answersEl.innerHTML = q.answers.map((ans, aIdx) => `
+          <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-emerald-950/30 border border-emerald-600/30 shadow-sm">
+            <span class="text-emerald-400 font-bold text-base leading-none mt-0.5">✓</span>
+            <span class="chalk-font chalk-green text-base sm:text-lg font-semibold leading-snug">${ans}</span>
+          </div>
+        `).join('');
+      }
+
+      // Professor Speech Bubble
+      const bubbleEl = document.getElementById('cw-prof-bubble');
+      if (bubbleEl) {
+        bubbleEl.textContent = `Welcome to Lesson ${q.id}! Listen carefully to the accepted answers: "${q.primaryAnswer}". Tip: ${q.explanation.slice(0, 85)}...`;
+      }
+
+      // Visual Artifact
+      const artifact = getQuestionArtifact(q);
+      const artContainer = document.getElementById('cw-artifact-container');
+      const artCaption = document.getElementById('cw-artifact-caption');
+      if (artContainer) artContainer.innerHTML = artifact.svg;
+      if (artCaption) artCaption.textContent = artifact.caption;
+
+      // Star & Mastered Action Buttons
+      const starIcon = document.getElementById('cw-star-icon');
+      const masterCheck = document.getElementById('cw-master-check');
+      const masterLabel = document.getElementById('cw-master-label');
+      const isMastered = !!appState.mastered[q.id];
+      const isStarred = !!appState.starred[q.id];
+
+      if (starIcon) starIcon.textContent = isStarred ? '★' : '☆';
+      if (masterCheck) masterCheck.textContent = isMastered ? '●' : '○';
+      if (masterLabel) masterLabel.textContent = isMastered ? 'Mastered' : 'Master';
+
+      // Close pop quiz
+      document.getElementById('cw-pop-quiz-box')?.classList.add('hidden');
+
+      // Sync Progress
+      syncCourseworkProgressUI();
+
+      // Audio Management
+      pauseCourseworkLesson(false);
+      const captionEl = document.getElementById('cw-live-caption');
+      if (captionEl) {
+        captionEl.textContent = `Lesson ${q.id}: Click "Play Lesson" to listen to Professor Civics.`;
+      }
+
+      if (autoPlay) {
+        playCourseworkLesson();
+      }
+    }
+
+    function togglePopQuiz() {
+      const quizBox = document.getElementById('cw-pop-quiz-box');
+      if (!quizBox) return;
+
+      if (!quizBox.classList.contains('hidden')) {
+        quizBox.classList.add('hidden');
+        return;
+      }
+
+      const qIndex = appState.courseworkLessonIndex || 0;
+      const rawQ = CIVICS_QUESTIONS[qIndex];
+      const q = getResolvedQuestion(rawQ, appState.selectedState || 'CA');
+
+      const qTextEl = document.getElementById('cw-pop-quiz-question');
+      const optionsEl = document.getElementById('cw-pop-quiz-options');
+      const feedbackEl = document.getElementById('cw-pop-quiz-feedback');
+
+      if (qTextEl) qTextEl.textContent = q.question;
+      if (feedbackEl) feedbackEl.classList.add('hidden');
+
+      const options = [...(q.options || [q.primaryAnswer, 'None of the above', 'All of the above', 'Varies'])];
+      for (let i = options.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [options[i], options[j]] = [options[j], options[i]];
+      }
+
+      optionsEl.innerHTML = options.map((opt, idx) => `
+        <button class="cw-quiz-opt w-full text-left p-3 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 hover:border-indigo-400 text-slate-100 font-medium transition flex items-start gap-2.5" data-opt="${encodeURIComponent(opt)}">
+          <span class="w-5 h-5 rounded-full bg-slate-700 text-[10px] font-bold text-slate-300 flex items-center justify-center shrink-0 mt-0.5">${String.fromCharCode(65 + idx)}</span>
+          <span class="leading-snug">${opt}</span>
+        </button>
+      `).join('');
+
+      optionsEl.querySelectorAll('.cw-quiz-opt').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const selected = decodeURIComponent(btn.getAttribute('data-opt'));
+          const isCorrect = (selected === q.primaryAnswer) || (q.answers && q.answers.includes(selected));
+
+          optionsEl.querySelectorAll('.cw-quiz-opt').forEach(b => {
+            b.disabled = true;
+            const bOpt = decodeURIComponent(b.getAttribute('data-opt'));
+            if ((bOpt === q.primaryAnswer) || (q.answers && q.answers.includes(bOpt))) {
+              b.className = 'w-full text-left p-3 rounded-xl bg-emerald-950/80 border-2 border-emerald-500 text-emerald-200 font-semibold flex items-start gap-2.5';
+            } else if (bOpt === selected && !isCorrect) {
+              b.className = 'w-full text-left p-3 rounded-xl bg-rose-950/80 border-2 border-rose-500 text-rose-200 font-semibold flex items-start gap-2.5';
+            } else {
+              b.className = 'w-full text-left p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-slate-500 opacity-60 flex items-start gap-2.5';
+            }
+          });
+
+          if (feedbackEl) {
+            feedbackEl.classList.remove('hidden');
+            if (isCorrect) {
+              playBeep('correct');
+              feedbackEl.className = 'p-3.5 rounded-xl bg-emerald-950/90 border border-emerald-500/60 text-emerald-200 space-y-2';
+              feedbackEl.innerHTML = `
+                <div class="flex items-center gap-2 font-bold text-emerald-300">
+                  <span>🎉</span>
+                  <span>Correct! Outstanding comprehension!</span>
+                </div>
+                <p class="text-[11px] text-emerald-200/90">That is the official USCIS accepted naturalization answer.</p>
+                <div class="flex items-center gap-2 pt-1">
+                  <button id="cw-quiz-btn-master" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition">
+                    ${appState.mastered[q.id] ? '✓ Already Mastered' : '★ Mark Question as Mastered'}
+                  </button>
+                  <button id="cw-quiz-btn-next" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition">
+                    Next Lesson ▶
+                  </button>
+                </div>
+              `;
+              document.getElementById('cw-quiz-btn-master')?.addEventListener('click', () => {
+                if (!appState.mastered[q.id]) toggleMastered(q.id);
+                syncCourseworkProgressUI();
+                const mBtn = document.getElementById('cw-btn-mastered');
+                if (mBtn) {
+                  document.getElementById('cw-master-check').textContent = '●';
+                  document.getElementById('cw-master-label').textContent = 'Mastered';
+                }
+                document.getElementById('cw-quiz-btn-master').textContent = '✓ Mastered!';
+              });
+              document.getElementById('cw-quiz-btn-next')?.addEventListener('click', () => {
+                if (qIndex < CIVICS_QUESTIONS.length - 1) {
+                  loadCourseworkLesson(qIndex + 1, false);
+                }
+              });
+            } else {
+              playBeep('wrong');
+              feedbackEl.className = 'p-3.5 rounded-xl bg-rose-950/90 border border-rose-500/60 text-rose-200 space-y-1.5';
+              feedbackEl.innerHTML = `
+                <div class="flex items-center gap-2 font-bold text-rose-300">
+                  <span>⚠️</span>
+                  <span>Incorrect. The accepted answer is: "${q.primaryAnswer}".</span>
+                </div>
+                <p class="text-[11px] text-rose-200/90">Study Tip: ${q.explanation}</p>
+              `;
+            }
+          }
+        });
+      });
+
+      quizBox.classList.remove('hidden');
+    }
+
+    function renderCourseworkSyllabus() {
+      const grid = document.getElementById('cw-syllabus-grid');
+      if (!grid) return;
+
+      grid.innerHTML = COURSEWORK_UNITS.map(unit => {
+        const unitQs = CIVICS_QUESTIONS.filter(q => q.id >= unit.range[0] && q.id <= unit.range[1]);
+        const unitMastered = unitQs.filter(q => appState.mastered[q.id]).length;
+        const pct = Math.round((unitMastered / unitQs.length) * 100);
+
+        return `
+          <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-indigo-500/50 transition flex flex-col justify-between space-y-3 group">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-2xl">${unit.icon}</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${unitMastered === unitQs.length ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/40' : 'bg-slate-900 text-slate-400 border border-slate-800'}">
+                  ${unitMastered} / ${unitQs.length} Mastered (${pct}%)
+                </span>
+              </div>
+              <h4 class="text-sm font-bold text-white mt-2 group-hover:text-indigo-300 transition">
+                Unit ${unit.id}: ${unit.title}
+              </h4>
+              <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">
+                ${unit.description}
+              </p>
+            </div>
+
+            <div class="space-y-2 pt-2 border-t border-slate-800/80">
+              <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                <div class="bg-indigo-500 h-full transition-all duration-300" style="width: ${pct}%"></div>
+              </div>
+              <button class="cw-btn-study-unit w-full py-1.5 rounded-xl bg-slate-800 hover:bg-indigo-600 text-slate-200 hover:text-white text-xs font-semibold transition" data-start="${unit.range[0] - 1}">
+                Study Unit ${unit.id} (Q${unit.range[0]}–${unit.range[1]}) ▶
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      grid.querySelectorAll('.cw-btn-study-unit').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const startIndex = parseInt(btn.getAttribute('data-start'), 10);
+          loadCourseworkLesson(startIndex, false);
+          document.getElementById('cw-cinema-stage')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+    }
+
+    function populateCourseworkLessonSelect() {
+      const select = document.getElementById('cw-lesson-select');
+      if (!select || select.options.length > 0) return;
+
+      CIVICS_QUESTIONS.forEach((q, idx) => {
+        const opt = document.createElement('option');
+        opt.value = idx;
+        opt.textContent = `Lesson ${q.id}: ${q.question.slice(0, 40)}...`;
+        select.appendChild(opt);
+      });
+    }
+
+    let courseworkInitialized = false;
+    function initCourseworkView() {
+      populateCourseworkLessonSelect();
+      renderCourseworkSyllabus();
+
+      if (!courseworkInitialized) {
+        courseworkInitialized = true;
+        // Wire up playback buttons
+        document.getElementById('cw-btn-play')?.addEventListener('click', playCourseworkLesson);
+        document.getElementById('cw-btn-replay')?.addEventListener('click', replayCourseworkLesson);
+        document.getElementById('cw-btn-prev')?.addEventListener('click', () => {
+          const cur = appState.courseworkLessonIndex || 0;
+          if (cur > 0) loadCourseworkLesson(cur - 1, isCourseworkSpeaking);
+        });
+        document.getElementById('cw-btn-next')?.addEventListener('click', () => {
+          const cur = appState.courseworkLessonIndex || 0;
+          if (cur < CIVICS_QUESTIONS.length - 1) loadCourseworkLesson(cur + 1, isCourseworkSpeaking);
+        });
+
+        // Dropdowns
+        document.getElementById('cw-lesson-select')?.addEventListener('change', (e) => {
+          const idx = parseInt(e.target.value, 10);
+          loadCourseworkLesson(idx, isCourseworkSpeaking);
+        });
+
+        document.getElementById('cw-unit-select')?.addEventListener('change', (e) => {
+          const unitId = parseInt(e.target.value, 10);
+          const unit = COURSEWORK_UNITS.find(u => u.id === unitId);
+          if (unit) {
+            loadCourseworkLesson(unit.range[0] - 1, isCourseworkSpeaking);
+          }
+        });
+
+        // Star & Mastered
+        document.getElementById('cw-btn-star')?.addEventListener('click', () => {
+          const cur = appState.courseworkLessonIndex || 0;
+          const q = CIVICS_QUESTIONS[cur];
+          toggleStar(q.id);
+          const isStarred = !!appState.starred[q.id];
+          const starIcon = document.getElementById('cw-star-icon');
+          if (starIcon) starIcon.textContent = isStarred ? '★' : '☆';
+        });
+
+        document.getElementById('cw-btn-mastered')?.addEventListener('click', () => {
+          const cur = appState.courseworkLessonIndex || 0;
+          const q = CIVICS_QUESTIONS[cur];
+          toggleMastered(q.id);
+          const isMastered = !!appState.mastered[q.id];
+          const check = document.getElementById('cw-master-check');
+          const label = document.getElementById('cw-master-label');
+          if (check) check.textContent = isMastered ? '●' : '○';
+          if (label) label.textContent = isMastered ? 'Mastered' : 'Master';
+          syncCourseworkProgressUI();
+          renderCourseworkSyllabus();
+        });
+
+        // Pop Quiz toggles
+        document.getElementById('cw-btn-toggle-quiz')?.addEventListener('click', togglePopQuiz);
+        document.getElementById('cw-btn-close-quiz')?.addEventListener('click', () => {
+          document.getElementById('cw-pop-quiz-box')?.classList.add('hidden');
+        });
+
+        // Speed change listener
+        document.getElementById('cw-speed-select')?.addEventListener('change', () => {
+          if (isCourseworkSpeaking) {
+            replayCourseworkLesson();
+          }
+        });
+
+        // Filter syllabus link
+        document.getElementById('cw-filter-all')?.addEventListener('click', () => {
+          renderCourseworkSyllabus();
+        });
+
+        // Keyboard Shortcuts for Coursework
+        document.addEventListener('keydown', (e) => {
+          if (appState.activeTab !== 'coursework') return;
+          if (['input', 'textarea', 'select'].includes(e.target.tagName.toLowerCase())) return;
+
+          if (e.key === 'ArrowLeft') {
+            const cur = appState.courseworkLessonIndex || 0;
+            if (cur > 0) loadCourseworkLesson(cur - 1, isCourseworkSpeaking);
+          } else if (e.key === 'ArrowRight') {
+            const cur = appState.courseworkLessonIndex || 0;
+            if (cur < CIVICS_QUESTIONS.length - 1) loadCourseworkLesson(cur + 1, isCourseworkSpeaking);
+          } else if (e.key === ' ' || e.code === 'Space') {
+            e.preventDefault();
+            playCourseworkLesson();
+          }
+        });
+      }
+
+      loadCourseworkLesson(appState.courseworkLessonIndex || 0, false);
+    }
+
+
+
     // INITIAL APP BOOT
     window.addEventListener('DOMContentLoaded', () => {
       initAuth();
@@ -2026,882 +2977,6 @@
         }
       }
 
-      // =========================================================================
-      // 5. ANIMATED COURSEWORK & CINEMA CLASSROOM ENGINE
-      // =========================================================================
-
-      const COURSEWORK_UNITS = [
-        {
-          id: 1,
-          title: "Principles of American Democracy & The Constitution",
-          range: [1, 12],
-          description: "Form of government, supreme law, Bill of Rights, amendments, and economic system.",
-          icon: "🏛️"
-        },
-        {
-          id: 2,
-          title: "System of Government – Congress & Lawmaking",
-          range: [13, 35],
-          description: "Three branches, Legislative Branch, Senate, House of Representatives, and federal powers.",
-          icon: "⚖️"
-        },
-        {
-          id: 3,
-          title: "Executive Branch – The Presidency & Cabinet",
-          range: [36, 54],
-          description: "The President, Vice President, Cabinet, Commander in Chief, and succession.",
-          icon: "🦅"
-        },
-        {
-          id: 4,
-          title: "Judicial Branch – Supreme Court & Federal Courts",
-          range: [55, 60],
-          description: "Judicial review, Supreme Court justices, Chief Justice, and federal judges.",
-          icon: "⚖️"
-        },
-        {
-          id: 5,
-          title: "State Government & California Leadership",
-          range: [61, 67],
-          description: "State vs Federal powers, Governors, California leaders, and State Capitals.",
-          icon: "📍"
-        },
-        {
-          id: 6,
-          title: "Rights, Freedoms & Civic Responsibilities",
-          range: [68, 72],
-          description: "Voting amendments, civic duties, promises of citizenship, and naturalization rights.",
-          icon: "🗳️"
-        },
-        {
-          id: 7,
-          title: "American History – Colonies, Revolution & 1800s",
-          range: [73, 98],
-          description: "Indigenous peoples, 13 colonies, Independence (1776), Constitution (1787), Civil War, and Lincoln.",
-          icon: "📜"
-        },
-        {
-          id: 8,
-          title: "Modern History, Wars & National Symbols",
-          range: [99, 128],
-          description: "WWI, WWII, Civil Rights, MLK, 9/11, Flag, Anthem, Statue of Liberty, and Holidays.",
-          icon: "🗽"
-        }
-      ];
-
-      function getUnitForQuestionId(qid) {
-        return COURSEWORK_UNITS.find(u => qid >= u.range[0] && qid <= u.range[1]) || COURSEWORK_UNITS[0];
-      }
-
-      function getQuestionArtifact(q) {
-        const qid = q.id;
-        const st = STATES_DATA[appState.selectedState || 'CA'] || STATES_DATA['CA'];
-
-        if (q.isStateSpecific || [61, 62, 63, 67].includes(qid)) {
-          return {
-            caption: `${st.name} Leadership • Capital: ${st.capital}`,
-            svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="caGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#10b981" />
-                  <stop offset="100%" stop-color="#047857" />
-                </linearGradient>
-                <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#fbbf24" />
-                  <stop offset="100%" stop-color="#d97706" />
-                </linearGradient>
-              </defs>
-              <path d="M70,15 L95,15 L125,75 L115,125 L90,120 L75,90 L60,50 Z" fill="url(#caGrad)" stroke="#34d399" stroke-width="2" />
-              <polygon points="88,48 91,54 97,54 92,58 94,64 88,60 82,64 84,58 79,54 85,54" fill="url(#goldGrad)" stroke="#fff" stroke-width="1" />
-              <text x="96" y="52" fill="#fde047" font-size="9" font-weight="bold">${st.capital} ★</text>
-              <rect x="140" y="16" width="132" height="108" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1.5" />
-              <text x="148" y="34" fill="#38bdf8" font-size="11" font-weight="bold">${st.name.toUpperCase()} (${appState.selectedState || 'CA'})</text>
-              <text x="148" y="50" fill="#94a3b8" font-size="8.5">Governor:</text>
-              <text x="148" y="63" fill="#86efac" font-size="10" font-weight="bold">${st.gov}</text>
-              <text x="148" y="78" fill="#94a3b8" font-size="8.5">U.S. Senators:</text>
-              <text x="148" y="91" fill="#fde047" font-size="9.5" font-weight="bold">${st.sens[0]}</text>
-              <text x="148" y="104" fill="#fde047" font-size="9.5" font-weight="bold">${st.sens[1] || 'U.S. Senate'}</text>
-            </svg>`
-          };
-        }
-
-        if ([1, 2, 3, 4, 10, 11, 12, 79, 80, 81, 82, 83].includes(qid)) {
-          return {
-            caption: "The U.S. Constitution (1787) • Supreme Law of the Land",
-            svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="scrollGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#fef3c7" />
-                  <stop offset="100%" stop-color="#fde68a" />
-                </linearGradient>
-              </defs>
-              <rect x="40" y="15" width="200" height="110" rx="8" fill="url(#scrollGrad)" stroke="#d97706" stroke-width="2" />
-              <path d="M35,15 C45,10 45,25 35,20 L35,120 C45,115 45,130 35,125 Z" fill="#b45309" />
-              <path d="M245,15 C235,10 235,25 245,20 L245,120 C235,115 235,130 245,125 Z" fill="#b45309" />
-              <text x="140" y="45" fill="#78350f" font-size="18" font-weight="bold" font-family="Georgia, serif" text-anchor="middle" font-style="italic">We the People</text>
-              <line x1="60" y1="60" x2="220" y2="60" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 2" />
-              <line x1="60" y1="72" x2="220" y2="72" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 2" />
-              <line x1="60" y1="84" x2="220" y2="84" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 2" />
-              <line x1="60" y1="96" x2="170" y2="96" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 2" />
-              <circle cx="205" cy="100" r="14" fill="#dc2626" stroke="#991b1b" stroke-width="1.5" />
-              <polygon points="205,92 208,98 214,98 209,102 211,108 205,104 199,108 201,102 196,98 202,98" fill="#fbbf24" />
-              <path d="M225,20 Q245,45 220,105 L218,107" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" />
-            </svg>`
-          };
-        }
-
-        if ([8, 9, 77, 78].includes(qid)) {
-          return {
-            caption: "Declaration of Independence (July 4, 1776)",
-            svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="45" y="12" width="190" height="116" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="2" />
-              <text x="140" y="32" fill="#78350f" font-size="11" font-weight="bold" font-family="Georgia, serif" text-anchor="middle">IN CONGRESS, JULY 4, 1776</text>
-              <text x="140" y="48" fill="#92400e" font-size="13" font-weight="bold" font-family="Georgia, serif" text-anchor="middle">The unanimous Declaration</text>
-              <line x1="60" y1="62" x2="220" y2="62" stroke="#d97706" stroke-width="1.2" stroke-dasharray="3 2" />
-              <line x1="60" y1="74" x2="220" y2="74" stroke="#d97706" stroke-width="1.2" stroke-dasharray="3 2" />
-              <line x1="60" y1="86" x2="220" y2="86" stroke="#d97706" stroke-width="1.2" stroke-dasharray="3 2" />
-              <text x="140" y="112" fill="#1e3a8a" font-size="15" font-family="'Brush Script MT', cursive, serif" font-weight="bold" text-anchor="middle">John Hancock</text>
-            </svg>`
-          };
-        }
-
-        if ([5, 6, 7, 71, 72, 84, 85].includes(qid)) {
-          return {
-            caption: "The Bill of Rights • First 10 Amendments",
-            svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="40" y="15" width="90" height="110" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.8" />
-              <rect x="150" y="15" width="90" height="110" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.8" />
-              <text x="85" y="35" fill="#78350f" font-size="11" font-weight="bold" text-anchor="middle">Amendments I-V</text>
-              <text x="85" y="55" fill="#92400e" font-size="9" text-anchor="middle">I. Speech &amp; Religion</text>
-              <text x="85" y="72" fill="#92400e" font-size="9" text-anchor="middle">II. Bear Arms</text>
-              <text x="85" y="89" fill="#92400e" font-size="9" text-anchor="middle">III. Quartering</text>
-              <text x="85" y="106" fill="#92400e" font-size="9" text-anchor="middle">IV. Search &amp; Seizure</text>
-              <text x="195" y="35" fill="#78350f" font-size="11" font-weight="bold" text-anchor="middle">Amendments VI-X</text>
-              <text x="195" y="55" fill="#92400e" font-size="9" text-anchor="middle">VI. Speedy Trial</text>
-              <text x="195" y="72" fill="#92400e" font-size="9" text-anchor="middle">VII. Jury Trial</text>
-              <text x="195" y="89" fill="#92400e" font-size="9" text-anchor="middle">VIII. Cruel Punishment</text>
-              <text x="195" y="106" fill="#92400e" font-size="9" text-anchor="middle">X. State Powers</text>
-            </svg>`
-          };
-        }
-
-        if ([13, 14, 15].includes(qid)) {
-          return {
-            caption: "3 Branches of Government • Checks & Balances",
-            svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g transform="translate(25, 20)">
-                <polygon points="35,0 70,20 0,20" fill="#3b82f6" />
-                <rect x="5" y="20" width="10" height="50" fill="#93c5fd" />
-                <rect x="25" y="20" width="10" height="50" fill="#93c5fd" />
-                <rect x="40" y="20" width="10" height="50" fill="#93c5fd" />
-                <rect x="55" y="20" width="10" height="50" fill="#93c5fd" />
-                <rect x="0" y="70" width="70" height="10" fill="#1d4ed8" />
-                <text x="35" y="93" fill="#60a5fa" font-size="8.5" font-weight="bold" text-anchor="middle">LEGISLATIVE</text>
-                <text x="35" y="103" fill="#94a3b8" font-size="7.5" text-anchor="middle">Congress</text>
-              </g>
-              <g transform="translate(105, 20)">
-                <polygon points="35,0 70,20 0,20" fill="#10b981" />
-                <rect x="5" y="20" width="10" height="50" fill="#6ee7b7" />
-                <rect x="25" y="20" width="10" height="50" fill="#6ee7b7" />
-                <rect x="40" y="20" width="10" height="50" fill="#6ee7b7" />
-                <rect x="55" y="20" width="10" height="50" fill="#6ee7b7" />
-                <rect x="0" y="70" width="70" height="10" fill="#047857" />
-                <text x="35" y="93" fill="#34d399" font-size="8.5" font-weight="bold" text-anchor="middle">EXECUTIVE</text>
-                <text x="35" y="103" fill="#94a3b8" font-size="7.5" text-anchor="middle">President</text>
-              </g>
-              <g transform="translate(185, 20)">
-                <polygon points="35,0 70,20 0,20" fill="#f59e0b" />
-                <rect x="5" y="20" width="10" height="50" fill="#fde68a" />
-                <rect x="25" y="20" width="10" height="50" fill="#fde68a" />
-                <rect x="40" y="20" width="10" height="50" fill="#fde68a" />
-                <rect x="55" y="20" width="10" height="50" fill="#fde68a" />
-                <rect x="0" y="70" width="70" height="10" fill="#b45309" />
-                <text x="35" y="93" fill="#fbbf24" font-size="8.5" font-weight="bold" text-anchor="middle">JUDICIAL</text>
-                <text x="35" y="103" fill="#94a3b8" font-size="7.5" text-anchor="middle">Supreme Court</text>
-              </g>
-              <path d="M85,35 Q140,15 195,35" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3 3" fill="none" />
-              <text x="140" y="132" fill="#e2e8f0" font-size="9" font-weight="bold" text-anchor="middle">⚖️ Checks &amp; Balances</text>
-            </svg>`
-          };
-        }
-
-        if (qid >= 16 && qid <= 35) {
-          return {
-            caption: "The U.S. Capitol • Legislative Branch (Congress)",
-            svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="20" y="75" width="240" height="45" fill="#334155" rx="3" />
-              <rect x="105" y="45" width="70" height="30" fill="#475569" />
-              <rect x="110" y="50" width="6" height="25" fill="#e2e8f0" />
-              <rect x="122" y="50" width="6" height="25" fill="#e2e8f0" />
-              <rect x="134" y="50" width="6" height="25" fill="#e2e8f0" />
-              <rect x="146" y="50" width="6" height="25" fill="#e2e8f0" />
-              <rect x="158" y="50" width="6" height="25" fill="#e2e8f0" />
-              <path d="M110,45 C110,18 170,18 170,45 Z" fill="#e2e8f0" />
-              <rect x="136" y="10" width="8" height="10" fill="#cbd5e1" />
-              <circle cx="140" cy="8" r="3" fill="#fbbf24" />
-              <rect x="35" y="80" width="55" height="25" fill="#1e293b" />
-              <text x="62" y="96" fill="#93c5fd" font-size="8" font-weight="bold" text-anchor="middle">HOUSE</text>
-              <rect x="190" y="80" width="55" height="25" fill="#1e293b" />
-              <text x="217" y="96" fill="#93c5fd" font-size="8" font-weight="bold" text-anchor="middle">SENATE</text>
-              <text x="140" y="132" fill="#94a3b8" font-size="9" font-weight="bold" text-anchor="middle">U.S. Capitol Building • Washington, D.C.</text>
-            </svg>`
-          };
-        }
-
-        if (qid >= 36 && qid <= 54) {
-          return {
-            caption: "The White House • Executive Branch (The Presidency)",
-            svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="40" y="45" width="200" height="60" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-              <rect x="38" y="40" width="204" height="6" fill="#e2e8f0" />
-              <path d="M100,50 C100,20 180,20 180,50 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-              <polygon points="140,16 182,32 98,32" fill="#f8fafc" stroke="#94a3b8" stroke-width="1" />
-              <rect x="108" y="50" width="6" height="55" fill="#cbd5e1" />
-              <rect x="124" y="50" width="6" height="55" fill="#cbd5e1" />
-              <rect x="150" y="50" width="6" height="55" fill="#cbd5e1" />
-              <rect x="166" y="50" width="6" height="55" fill="#cbd5e1" />
-              <path d="M0,120 Q140,105 280,120 L280,140 L0,140 Z" fill="#065f46" />
-              <line x1="140" y1="16" x2="140" y2="4" stroke="#64748b" stroke-width="1.5" />
-              <rect x="140" y="4" width="12" height="7" fill="#ef4444" />
-              <text x="140" y="134" fill="#94a3b8" font-size="9" font-weight="bold" text-anchor="middle">The White House • 1600 Pennsylvania Ave</text>
-            </svg>`
-          };
-        }
-
-        if (qid >= 55 && qid <= 60) {
-          return {
-            caption: "Supreme Court of the U.S. • Highest Federal Court",
-            svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <polygon points="140,15 250,45 30,45" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-              <text x="140" y="38" fill="#475569" font-size="8.5" font-weight="bold" font-family="Georgia, serif" text-anchor="middle">EQUAL JUSTICE UNDER LAW</text>
-              <rect x="30" y="45" width="220" height="8" fill="#e2e8f0" />
-              <rect x="45" y="53" width="10" height="55" fill="#f1f5f9" stroke="#cbd5e1" />
-              <rect x="75" y="53" width="10" height="55" fill="#f1f5f9" stroke="#cbd5e1" />
-              <rect x="105" y="53" width="10" height="55" fill="#f1f5f9" stroke="#cbd5e1" />
-              <rect x="135" y="53" width="10" height="55" fill="#f1f5f9" stroke="#cbd5e1" />
-              <rect x="165" y="53" width="10" height="55" fill="#f1f5f9" stroke="#cbd5e1" />
-              <rect x="195" y="53" width="10" height="55" fill="#f1f5f9" stroke="#cbd5e1" />
-              <rect x="225" y="53" width="10" height="55" fill="#f1f5f9" stroke="#cbd5e1" />
-              <rect x="20" y="108" width="240" height="10" fill="#cbd5e1" />
-              <rect x="10" y="118" width="260" height="8" fill="#94a3b8" />
-              <text x="140" y="134" fill="#fbbf24" font-size="9" font-weight="bold" text-anchor="middle">⚖️ 9 Justices • Chief Justice of the United States</text>
-            </svg>`
-          };
-        }
-
-        if ([68, 69, 70, 107, 108].includes(qid)) {
-          return {
-            caption: "Civic Rights & Voting • Democratic Participation",
-            svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="80" y="50" width="120" height="75" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2" />
-              <rect x="110" y="45" width="60" height="8" rx="4" fill="#0f172a" stroke="#60a5fa" stroke-width="1.5" />
-              <rect x="120" y="15" width="40" height="36" rx="3" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
-              <line x1="126" y1="23" x2="154" y2="23" stroke="#2563eb" stroke-width="2" />
-              <line x1="126" y1="31" x2="148" y2="31" stroke="#94a3b8" stroke-width="1.5" />
-              <circle cx="150" cy="31" r="3" fill="#10b981" />
-              <polygon points="140,75 144,83 152,83 146,88 148,96 140,91 132,96 134,88 128,83 136,83" fill="#fde047" />
-              <text x="140" y="112" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" letter-spacing="2">OFFICIAL VOTE</text>
-            </svg>`
-          };
-        }
-
-        if ((qid >= 73 && qid <= 76) || qid === 86) {
-          return {
-            caption: "13 Original Colonies (1776) • Atlantic Coast",
-            svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="10" y="10" width="260" height="120" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5" />
-              <path d="M50,20 Q90,40 100,70 T130,120" stroke="#f59e0b" stroke-width="3" fill="none" />
-              <circle cx="75" cy="30" r="4" fill="#60a5fa" /><text x="82" y="33" fill="#93c5fd" font-size="8">MA</text>
-              <circle cx="85" cy="45" r="4" fill="#60a5fa" /><text x="92" y="48" fill="#93c5fd" font-size="8">NY</text>
-              <circle cx="95" cy="60" r="4" fill="#60a5fa" /><text x="102" y="63" fill="#93c5fd" font-size="8">PA</text>
-              <circle cx="105" cy="75" r="4" fill="#60a5fa" /><text x="112" y="78" fill="#93c5fd" font-size="8">VA</text>
-              <circle cx="115" cy="95" r="4" fill="#60a5fa" /><text x="122" y="98" fill="#93c5fd" font-size="8">NC</text>
-              <circle cx="125" cy="115" r="4" fill="#60a5fa" /><text x="132" y="118" fill="#93c5fd" font-size="8">GA</text>
-              <g transform="translate(180, 50)">
-                <path d="M0,30 L50,30 L40,42 L10,42 Z" fill="#78350f" />
-                <line x1="25" y1="30" x2="25" y2="8" stroke="#451a03" stroke-width="2" />
-                <path d="M25,10 Q40,16 25,24 Z" fill="#ffffff" />
-                <text x="25" y="55" fill="#fde047" font-size="8" font-weight="bold" text-anchor="middle">Mayflower (1620)</text>
-              </g>
-            </svg>`
-          };
-        }
-
-        if (qid >= 87 && qid <= 98) {
-          return {
-            caption: "Civil War Era & Lincoln (1861–1865) • Emancipation",
-            svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g transform="translate(45, 20)">
-                <ellipse cx="40" cy="85" rx="36" ry="7" fill="#0f172a" />
-                <rect x="18" y="25" width="44" height="60" fill="#0f172a" />
-                <rect x="18" y="77" width="44" height="8" fill="#1e3a8a" />
-                <text x="40" y="105" fill="#cbd5e1" font-size="9" font-weight="bold" text-anchor="middle">A. Lincoln</text>
-              </g>
-              <rect x="135" y="18" width="115" height="104" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.8" />
-              <text x="192" y="36" fill="#78350f" font-size="9" font-weight="bold" text-anchor="middle">EMANCIPATION</text>
-              <text x="192" y="48" fill="#78350f" font-size="8.5" font-weight="bold" text-anchor="middle">PROCLAMATION (1863)</text>
-              <line x1="145" y1="60" x2="240" y2="60" stroke="#d97706" stroke-width="1.2" stroke-dasharray="3 2" />
-              <line x1="145" y1="72" x2="240" y2="72" stroke="#d97706" stroke-width="1.2" stroke-dasharray="3 2" />
-              <line x1="145" y1="84" x2="240" y2="84" stroke="#d97706" stroke-width="1.2" stroke-dasharray="3 2" />
-              <text x="192" y="105" fill="#dc2626" font-size="9" font-weight="bold" text-anchor="middle">"Forever Free"</text>
-            </svg>`
-          };
-        }
-
-        if (qid >= 99 && qid <= 118) {
-          return {
-            caption: "20th-Century History & The Civil Rights Movement",
-            svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g transform="translate(45, 15)">
-                <rect x="25" y="45" width="35" height="65" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
-                <circle cx="42" cy="38" r="5" fill="#94a3b8" />
-                <line x1="42" y1="43" x2="42" y2="48" stroke="#64748b" stroke-width="2" />
-                <text x="42" y="75" fill="#fbbf24" font-size="8" font-weight="bold" text-anchor="middle">"I Have a</text>
-                <text x="42" y="87" fill="#fbbf24" font-size="8" font-weight="bold" text-anchor="middle">Dream"</text>
-                <text x="42" y="100" fill="#e2e8f0" font-size="7" text-anchor="middle">MLK (1963)</text>
-              </g>
-              <g transform="translate(145, 20)">
-                <circle cx="50" cy="45" r="35" fill="#0f172a" stroke="#3b82f6" stroke-width="2" />
-                <polygon points="50,22 56,36 71,36 59,46 63,60 50,51 37,60 41,46 29,36 44,36" fill="#fbbf24" stroke="#d97706" stroke-width="1" />
-                <text x="50" y="95" fill="#93c5fd" font-size="9" font-weight="bold" text-anchor="middle">Freedom &amp; Equality</text>
-                <text x="50" y="107" fill="#64748b" font-size="8" text-anchor="middle">1900s – Modern Era</text>
-              </g>
-            </svg>`
-          };
-        }
-
-        // Default: American Symbols & Holidays (119 to 128)
-        return {
-          caption: "Official National Symbols • Old Glory & Liberty Bell",
-          svg: `<svg class="w-full h-full" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g transform="translate(25, 20)">
-              <rect x="0" y="0" width="105" height="65" fill="#ef4444" rx="3" />
-              <rect x="0" y="5" width="105" height="5" fill="#ffffff" />
-              <rect x="0" y="15" width="105" height="5" fill="#ffffff" />
-              <rect x="0" y="25" width="105" height="5" fill="#ffffff" />
-              <rect x="0" y="35" width="105" height="5" fill="#ffffff" />
-              <rect x="0" y="45" width="105" height="5" fill="#ffffff" />
-              <rect x="0" y="55" width="105" height="5" fill="#ffffff" />
-              <rect x="0" y="0" width="45" height="35" fill="#1e3a8a" />
-              <text x="22" y="22" fill="#ffffff" font-size="11" text-anchor="middle">★ ★ ★</text>
-              <text x="52" y="80" fill="#94a3b8" font-size="8.5" font-weight="bold" text-anchor="middle">Old Glory (50 Stars)</text>
-            </g>
-            <g transform="translate(155, 15)">
-              <path d="M30,10 L70,10 L75,65 Q85,75 50,75 Q15,75 25,65 Z" fill="#b45309" stroke="#78350f" stroke-width="1.5" />
-              <rect x="20" y="0" width="60" height="12" rx="2" fill="#713f12" />
-              <path d="M50,75 L47,60 L52,50 L48,40" stroke="#0f172a" stroke-width="2" fill="none" />
-              <text x="50" y="90" fill="#fde047" font-size="9" font-weight="bold" text-anchor="middle">Liberty Bell</text>
-              <text x="50" y="102" fill="#94a3b8" font-size="7.5" text-anchor="middle">Philadelphia, PA</text>
-            </g>
-          </svg>`
-        };
-      }
-
-      let isCourseworkSpeaking = false;
-      let courseworkUtterance = null;
-      let autoAdvanceTimeout = null;
-
-      function stopCourseworkAnimations() {
-        isCourseworkSpeaking = false;
-        courseworkUtterance = null;
-        const icon = document.getElementById('cw-play-icon');
-        const text = document.getElementById('cw-play-text');
-        if (icon) icon.textContent = '▶';
-        if (text) text.textContent = 'Play Lesson';
-
-        document.getElementById('prof-mouth')?.classList.remove('mouth-talking');
-        document.getElementById('prof-arm')?.classList.remove('baton-pointing');
-      }
-
-      function pauseCourseworkLesson(clearTimer = true) {
-        if (clearTimer && autoAdvanceTimeout) {
-          clearTimeout(autoAdvanceTimeout);
-          autoAdvanceTimeout = null;
-        }
-        if ('speechSynthesis' in window) {
-          window.speechSynthesis.cancel();
-        }
-        stopCourseworkAnimations();
-        const captionEl = document.getElementById('cw-live-caption');
-        if (captionEl) {
-          captionEl.textContent = `Narration paused. Click "Play Lesson" to continue.`;
-        }
-      }
-
-      function playCourseworkLesson() {
-        if (!('speechSynthesis' in window)) {
-          showToast('Speech synthesis not supported in this browser.', 'warning');
-          return;
-        }
-
-        if (isCourseworkSpeaking) {
-          pauseCourseworkLesson();
-          return;
-        }
-
-        const qIndex = appState.courseworkLessonIndex || 0;
-        const rawQ = CIVICS_QUESTIONS[qIndex];
-        const q = getResolvedQuestion(rawQ, appState.selectedState || 'CA');
-
-        window.speechSynthesis.cancel();
-        if (autoAdvanceTimeout) {
-          clearTimeout(autoAdvanceTimeout);
-          autoAdvanceTimeout = null;
-        }
-
-        let speechText = `Lesson ${q.id}. ${q.question}. `;
-        if (q.answers && q.answers.length > 1) {
-          speechText += `The accepted answer is: ${q.primaryAnswer}. You may also say: ${q.answers.slice(1).join(', ')}. `;
-        } else {
-          speechText += `The accepted answer is: ${q.primaryAnswer}. `;
-        }
-        speechText += `Professor's study tip: ${q.explanation}.`;
-
-        const cleanSpeech = speechText.replace(/[\(\)\[\]]/g, '').trim();
-        const utterance = new SpeechSynthesisUtterance(cleanSpeech);
-
-        const speedVal = parseFloat(document.getElementById('cw-speed-select')?.value || '1.0');
-        utterance.rate = speedVal;
-
-        if (appState.speechVoice) {
-          const voices = window.speechSynthesis.getVoices();
-          const found = voices.find(v => v.name === appState.speechVoice);
-          if (found) utterance.voice = found;
-        }
-
-        utterance.onstart = () => {
-          isCourseworkSpeaking = true;
-          courseworkUtterance = utterance;
-
-          const icon = document.getElementById('cw-play-icon');
-          const text = document.getElementById('cw-play-text');
-          if (icon) icon.textContent = '⏸';
-          if (text) text.textContent = 'Pause';
-
-          document.getElementById('prof-mouth')?.classList.add('mouth-talking');
-          document.getElementById('prof-arm')?.classList.add('baton-pointing');
-
-          const captionEl = document.getElementById('cw-live-caption');
-          if (captionEl) {
-            captionEl.textContent = `Lesson ${q.id}: "${q.question}" → Accepted: "${q.primaryAnswer}"`;
-          }
-        };
-
-        utterance.onend = () => {
-          stopCourseworkAnimations();
-
-          const captionEl = document.getElementById('cw-live-caption');
-          const autoAdvanceOn = document.getElementById('cw-toggle-autoadvance')?.checked;
-
-          if (autoAdvanceOn && qIndex < CIVICS_QUESTIONS.length - 1) {
-            if (captionEl) {
-              captionEl.textContent = `✅ Lesson ${q.id} completed! Auto-advancing to Lesson ${q.id + 1} in 3 seconds... (Click Pause to stay)`;
-            }
-            autoAdvanceTimeout = setTimeout(() => {
-              loadCourseworkLesson(qIndex + 1, true);
-            }, 3000);
-          } else {
-            if (captionEl) {
-              captionEl.textContent = `✅ Lesson ${q.id} completed! Try the Pop Quiz or click "Next" for Lesson ${q.id + 1}.`;
-            }
-          }
-        };
-
-        utterance.onerror = () => {
-          stopCourseworkAnimations();
-        };
-
-        window.speechSynthesis.speak(utterance);
-      }
-
-      function replayCourseworkLesson() {
-        pauseCourseworkLesson();
-        playCourseworkLesson();
-      }
-
-      function syncCourseworkProgressUI() {
-        const totalMastered = Object.keys(appState.mastered).filter(k => appState.mastered[k]).length;
-        const totalQs = CIVICS_QUESTIONS.length;
-        const pct = Math.round((totalMastered / totalQs) * 100);
-
-        const progEl = document.getElementById('cw-overall-progress');
-        const progPctEl = document.getElementById('cw-progress-percent');
-        const pillEl = document.getElementById('cw-progress-pill');
-
-        if (progEl) progEl.style.width = `${pct}%`;
-        if (progPctEl) progPctEl.textContent = `${pct}% Completed (${totalMastered} / ${totalQs})`;
-
-        const qIndex = appState.courseworkLessonIndex || 0;
-        if (pillEl) {
-          pillEl.textContent = `Lesson ${qIndex + 1} of ${totalQs} • ${totalMastered} / ${totalQs} Mastered across Curriculum`;
-        }
-      }
-
-      function loadCourseworkLesson(index, autoPlay = false) {
-        if (index < 0) index = 0;
-        if (index >= CIVICS_QUESTIONS.length) index = CIVICS_QUESTIONS.length - 1;
-
-        appState.courseworkLessonIndex = index;
-        saveState();
-
-        const rawQ = CIVICS_QUESTIONS[index];
-        const q = getResolvedQuestion(rawQ, appState.selectedState || 'CA');
-        const unit = getUnitForQuestionId(q.id);
-
-        // Header Unit elements
-        const badgeEl = document.getElementById('cw-unit-badge');
-        const titleEl = document.getElementById('cw-unit-title');
-        const unitSelect = document.getElementById('cw-unit-select');
-        const lessonSelect = document.getElementById('cw-lesson-select');
-
-        if (badgeEl) badgeEl.textContent = `Unit ${unit.id} of 8: ${unit.icon}`;
-        if (titleEl) titleEl.textContent = unit.title;
-        if (unitSelect) unitSelect.value = unit.id;
-        if (lessonSelect) lessonSelect.value = index;
-
-        // Chalkboard Header
-        const numEl = document.getElementById('cw-chalk-lesson-num');
-        const tagEl = document.getElementById('cw-chalk-tag');
-        const catEl = document.getElementById('cw-chalk-category');
-
-        if (numEl) numEl.textContent = `LESSON ${q.id} OF 128`;
-        if (catEl) catEl.textContent = `${q.category} • ${q.subcategory}`;
-
-        if (tagEl) {
-          if (q.is6520) {
-            tagEl.textContent = '★ 65/20 Special Exemption (Designated Question)';
-            tagEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-950/90 text-amber-300 border border-amber-600/50';
-          } else if (q.isStateSpecific) {
-            const stName = (STATES_DATA[appState.selectedState || 'CA'] || STATES_DATA['CA']).name;
-            tagEl.textContent = `📍 ${stName} State Official Question`;
-            tagEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-950/90 text-emerald-300 border border-emerald-600/50';
-          } else if (q.origin === 'new') {
-            tagEl.textContent = '🆕 New in 128 Pool';
-            tagEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-950/90 text-indigo-300 border border-indigo-600/50';
-          } else if (q.origin === 'amended') {
-            tagEl.textContent = '✏️ Amended / Expanded Wording';
-            tagEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-950/90 text-amber-300 border border-amber-600/50';
-          } else {
-            tagEl.textContent = 'Official 128 Exam';
-            tagEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-950/90 text-emerald-300 border border-emerald-600/50';
-          }
-        }
-
-        // Chalkboard Question & Answers
-        const qEl = document.getElementById('cw-chalk-question');
-        const answersEl = document.getElementById('cw-chalk-answers');
-        const tipEl = document.getElementById('cw-chalk-tip');
-
-        if (qEl) qEl.textContent = q.question;
-        if (tipEl) tipEl.textContent = q.explanation;
-
-        if (answersEl) {
-          answersEl.innerHTML = q.answers.map((ans, aIdx) => `
-            <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-emerald-950/30 border border-emerald-600/30 shadow-sm">
-              <span class="text-emerald-400 font-bold text-base leading-none mt-0.5">✓</span>
-              <span class="chalk-font chalk-green text-base sm:text-lg font-semibold leading-snug">${ans}</span>
-            </div>
-          `).join('');
-        }
-
-        // Professor Speech Bubble
-        const bubbleEl = document.getElementById('cw-prof-bubble');
-        if (bubbleEl) {
-          bubbleEl.textContent = `Welcome to Lesson ${q.id}! Listen carefully to the accepted answers: "${q.primaryAnswer}". Tip: ${q.explanation.slice(0, 85)}...`;
-        }
-
-        // Visual Artifact
-        const artifact = getQuestionArtifact(q);
-        const artContainer = document.getElementById('cw-artifact-container');
-        const artCaption = document.getElementById('cw-artifact-caption');
-        if (artContainer) artContainer.innerHTML = artifact.svg;
-        if (artCaption) artCaption.textContent = artifact.caption;
-
-        // Star & Mastered Action Buttons
-        const starIcon = document.getElementById('cw-star-icon');
-        const masterCheck = document.getElementById('cw-master-check');
-        const masterLabel = document.getElementById('cw-master-label');
-        const isMastered = !!appState.mastered[q.id];
-        const isStarred = !!appState.starred[q.id];
-
-        if (starIcon) starIcon.textContent = isStarred ? '★' : '☆';
-        if (masterCheck) masterCheck.textContent = isMastered ? '●' : '○';
-        if (masterLabel) masterLabel.textContent = isMastered ? 'Mastered' : 'Master';
-
-        // Close pop quiz
-        document.getElementById('cw-pop-quiz-box')?.classList.add('hidden');
-
-        // Sync Progress
-        syncCourseworkProgressUI();
-
-        // Audio Management
-        pauseCourseworkLesson(false);
-        const captionEl = document.getElementById('cw-live-caption');
-        if (captionEl) {
-          captionEl.textContent = `Lesson ${q.id}: Click "Play Lesson" to listen to Professor Civics.`;
-        }
-
-        if (autoPlay) {
-          playCourseworkLesson();
-        }
-      }
-
-      function togglePopQuiz() {
-        const quizBox = document.getElementById('cw-pop-quiz-box');
-        if (!quizBox) return;
-
-        if (!quizBox.classList.contains('hidden')) {
-          quizBox.classList.add('hidden');
-          return;
-        }
-
-        const qIndex = appState.courseworkLessonIndex || 0;
-        const rawQ = CIVICS_QUESTIONS[qIndex];
-        const q = getResolvedQuestion(rawQ, appState.selectedState || 'CA');
-
-        const qTextEl = document.getElementById('cw-pop-quiz-question');
-        const optionsEl = document.getElementById('cw-pop-quiz-options');
-        const feedbackEl = document.getElementById('cw-pop-quiz-feedback');
-
-        if (qTextEl) qTextEl.textContent = q.question;
-        if (feedbackEl) feedbackEl.classList.add('hidden');
-
-        const options = [...(q.options || [q.primaryAnswer, 'None of the above', 'All of the above', 'Varies'])];
-        for (let i = options.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [options[i], options[j]] = [options[j], options[i]];
-        }
-
-        optionsEl.innerHTML = options.map((opt, idx) => `
-          <button class="cw-quiz-opt w-full text-left p-3 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 hover:border-indigo-400 text-slate-100 font-medium transition flex items-start gap-2.5" data-opt="${encodeURIComponent(opt)}">
-            <span class="w-5 h-5 rounded-full bg-slate-700 text-[10px] font-bold text-slate-300 flex items-center justify-center shrink-0 mt-0.5">${String.fromCharCode(65 + idx)}</span>
-            <span class="leading-snug">${opt}</span>
-          </button>
-        `).join('');
-
-        optionsEl.querySelectorAll('.cw-quiz-opt').forEach(btn => {
-          btn.addEventListener('click', () => {
-            const selected = decodeURIComponent(btn.getAttribute('data-opt'));
-            const isCorrect = (selected === q.primaryAnswer) || (q.answers && q.answers.includes(selected));
-
-            optionsEl.querySelectorAll('.cw-quiz-opt').forEach(b => {
-              b.disabled = true;
-              const bOpt = decodeURIComponent(b.getAttribute('data-opt'));
-              if ((bOpt === q.primaryAnswer) || (q.answers && q.answers.includes(bOpt))) {
-                b.className = 'w-full text-left p-3 rounded-xl bg-emerald-950/80 border-2 border-emerald-500 text-emerald-200 font-semibold flex items-start gap-2.5';
-              } else if (bOpt === selected && !isCorrect) {
-                b.className = 'w-full text-left p-3 rounded-xl bg-rose-950/80 border-2 border-rose-500 text-rose-200 font-semibold flex items-start gap-2.5';
-              } else {
-                b.className = 'w-full text-left p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-slate-500 opacity-60 flex items-start gap-2.5';
-              }
-            });
-
-            if (feedbackEl) {
-              feedbackEl.classList.remove('hidden');
-              if (isCorrect) {
-                playBeep('correct');
-                feedbackEl.className = 'p-3.5 rounded-xl bg-emerald-950/90 border border-emerald-500/60 text-emerald-200 space-y-2';
-                feedbackEl.innerHTML = `
-                  <div class="flex items-center gap-2 font-bold text-emerald-300">
-                    <span>🎉</span>
-                    <span>Correct! Outstanding comprehension!</span>
-                  </div>
-                  <p class="text-[11px] text-emerald-200/90">That is the official USCIS accepted naturalization answer.</p>
-                  <div class="flex items-center gap-2 pt-1">
-                    <button id="cw-quiz-btn-master" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition">
-                      ${appState.mastered[q.id] ? '✓ Already Mastered' : '★ Mark Question as Mastered'}
-                    </button>
-                    <button id="cw-quiz-btn-next" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition">
-                      Next Lesson ▶
-                    </button>
-                  </div>
-                `;
-                document.getElementById('cw-quiz-btn-master')?.addEventListener('click', () => {
-                  if (!appState.mastered[q.id]) toggleMastered(q.id);
-                  syncCourseworkProgressUI();
-                  const mBtn = document.getElementById('cw-btn-mastered');
-                  if (mBtn) {
-                    document.getElementById('cw-master-check').textContent = '●';
-                    document.getElementById('cw-master-label').textContent = 'Mastered';
-                  }
-                  document.getElementById('cw-quiz-btn-master').textContent = '✓ Mastered!';
-                });
-                document.getElementById('cw-quiz-btn-next')?.addEventListener('click', () => {
-                  if (qIndex < CIVICS_QUESTIONS.length - 1) {
-                    loadCourseworkLesson(qIndex + 1, false);
-                  }
-                });
-              } else {
-                playBeep('wrong');
-                feedbackEl.className = 'p-3.5 rounded-xl bg-rose-950/90 border border-rose-500/60 text-rose-200 space-y-1.5';
-                feedbackEl.innerHTML = `
-                  <div class="flex items-center gap-2 font-bold text-rose-300">
-                    <span>⚠️</span>
-                    <span>Incorrect. The accepted answer is: "${q.primaryAnswer}".</span>
-                  </div>
-                  <p class="text-[11px] text-rose-200/90">Study Tip: ${q.explanation}</p>
-                `;
-              }
-            }
-          });
-        });
-
-        quizBox.classList.remove('hidden');
-      }
-
-      function renderCourseworkSyllabus() {
-        const grid = document.getElementById('cw-syllabus-grid');
-        if (!grid) return;
-
-        grid.innerHTML = COURSEWORK_UNITS.map(unit => {
-          const unitQs = CIVICS_QUESTIONS.filter(q => q.id >= unit.range[0] && q.id <= unit.range[1]);
-          const unitMastered = unitQs.filter(q => appState.mastered[q.id]).length;
-          const pct = Math.round((unitMastered / unitQs.length) * 100);
-
-          return `
-            <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-indigo-500/50 transition flex flex-col justify-between space-y-3 group">
-              <div>
-                <div class="flex items-center justify-between">
-                  <span class="text-2xl">${unit.icon}</span>
-                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${unitMastered === unitQs.length ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/40' : 'bg-slate-900 text-slate-400 border border-slate-800'}">
-                    ${unitMastered} / ${unitQs.length} Mastered (${pct}%)
-                  </span>
-                </div>
-                <h4 class="text-sm font-bold text-white mt-2 group-hover:text-indigo-300 transition">
-                  Unit ${unit.id}: ${unit.title}
-                </h4>
-                <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">
-                  ${unit.description}
-                </p>
-              </div>
-
-              <div class="space-y-2 pt-2 border-t border-slate-800/80">
-                <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                  <div class="bg-indigo-500 h-full transition-all duration-300" style="width: ${pct}%"></div>
-                </div>
-                <button class="cw-btn-study-unit w-full py-1.5 rounded-xl bg-slate-800 hover:bg-indigo-600 text-slate-200 hover:text-white text-xs font-semibold transition" data-start="${unit.range[0] - 1}">
-                  Study Unit ${unit.id} (Q${unit.range[0]}–${unit.range[1]}) ▶
-                </button>
-              </div>
-            </div>
-          `;
-        }).join('');
-
-        grid.querySelectorAll('.cw-btn-study-unit').forEach(btn => {
-          btn.addEventListener('click', () => {
-            const startIndex = parseInt(btn.getAttribute('data-start'), 10);
-            loadCourseworkLesson(startIndex, false);
-            document.getElementById('cw-cinema-stage')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          });
-        });
-      }
-
-      function populateCourseworkLessonSelect() {
-        const select = document.getElementById('cw-lesson-select');
-        if (!select || select.options.length > 0) return;
-
-        CIVICS_QUESTIONS.forEach((q, idx) => {
-          const opt = document.createElement('option');
-          opt.value = idx;
-          opt.textContent = `Lesson ${q.id}: ${q.question.slice(0, 40)}...`;
-          select.appendChild(opt);
-        });
-      }
-
-      let courseworkInitialized = false;
-      function initCourseworkView() {
-        populateCourseworkLessonSelect();
-        renderCourseworkSyllabus();
-
-        if (!courseworkInitialized) {
-          courseworkInitialized = true;
-          // Wire up playback buttons
-          document.getElementById('cw-btn-play')?.addEventListener('click', playCourseworkLesson);
-          document.getElementById('cw-btn-replay')?.addEventListener('click', replayCourseworkLesson);
-          document.getElementById('cw-btn-prev')?.addEventListener('click', () => {
-            const cur = appState.courseworkLessonIndex || 0;
-            if (cur > 0) loadCourseworkLesson(cur - 1, isCourseworkSpeaking);
-          });
-          document.getElementById('cw-btn-next')?.addEventListener('click', () => {
-            const cur = appState.courseworkLessonIndex || 0;
-            if (cur < CIVICS_QUESTIONS.length - 1) loadCourseworkLesson(cur + 1, isCourseworkSpeaking);
-          });
-
-          // Dropdowns
-          document.getElementById('cw-lesson-select')?.addEventListener('change', (e) => {
-            const idx = parseInt(e.target.value, 10);
-            loadCourseworkLesson(idx, isCourseworkSpeaking);
-          });
-
-          document.getElementById('cw-unit-select')?.addEventListener('change', (e) => {
-            const unitId = parseInt(e.target.value, 10);
-            const unit = COURSEWORK_UNITS.find(u => u.id === unitId);
-            if (unit) {
-              loadCourseworkLesson(unit.range[0] - 1, isCourseworkSpeaking);
-            }
-          });
-
-          // Star & Mastered
-          document.getElementById('cw-btn-star')?.addEventListener('click', () => {
-            const cur = appState.courseworkLessonIndex || 0;
-            const q = CIVICS_QUESTIONS[cur];
-            toggleStar(q.id);
-            const isStarred = !!appState.starred[q.id];
-            const starIcon = document.getElementById('cw-star-icon');
-            if (starIcon) starIcon.textContent = isStarred ? '★' : '☆';
-          });
-
-          document.getElementById('cw-btn-mastered')?.addEventListener('click', () => {
-            const cur = appState.courseworkLessonIndex || 0;
-            const q = CIVICS_QUESTIONS[cur];
-            toggleMastered(q.id);
-            const isMastered = !!appState.mastered[q.id];
-            const check = document.getElementById('cw-master-check');
-            const label = document.getElementById('cw-master-label');
-            if (check) check.textContent = isMastered ? '●' : '○';
-            if (label) label.textContent = isMastered ? 'Mastered' : 'Master';
-            syncCourseworkProgressUI();
-            renderCourseworkSyllabus();
-          });
-
-          // Pop Quiz toggles
-          document.getElementById('cw-btn-toggle-quiz')?.addEventListener('click', togglePopQuiz);
-          document.getElementById('cw-btn-close-quiz')?.addEventListener('click', () => {
-            document.getElementById('cw-pop-quiz-box')?.classList.add('hidden');
-          });
-
-          // Speed change listener
-          document.getElementById('cw-speed-select')?.addEventListener('change', () => {
-            if (isCourseworkSpeaking) {
-              replayCourseworkLesson();
-            }
-          });
-
-          // Filter syllabus link
-          document.getElementById('cw-filter-all')?.addEventListener('click', () => {
-            renderCourseworkSyllabus();
-          });
-
-          // Keyboard Shortcuts for Coursework
-          document.addEventListener('keydown', (e) => {
-            if (appState.activeTab !== 'coursework') return;
-            if (['input', 'textarea', 'select'].includes(e.target.tagName.toLowerCase())) return;
-
-            if (e.key === 'ArrowLeft') {
-              const cur = appState.courseworkLessonIndex || 0;
-              if (cur > 0) loadCourseworkLesson(cur - 1, isCourseworkSpeaking);
-            } else if (e.key === 'ArrowRight') {
-              const cur = appState.courseworkLessonIndex || 0;
-              if (cur < CIVICS_QUESTIONS.length - 1) loadCourseworkLesson(cur + 1, isCourseworkSpeaking);
-            } else if (e.key === ' ' || e.code === 'Space') {
-              e.preventDefault();
-              playCourseworkLesson();
-            }
-          });
-        }
-
-        loadCourseworkLesson(appState.courseworkLessonIndex || 0, false);
-      }
-
-      checkStandaloneStatus();
+      initCourseworkView();
+            checkStandaloneStatus();
     });
