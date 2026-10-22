@@ -835,6 +835,16 @@
               ${q.answers.map(ans => `<li class="flex items-start gap-1.5"><span class="text-emerald-400 shrink-0 font-bold">•</span><span>${ans}</span></li>`).join('')}
             </ul>
           </div>
+
+          <!-- Study Tip Box -->
+          ${q.explanation ? `
+          <div class="p-3 rounded-xl bg-amber-950/20 border border-amber-500/30 text-xs text-amber-100 flex items-start gap-2.5 shadow-sm">
+            <span class="text-amber-400 text-sm leading-none shrink-0 mt-0.5">💡</span>
+            <div class="leading-relaxed">
+              <span class="font-bold text-amber-300">Study Tip:</span>
+              <span class="text-slate-200 ml-1">${q.explanation}</span>
+            </div>
+          </div>` : ''}
         </div>`;
       }).join('');
     }
