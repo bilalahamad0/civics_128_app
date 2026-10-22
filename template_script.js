@@ -2473,6 +2473,8 @@
           showAuthFeedback('Sign-in popup was blocked by your browser. Please allow popups for civics-128-app.pages.dev.', 'error');
         } else if (error.code === 'auth/popup-closed-by-user') {
           // Closed by user, no error banner needed
+        } else if (error.code === 'auth/operation-not-allowed') {
+          showAuthFeedback('Google Sign-In is not enabled yet in Firebase Console. Enable "Google" under Authentication > Sign-in method, or sign in with Email & Password above.', 'error');
         } else {
           showAuthFeedback(error.message || 'Could not sign in with Google.', 'error');
         }
