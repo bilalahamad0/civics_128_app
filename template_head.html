@@ -111,8 +111,8 @@
       75% { transform: scaleY(1.4) scaleX(1.15); }
     }
     .mouth-talking {
+      transform-origin: 100px 104px;
       animation: mouthTalk 0.22s infinite ease-in-out;
-      transform-origin: 100px 108px;
     }
     @keyframes eyeBlink {
       0%, 93%, 100% { transform: scaleY(1); }
@@ -120,17 +120,22 @@
     }
     .eye-blinking {
       animation: eyeBlink 3.8s infinite;
-      transform-origin: center;
+    }
+    .eye-left {
+      transform-origin: 85px 80px;
+    }
+    .eye-right {
+      transform-origin: 115px 80px;
     }
     @keyframes batonPoint {
       0%, 100% { transform: rotate(0deg); }
-      30% { transform: rotate(14deg); }
-      60% { transform: rotate(5deg); }
-      85% { transform: rotate(18deg); }
+      35% { transform: rotate(-10deg); }
+      70% { transform: rotate(4deg); }
+      85% { transform: rotate(-6deg); }
     }
     .baton-pointing {
+      transform-origin: 55px 145px;
       animation: batonPoint 2.4s infinite ease-in-out;
-      transform-origin: 40px 145px;
     }
     @keyframes floatArtifact {
       0%, 100% { transform: translateY(0px) rotate(0deg); }

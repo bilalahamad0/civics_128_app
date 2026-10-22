@@ -2464,19 +2464,19 @@
       document.getElementById('prof-mouth')?.classList.add('mouth-talking');
       document.getElementById('prof-arm')?.classList.add('baton-pointing');
 
+      // 2. Build spoken lesson text strictly aligned with chalkboard display
+      const questionText = q.question.trim();
+      const answersList = (q.answers && q.answers.length > 0) ? q.answers : [q.primaryAnswer];
+      const answersText = (answersList.length > 1)
+        ? `Accepted answers: ${answersList.join('. ')}.`
+        : `Accepted answer: ${answersList[0]}.`;
+      const tipText = `Study tip: ${q.explanation.trim()}`;
+      const speechText = `Lesson ${q.id}. ${questionText}. ${answersText} ${tipText}`;
+
       const captionEl = document.getElementById('cw-live-caption');
       if (captionEl) {
-        captionEl.textContent = `Lesson ${q.id}: "${q.question}" → Accepted: "${q.primaryAnswer}"`;
+        captionEl.textContent = `Lesson ${q.id}: ${questionText} | ${answersText} | ${tipText}`;
       }
-
-      // 2. Build spoken lesson text
-      let speechText = `Lesson ${q.id}. ${q.question}. `;
-      if (q.answers && q.answers.length > 1) {
-        speechText += `The accepted answer is: ${q.primaryAnswer}. You may also say: ${q.answers.slice(1).join(', ')}. `;
-      } else {
-        speechText += `The accepted answer is: ${q.primaryAnswer}. `;
-      }
-      speechText += `Professor's study tip: ${q.explanation}.`;
 
       const cleanSpeech = speechText.replace(/[\(\)\[\]]/g, '').trim();
 
@@ -2648,7 +2648,7 @@
       // Professor Speech Bubble
       const bubbleEl = document.getElementById('cw-prof-bubble');
       if (bubbleEl) {
-        bubbleEl.textContent = `Welcome to Lesson ${q.id}! Listen carefully to the accepted answers: "${q.primaryAnswer}". Tip: ${q.explanation.slice(0, 85)}...`;
+        bubbleEl.textContent = `Welcome to Lesson ${q.id}! Study Tip: ${q.explanation}`;
       }
 
       // Visual Artifact
@@ -2679,7 +2679,7 @@
       pauseCourseworkLesson(false);
       const captionEl = document.getElementById('cw-live-caption');
       if (captionEl) {
-        captionEl.textContent = `Lesson ${q.id}: Click "Play Lesson" to listen to Professor Civics.`;
+        captionEl.textContent = `Lesson ${q.id}: Click "Play Lesson" to listen.`;
       }
 
       if (autoPlay) {
