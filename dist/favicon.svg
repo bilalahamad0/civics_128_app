@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde047" />
+      <stop offset="50%" stop-color="#eab308" />
+      <stop offset="100%" stop-color="#ca8a04" />
+    </linearGradient>
+    <linearGradient id="shieldBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1d4ed8" />
+      <stop offset="100%" stop-color="#1e3a8a" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Background Rounded Square (iOS / macOS icon style) -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" stroke="url(#goldGrad)" stroke-width="8" />
+
+  <!-- Shield Base with drop shadow -->
+  <g filter="url(#shadow)">
+    <!-- Shield Outer Gold Border -->
+    <path d="M 256 64 C 340 64 400 96 400 96 C 400 280 256 424 256 424 C 256 424 112 280 112 96 C 112 96 172 64 256 64 Z"
+          fill="none" stroke="url(#goldGrad)" stroke-width="12" stroke-linejoin="round" />
+
+    <!-- Shield Inner Fill Clip Path -->
+    <clipPath id="shieldClip">
+      <path d="M 256 70 C 336 70 392 100 392 100 C 392 274 256 414 256 414 C 256 414 120 274 120 100 C 120 100 176 70 256 70 Z" />
+    </clipPath>
+
+    <!-- Shield Contents -->
+    <g clip-path="url(#shieldClip)">
+      <!-- Background white -->
+      <rect x="100" y="60" width="312" height="360" fill="#f8fafc" />
+
+      <!-- Red vertical stripes -->
+      <!-- 7 red stripes total -->
+      <rect x="120" y="190" width="22" height="240" fill="#dc2626" />
+      <rect x="164" y="190" width="22" height="240" fill="#dc2626" />
+      <rect x="208" y="190" width="22" height="240" fill="#dc2626" />
+      <rect x="252" y="190" width="22" height="240" fill="#dc2626" />
+      <rect x="296" y="190" width="22" height="240" fill="#dc2626" />
+      <rect x="340" y="190" width="22" height="240" fill="#dc2626" />
+      <rect x="384" y="190" width="22" height="240" fill="#dc2626" />
+
+      <!-- Blue Chief (Header) -->
+      <rect x="100" y="60" width="312" height="135" fill="url(#shieldBlue)" />
+      
+      <!-- Gold Stars in Chief -->
+      <!-- Star 1 -->
+      <polygon points="175,108 178,118 188,118 180,124 183,134 175,128 167,134 170,124 162,118 172,118" fill="url(#goldGrad)" />
+      <!-- Star 2 (center, larger) -->
+      <polygon points="256,92 261,107 276,107 264,116 268,131 256,122 244,131 248,116 236,107 251,107" fill="url(#goldGrad)" />
+      <!-- Star 3 -->
+      <polygon points="337,108 340,118 350,118 342,124 345,134 337,128 329,134 332,124 324,118 334,118" fill="url(#goldGrad)" />
+
+      <!-- Center Gold Badge: "128" -->
+      <circle cx="256" cy="270" r="76" fill="#090d16" stroke="url(#goldGrad)" stroke-width="8" filter="url(#shadow)" />
+      <text x="256" y="284" font-family="-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif" font-size="52" font-weight="900" fill="url(#goldGrad)" text-anchor="middle" letter-spacing="1">128</text>
+      <text x="256" y="318" font-family="-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif" font-size="14" font-weight="800" fill="#94a3b8" text-anchor="middle" letter-spacing="3">CIVICS</text>
+    </g>
+  </g>
+</svg>

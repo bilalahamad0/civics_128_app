@@ -1,0 +1,1259 @@
+{
+  "AL": {
+    "name": "Alabama",
+    "capital": "Montgomery",
+    "gov": "Kay Ivey",
+    "sens": [
+      "Tommy Tuberville",
+      "Katie Britt"
+    ],
+    "capitalDistractors": [
+      "Birmingham",
+      "Huntsville",
+      "Mobile"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "AK": {
+    "name": "Alaska",
+    "capital": "Juneau",
+    "gov": "Mike Dunleavy",
+    "sens": [
+      "Lisa Murkowski",
+      "Dan Sullivan"
+    ],
+    "capitalDistractors": [
+      "Anchorage",
+      "Fairbanks",
+      "Sitka"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "AZ": {
+    "name": "Arizona",
+    "capital": "Phoenix",
+    "gov": "Katie Hobbs",
+    "sens": [
+      "Kyrsten Sinema",
+      "Mark Kelly"
+    ],
+    "capitalDistractors": [
+      "Tucson",
+      "Mesa",
+      "Scottsdale"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "AR": {
+    "name": "Arkansas",
+    "capital": "Little Rock",
+    "gov": "Sarah Huckabee Sanders",
+    "sens": [
+      "John Boozman",
+      "Tom Cotton"
+    ],
+    "capitalDistractors": [
+      "Fayetteville",
+      "Fort Smith",
+      "Springdale"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "CA": {
+    "name": "California",
+    "capital": "Sacramento",
+    "gov": "Gavin Newsom",
+    "sens": [
+      "Alex Padilla",
+      "Adam Schiff"
+    ],
+    "altSens": [
+      "Laphonza Butler"
+    ],
+    "districts": 52,
+    "repsHint": "California has 52 congressional districts. For example: Nancy Pelosi (CA-11), Ted Lieu (CA-36), Ro Khanna (CA-17), Kevin Kiley (CA-03).",
+    "sampleReps": [
+      "Nancy Pelosi",
+      "Ted Lieu",
+      "Ro Khanna",
+      "Kevin Kiley"
+    ],
+    "capitalDistractors": [
+      "Los Angeles",
+      "San Francisco",
+      "San Diego"
+    ],
+    "govDistractors": [
+      "Greg Abbott",
+      "Ron DeSantis",
+      "Kathy Hochul"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "CO": {
+    "name": "Colorado",
+    "capital": "Denver",
+    "gov": "Jared Polis",
+    "sens": [
+      "Michael Bennet",
+      "John Hickenlooper"
+    ],
+    "capitalDistractors": [
+      "Colorado Springs",
+      "Aurora",
+      "Boulder"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "CT": {
+    "name": "Connecticut",
+    "capital": "Hartford",
+    "gov": "Ned Lamont",
+    "sens": [
+      "Richard Blumenthal",
+      "Chris Murphy"
+    ],
+    "capitalDistractors": [
+      "Bridgeport",
+      "New Haven",
+      "Stamford"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "DE": {
+    "name": "Delaware",
+    "capital": "Dover",
+    "gov": "John Carney",
+    "sens": [
+      "Tom Carper",
+      "Chris Coons"
+    ],
+    "capitalDistractors": [
+      "Wilmington",
+      "Newark",
+      "Middletown"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "FL": {
+    "name": "Florida",
+    "capital": "Tallahassee",
+    "gov": "Ron DeSantis",
+    "sens": [
+      "Marco Rubio",
+      "Rick Scott"
+    ],
+    "capitalDistractors": [
+      "Miami",
+      "Orlando",
+      "Tampa"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Kathy Hochul"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "GA": {
+    "name": "Georgia",
+    "capital": "Atlanta",
+    "gov": "Brian Kemp",
+    "sens": [
+      "Jon Ossoff",
+      "Raphael Warnock"
+    ],
+    "capitalDistractors": [
+      "Savannah",
+      "Augusta",
+      "Columbus"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "HI": {
+    "name": "Hawaii",
+    "capital": "Honolulu",
+    "gov": "Josh Green",
+    "sens": [
+      "Brian Schatz",
+      "Mazie Hirono"
+    ],
+    "capitalDistractors": [
+      "Hilo",
+      "Kailua",
+      "Kahului"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "ID": {
+    "name": "Idaho",
+    "capital": "Boise",
+    "gov": "Brad Little",
+    "sens": [
+      "Mike Crapo",
+      "Jim Risch"
+    ],
+    "capitalDistractors": [
+      "Meridian",
+      "Nampa",
+      "Idaho Falls"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "IL": {
+    "name": "Illinois",
+    "capital": "Springfield",
+    "gov": "JB Pritzker",
+    "sens": [
+      "Dick Durbin",
+      "Tammy Duckworth"
+    ],
+    "capitalDistractors": [
+      "Chicago",
+      "Naperville",
+      "Rockford"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "IN": {
+    "name": "Indiana",
+    "capital": "Indianapolis",
+    "gov": "Eric Holcomb",
+    "sens": [
+      "Todd Young",
+      "Mike Braun"
+    ],
+    "capitalDistractors": [
+      "Fort Wayne",
+      "Evansville",
+      "South Bend"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "IA": {
+    "name": "Iowa",
+    "capital": "Des Moines",
+    "gov": "Kim Reynolds",
+    "sens": [
+      "Chuck Grassley",
+      "Joni Ernst"
+    ],
+    "capitalDistractors": [
+      "Cedar Rapids",
+      "Davenport",
+      "Sioux City"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "KS": {
+    "name": "Kansas",
+    "capital": "Topeka",
+    "gov": "Laura Kelly",
+    "sens": [
+      "Jerry Moran",
+      "Roger Marshall"
+    ],
+    "capitalDistractors": [
+      "Wichita",
+      "Overland Park",
+      "Kansas City"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "KY": {
+    "name": "Kentucky",
+    "capital": "Frankfort",
+    "gov": "Andy Beshear",
+    "sens": [
+      "Mitch McConnell",
+      "Rand Paul"
+    ],
+    "capitalDistractors": [
+      "Louisville",
+      "Lexington",
+      "Bowling Green"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "LA": {
+    "name": "Louisiana",
+    "capital": "Baton Rouge",
+    "gov": "Jeff Landry",
+    "sens": [
+      "Bill Cassidy",
+      "John Kennedy"
+    ],
+    "capitalDistractors": [
+      "New Orleans",
+      "Shreveport",
+      "Lafayette"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "ME": {
+    "name": "Maine",
+    "capital": "Augusta",
+    "gov": "Janet Mills",
+    "sens": [
+      "Susan Collins",
+      "Angus King"
+    ],
+    "capitalDistractors": [
+      "Portland",
+      "Bangor",
+      "Lewiston"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "MD": {
+    "name": "Maryland",
+    "capital": "Annapolis",
+    "gov": "Wes Moore",
+    "sens": [
+      "Ben Cardin",
+      "Chris Van Hollen"
+    ],
+    "capitalDistractors": [
+      "Baltimore",
+      "Frederick",
+      "Rockville"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "MA": {
+    "name": "Massachusetts",
+    "capital": "Boston",
+    "gov": "Maura Healey",
+    "sens": [
+      "Elizabeth Warren",
+      "Ed Markey"
+    ],
+    "capitalDistractors": [
+      "Worcester",
+      "Springfield",
+      "Cambridge"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "MI": {
+    "name": "Michigan",
+    "capital": "Lansing",
+    "gov": "Gretchen Whitmer",
+    "sens": [
+      "Debbie Stabenow",
+      "Gary Peters"
+    ],
+    "capitalDistractors": [
+      "Detroit",
+      "Grand Rapids",
+      "Ann Arbor"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "MN": {
+    "name": "Minnesota",
+    "capital": "Saint Paul",
+    "gov": "Tim Walz",
+    "sens": [
+      "Amy Klobuchar",
+      "Tina Smith"
+    ],
+    "capitalDistractors": [
+      "Minneapolis",
+      "Rochester",
+      "Duluth"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "MS": {
+    "name": "Mississippi",
+    "capital": "Jackson",
+    "gov": "Tate Reeves",
+    "sens": [
+      "Roger Wicker",
+      "Cindy Hyde-Smith"
+    ],
+    "capitalDistractors": [
+      "Gulfport",
+      "Southaven",
+      "Biloxi"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "MO": {
+    "name": "Missouri",
+    "capital": "Jefferson City",
+    "gov": "Mike Parson",
+    "sens": [
+      "Eric Schmitt",
+      "Josh Hawley"
+    ],
+    "capitalDistractors": [
+      "Kansas City",
+      "St. Louis",
+      "Springfield"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "MT": {
+    "name": "Montana",
+    "capital": "Helena",
+    "gov": "Greg Gianforte",
+    "sens": [
+      "Jon Tester",
+      "Steve Daines"
+    ],
+    "capitalDistractors": [
+      "Billings",
+      "Missoula",
+      "Great Falls"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "NE": {
+    "name": "Nebraska",
+    "capital": "Lincoln",
+    "gov": "Jim Pillen",
+    "sens": [
+      "Deb Fischer",
+      "Pete Ricketts"
+    ],
+    "capitalDistractors": [
+      "Omaha",
+      "Bellevue",
+      "Grand Island"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "NV": {
+    "name": "Nevada",
+    "capital": "Carson City",
+    "gov": "Joe Lombardo",
+    "sens": [
+      "Catherine Cortez Masto",
+      "Jacky Rosen"
+    ],
+    "capitalDistractors": [
+      "Las Vegas",
+      "Reno",
+      "Henderson"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "NH": {
+    "name": "New Hampshire",
+    "capital": "Concord",
+    "gov": "Chris Sununu",
+    "sens": [
+      "Jeanne Shaheen",
+      "Maggie Hassan"
+    ],
+    "capitalDistractors": [
+      "Manchester",
+      "Nashua",
+      "Derry"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "NJ": {
+    "name": "New Jersey",
+    "capital": "Trenton",
+    "gov": "Phil Murphy",
+    "sens": [
+      "Cory Booker",
+      "George Helmy"
+    ],
+    "capitalDistractors": [
+      "Newark",
+      "Jersey City",
+      "Paterson"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "NM": {
+    "name": "New Mexico",
+    "capital": "Santa Fe",
+    "gov": "Michelle Lujan Grisham",
+    "sens": [
+      "Martin Heinrich",
+      "Ben Ray Luj\u00e1n"
+    ],
+    "capitalDistractors": [
+      "Albuquerque",
+      "Las Cruces",
+      "Rio Rancho"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "NY": {
+    "name": "New York",
+    "capital": "Albany",
+    "gov": "Kathy Hochul",
+    "sens": [
+      "Chuck Schumer",
+      "Kirsten Gillibrand"
+    ],
+    "capitalDistractors": [
+      "New York City",
+      "Buffalo",
+      "Rochester"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Bernie Sanders",
+      "Alex Padilla"
+    ]
+  },
+  "NC": {
+    "name": "North Carolina",
+    "capital": "Raleigh",
+    "gov": "Roy Cooper",
+    "sens": [
+      "Thom Tillis",
+      "Ted Budd"
+    ],
+    "capitalDistractors": [
+      "Charlotte",
+      "Greensboro",
+      "Durham"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "ND": {
+    "name": "North Dakota",
+    "capital": "Bismarck",
+    "gov": "Doug Burgum",
+    "sens": [
+      "John Hoeven",
+      "Kevin Cramer"
+    ],
+    "capitalDistractors": [
+      "Fargo",
+      "Grand Forks",
+      "Minot"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "OH": {
+    "name": "Ohio",
+    "capital": "Columbus",
+    "gov": "Mike DeWine",
+    "sens": [
+      "Sherrod Brown",
+      "JD Vance"
+    ],
+    "capitalDistractors": [
+      "Cleveland",
+      "Cincinnati",
+      "Toledo"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "OK": {
+    "name": "Oklahoma",
+    "capital": "Oklahoma City",
+    "gov": "Kevin Stitt",
+    "sens": [
+      "James Lankford",
+      "Markwayne Mullin"
+    ],
+    "capitalDistractors": [
+      "Tulsa",
+      "Norman",
+      "Broken Arrow"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "OR": {
+    "name": "Oregon",
+    "capital": "Salem",
+    "gov": "Tina Kotek",
+    "sens": [
+      "Ron Wyden",
+      "Jeff Merkley"
+    ],
+    "capitalDistractors": [
+      "Portland",
+      "Eugene",
+      "Bend"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "PA": {
+    "name": "Pennsylvania",
+    "capital": "Harrisburg",
+    "gov": "Josh Shapiro",
+    "sens": [
+      "Bob Casey Jr.",
+      "John Fetterman"
+    ],
+    "capitalDistractors": [
+      "Philadelphia",
+      "Pittsburgh",
+      "Allentown"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "RI": {
+    "name": "Rhode Island",
+    "capital": "Providence",
+    "gov": "Dan McKee",
+    "sens": [
+      "Jack Reed",
+      "Sheldon Whitehouse"
+    ],
+    "capitalDistractors": [
+      "Warwick",
+      "Cranston",
+      "Pawtucket"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "SC": {
+    "name": "South Carolina",
+    "capital": "Columbia",
+    "gov": "Henry McMaster",
+    "sens": [
+      "Lindsey Graham",
+      "Tim Scott"
+    ],
+    "capitalDistractors": [
+      "Charleston",
+      "Greenville",
+      "Mount Pleasant"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "SD": {
+    "name": "South Dakota",
+    "capital": "Pierre",
+    "gov": "Kristi Noem",
+    "sens": [
+      "John Thune",
+      "Mike Rounds"
+    ],
+    "capitalDistractors": [
+      "Sioux Falls",
+      "Rapid City",
+      "Aberdeen"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "TN": {
+    "name": "Tennessee",
+    "capital": "Nashville",
+    "gov": "Bill Lee",
+    "sens": [
+      "Marsha Blackburn",
+      "Bill Hagerty"
+    ],
+    "capitalDistractors": [
+      "Memphis",
+      "Knoxville",
+      "Chattanooga"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "TX": {
+    "name": "Texas",
+    "capital": "Austin",
+    "gov": "Greg Abbott",
+    "sens": [
+      "John Cornyn",
+      "Ted Cruz"
+    ],
+    "capitalDistractors": [
+      "Houston",
+      "Dallas",
+      "San Antonio"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Ron DeSantis",
+      "Kathy Hochul"
+    ],
+    "senDistractors": [
+      "Chuck Schumer",
+      "Bernie Sanders",
+      "Alex Padilla"
+    ]
+  },
+  "UT": {
+    "name": "Utah",
+    "capital": "Salt Lake City",
+    "gov": "Spencer Cox",
+    "sens": [
+      "Mike Lee",
+      "Mitt Romney"
+    ],
+    "capitalDistractors": [
+      "Provo",
+      "West Valley City",
+      "Ogden"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "VT": {
+    "name": "Vermont",
+    "capital": "Montpelier",
+    "gov": "Phil Scott",
+    "sens": [
+      "Bernie Sanders",
+      "Peter Welch"
+    ],
+    "capitalDistractors": [
+      "Burlington",
+      "South Burlington",
+      "Rutland"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Alex Padilla"
+    ]
+  },
+  "VA": {
+    "name": "Virginia",
+    "capital": "Richmond",
+    "gov": "Glenn Youngkin",
+    "sens": [
+      "Mark Warner",
+      "Tim Kaine"
+    ],
+    "capitalDistractors": [
+      "Virginia Beach",
+      "Norfolk",
+      "Chesapeake"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "WA": {
+    "name": "Washington",
+    "capital": "Olympia",
+    "gov": "Jay Inslee",
+    "sens": [
+      "Patty Murray",
+      "Maria Cantwell"
+    ],
+    "capitalDistractors": [
+      "Seattle",
+      "Spokane",
+      "Tacoma"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "WV": {
+    "name": "West Virginia",
+    "capital": "Charleston",
+    "gov": "Jim Justice",
+    "sens": [
+      "Joe Manchin",
+      "Shelley Moore Capito"
+    ],
+    "capitalDistractors": [
+      "Huntington",
+      "Morgantown",
+      "Parkersburg"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "WI": {
+    "name": "Wisconsin",
+    "capital": "Madison",
+    "gov": "Tony Evers",
+    "sens": [
+      "Ron Johnson",
+      "Tammy Baldwin"
+    ],
+    "capitalDistractors": [
+      "Milwaukee",
+      "Green Bay",
+      "Kenosha"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "WY": {
+    "name": "Wyoming",
+    "capital": "Cheyenne",
+    "gov": "Mark Gordon",
+    "sens": [
+      "John Barrasso",
+      "Cynthia Lummis"
+    ],
+    "capitalDistractors": [
+      "Casper",
+      "Laramie",
+      "Gillette"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "DC": {
+    "name": "District of Columbia",
+    "capital": "D.C. is not a state and has no capital",
+    "gov": "Mayor Muriel Bowser (D.C. has no Governor)",
+    "sens": [
+      "D.C. has no U.S. Senators"
+    ],
+    "capitalDistractors": [
+      "Georgetown",
+      "Capitol Hill",
+      "Anacostia"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  },
+  "PR": {
+    "name": "Puerto Rico",
+    "capital": "San Juan",
+    "gov": "Pedro Pierluisi",
+    "sens": [
+      "Resident Commissioner: Jenniffer Gonz\u00e1lez-Col\u00f3n (No Senators)"
+    ],
+    "capitalDistractors": [
+      "Ponce",
+      "Bayam\u00f3n",
+      "Mayag\u00fcez"
+    ],
+    "govDistractors": [
+      "Gavin Newsom",
+      "Greg Abbott",
+      "Ron DeSantis"
+    ],
+    "senDistractors": [
+      "Ted Cruz",
+      "Chuck Schumer",
+      "Bernie Sanders"
+    ]
+  }
+}
