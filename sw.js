@@ -1,4 +1,4 @@
-const CACHE_NAME = 'civics-128-v2.9-interactive-cinema';
+const CACHE_NAME = 'civics-128-v3.0-firebase-cloud-sync';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -72,7 +72,17 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // External CDNs (Tailwind, Fonts)
+  // Let Firebase Auth and Firestore API requests go straight to network
+  if (url.hostname.includes('identitytoolkit.googleapis.com') ||
+      url.hostname.includes('firestore.googleapis.com') ||
+      url.hostname.includes('securetoken.googleapis.com') ||
+      url.hostname.includes('firebaseinstallations.googleapis.com') ||
+      url.hostname.includes('apis.google.com') ||
+      url.hostname.includes('accounts.google.com')) {
+    return;
+  }
+
+  // External CDNs (Tailwind, Fonts, Firebase static scripts)
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) return cachedResponse;
