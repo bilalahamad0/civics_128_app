@@ -1,4 +1,4 @@
-const CACHE_NAME = 'civics-128-v2.7-calibrated-audio-stick';
+const CACHE_NAME = 'civics-128-v2.8-anime-sensei-stick';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

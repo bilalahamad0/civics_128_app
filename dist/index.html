@@ -111,7 +111,7 @@
       75% { transform: scaleY(1.4) scaleX(1.15); }
     }
     .mouth-talking {
-      transform-origin: 100px 107px;
+      transform-origin: 100px 104px;
       animation: mouthTalk 0.22s infinite ease-in-out;
     }
     @keyframes eyeBlink {
@@ -122,10 +122,10 @@
       animation: eyeBlink 3.8s infinite;
     }
     .eye-left {
-      transform-origin: 86px 82px;
+      transform-origin: 85px 80px;
     }
     .eye-right {
-      transform-origin: 114px 82px;
+      transform-origin: 115px 80px;
     }
     @keyframes batonPoint {
       0%, 100% { transform: rotate(0deg); }
@@ -1484,7 +1484,7 @@
               <div class="w-40 sm:w-48 h-48 sm:h-56 relative flex items-center justify-center">
                 <svg id="cw-prof-svg" class="w-full h-full drop-shadow-2xl" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <!-- Glow aura behind teacher -->
-                  <circle cx="100" cy="110" r="85" fill="#3b82f6" opacity="0.12" filter="blur(20px)" />
+                  <circle cx="100" cy="110" r="85" fill="#3b82f6" opacity="0.15" filter="blur(20px)" />
                   
                   <!-- Academic Coat / Torso -->
                   <path d="M45,230 L55,145 L80,135 L120,135 L145,145 L155,230 Z" fill="#1e293b" />
@@ -1494,64 +1494,80 @@
                   <!-- White Shirt Collar -->
                   <polygon points="85,135 100,165 115,135" fill="#f8fafc" />
                   
-                  <!-- Crimson Bowtie -->
+                  <!-- Crimson Ribbon Tie -->
                   <polygon points="90,143 100,150 90,157" fill="#dc2626" />
                   <polygon points="110,143 100,150 110,157" fill="#dc2626" />
                   <circle cx="100" cy="150" r="3.5" fill="#b91c1c" />
+                  <path d="M96,152 L91,168 L98,168 Z" fill="#b91c1c" />
+                  <path d="M104,152 L109,168 L102,168 Z" fill="#b91c1c" />
 
                   <!-- Golden Academic Pin -->
                   <circle cx="125" cy="165" r="4" fill="#fbbf24" stroke="#d97706" stroke-width="1" />
 
                   <!-- Head & Neck -->
                   <rect x="92" y="115" width="16" height="22" rx="4" fill="#fed7aa" />
-                  <ellipse cx="100" cy="85" rx="36" ry="40" fill="#fed7aa" />
                   
-                  <!-- Professorial Hair (Silvery Gray) -->
-                  <path d="M64,80 C60,65 70,55 78,52 C85,50 115,50 122,52 C130,55 140,65 136,80 C134,88 136,98 138,105 C132,102 128,95 128,90 C128,85 72,85 72,90 C72,95 68,102 62,105 C64,98 66,88 64,80 Z" fill="#e2e8f0" />
+                  <!-- Anime Back Hair (Dark Indigo / Violet) -->
+                  <path d="M60,65 C55,40 75,22 100,22 C125,22 145,40 140,65 C146,95 148,135 142,145 C136,120 135,95 135,90 C135,80 65,80 65,90 C65,95 64,120 58,145 C52,135 54,95 60,65 Z" fill="#1e1b4b" />
                   
-                  <!-- Eyebrows -->
-                  <path d="M78,72 Q86,67 94,72" stroke="#64748b" stroke-width="2.5" stroke-linecap="round" fill="none" />
-                  <path d="M106,72 Q114,67 122,72" stroke="#64748b" stroke-width="2.5" stroke-linecap="round" fill="none" />
+                  <!-- Face Shape -->
+                  <path d="M68,75 C68,55 80,48 100,48 C120,48 132,55 132,75 C132,95 125,120 100,126 C75,120 68,95 68,75 Z" fill="#fed7aa" />
+                  
+                  <!-- Cute Anime Cheeks Blush -->
+                  <ellipse cx="75" cy="92" rx="6" ry="3" fill="#f43f5e" opacity="0.3" />
+                  <ellipse cx="125" cy="92" rx="6" ry="3" fill="#f43f5e" opacity="0.3" />
 
-                  <!-- Spectacles / Glasses (Gold Wireframe) -->
-                  <circle cx="86" cy="82" r="11" fill="none" stroke="#d97706" stroke-width="2.5" />
-                  <circle cx="114" cy="82" r="11" fill="none" stroke="#d97706" stroke-width="2.5" />
-                  <line x1="97" y1="82" x2="103" y2="82" stroke="#d97706" stroke-width="2.5" />
-                  <line x1="75" y1="80" x2="68" y2="76" stroke="#d97706" stroke-width="1.8" />
-                  <line x1="125" y1="80" x2="132" y2="76" stroke="#d97706" stroke-width="1.8" />
+                  <!-- Anime Front Fringe / Bangs (No Graduation Cap!) -->
+                  <path d="M64,48 C75,55 78,72 82,75 C86,60 92,54 100,56 C108,54 114,60 118,75 C122,72 125,55 136,48 C125,32 75,32 64,48 Z" fill="#2e1065" />
+                  <path d="M63,68 C61,85 63,108 67,118 C69,114 70,95 70,80 Z" fill="#2e1065" />
+                  <path d="M137,68 C139,85 137,108 133,118 C131,114 130,95 130,80 Z" fill="#2e1065" />
+
+                  <!-- Golden Anime Hair Barrette -->
+                  <polygon points="126,48 128,52 133,52 129,55 131,59 126,56 121,59 123,55 119,52 124,52" fill="#fbbf24" stroke="#d97706" stroke-width="0.7" />
+
+                  <!-- Eyebrows -->
+                  <path d="M75,67 Q85,63 94,67" stroke="#475569" stroke-width="2" stroke-linecap="round" fill="none" />
+                  <path d="M106,67 Q115,63 125,67" stroke="#475569" stroke-width="2" stroke-linecap="round" fill="none" />
+
+                  <!-- Spectacles / Glasses (Gold Wireframe situated at y=80) -->
+                  <rect x="72" y="69" width="26" height="22" rx="7" fill="#ffffff" fill-opacity="0.08" stroke="#d97706" stroke-width="2.2" />
+                  <rect x="102" y="69" width="26" height="22" rx="7" fill="#ffffff" fill-opacity="0.08" stroke="#d97706" stroke-width="2.2" />
+                  <line x1="98" y1="80" x2="102" y2="80" stroke="#d97706" stroke-width="2.2" />
+                  <line x1="72" y1="78" x2="65" y2="74" stroke="#d97706" stroke-width="1.8" />
+                  <line x1="128" y1="78" x2="135" y2="74" stroke="#d97706" stroke-width="1.8" />
 
                   <!-- Blinking Eyes (Restricted strictly inside glasses vertically) -->
                   <g class="eye-blinking eye-left">
-                    <circle cx="86" cy="82" r="3.2" fill="#1e293b" />
-                    <circle cx="87.5" cy="80.5" r="1.2" fill="#ffffff" />
+                    <ellipse cx="85" cy="80" rx="5.5" ry="6.5" fill="#1e1b4b" />
+                    <ellipse cx="85" cy="80" rx="3.8" ry="5" fill="#3b82f6" />
+                    <circle cx="85" cy="80" r="2.5" fill="#0f172a" />
+                    <circle cx="83.5" cy="77.5" r="1.6" fill="#ffffff" />
+                    <circle cx="87" cy="82" r="1" fill="#ffffff" />
                   </g>
                   <g class="eye-blinking eye-right">
-                    <circle cx="114" cy="82" r="3.2" fill="#1e293b" />
-                    <circle cx="115.5" cy="80.5" r="1.2" fill="#ffffff" />
+                    <ellipse cx="115" cy="80" rx="5.5" ry="6.5" fill="#1e1b4b" />
+                    <ellipse cx="115" cy="80" rx="3.8" ry="5" fill="#3b82f6" />
+                    <circle cx="115" cy="80" r="2.5" fill="#0f172a" />
+                    <circle cx="113.5" cy="77.5" r="1.6" fill="#ffffff" />
+                    <circle cx="117" cy="82" r="1" fill="#ffffff" />
                   </g>
 
-                  <!-- Distinguished Mustache -->
-                  <path d="M84,98 Q100,103 116,98 Q100,107 84,98 Z" fill="#cbd5e1" />
+                  <!-- Cute Anime Nose Dot -->
+                  <circle cx="100" cy="92" r="1.2" fill="#d97706" />
 
                   <!-- Animated Speaking Mouth -->
-                  <ellipse id="prof-mouth" cx="100" cy="107" rx="7" ry="3.5" fill="#881337" />
+                  <ellipse id="prof-mouth" cx="100" cy="104" rx="5.5" ry="2.8" fill="#be123c" />
 
-                  <!-- Mortarboard Cap (Graduation / Scholar) -->
-                  <polygon points="100,20 162,38 100,56 38,38" fill="#1e1b4b" stroke="#312e81" stroke-width="2" />
-                  <rect x="76" y="44" width="48" height="15" rx="4" fill="#1e1b4b" />
-                  <!-- Gold Cap Button & Tassel -->
-                  <circle cx="100" cy="38" r="4" fill="#fbbf24" />
-                  <path d="M100,38 Q138,44 144,68" stroke="#f59e0b" stroke-width="2.5" fill="none" />
-                  <circle cx="144" cy="70" r="4" fill="#fbbf24" />
-
-                  <!-- Animated Left Arm with Pointer Baton (Stick Only, No Hand) -->
+                  <!-- Animated Arm with Teaching Pointer Stick (Stick Only, No Hand) -->
                   <g id="prof-arm" class="baton-pointing">
-                    <!-- Arm Sleeve -->
-                    <path d="M55,145 L25,125 L35,115 L65,135 Z" fill="#1e293b" />
-                    <!-- Wooden Teaching Pointer Baton extending from sleeve -->
-                    <line x1="28" y1="122" x2="-20" y2="70" stroke="#78350f" stroke-width="3.5" stroke-linecap="round" />
-                    <!-- Gold Tip on Baton -->
-                    <circle cx="-20" cy="70" r="3" fill="#fbbf24" />
+                    <!-- Blazer Sleeve -->
+                    <path d="M55,145 L32,120 L40,112 L65,135 Z" fill="#1e293b" />
+                    <!-- White Shirt Cuff -->
+                    <polygon points="28,122 35,116 32,111 25,117" fill="#f8fafc" />
+                    <!-- Wooden Teaching Pointer Stick extending from sleeve (Stick Only, No Hand) -->
+                    <line x1="28" y1="116" x2="-26" y2="65" stroke="#92400e" stroke-width="3.5" stroke-linecap="round" />
+                    <!-- Polished Gold Brass Pointer Tip -->
+                    <circle cx="-26" cy="65" r="3.5" fill="#fbbf24" stroke="#d97706" stroke-width="1" />
                   </g>
                 </svg>
               </div>
