@@ -469,21 +469,21 @@
                   </div>
                 </div>
 
-                <!-- Origin classification note -->
-                <div id="fc-origin-box" class="mt-3 p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-xs text-slate-300 flex items-start gap-2">
-                  <span id="fc-origin-icon" class="text-indigo-400 font-bold shrink-0">🆕</span>
+                <!-- Civic Tip / Context Box (Important Learning Focus) -->
+                <div id="fc-tip-box" class="mt-3.5 p-3 rounded-xl bg-amber-950/30 border border-amber-500/30 text-xs text-amber-100 flex items-start gap-2.5 shadow-sm">
+                  <span class="text-amber-400 text-base leading-none shrink-0 mt-0.5">💡</span>
                   <div>
-                    <span id="fc-origin-badge-text" class="font-semibold text-slate-200">New in 128:</span>
-                    <span id="fc-origin-note-text" class="text-slate-300">Newly added question in the 128-question test pool.</span>
+                    <span class="font-bold text-amber-300">Study Tip:</span>
+                    <span id="fc-tip-text" class="text-slate-200 leading-relaxed ml-1">The United States is a constitutional federal republic...</span>
                   </div>
                 </div>
 
-                <!-- Civic Tip / Context Box -->
-                <div id="fc-tip-box" class="mt-3 p-3 rounded-xl bg-slate-800/80 border border-slate-700/80 text-xs text-slate-300 flex items-start gap-2.5">
-                  <span class="text-amber-400 text-base leading-none">💡</span>
-                  <div>
-                    <span class="font-bold text-slate-200">Study Tip:</span>
-                    <span id="fc-tip-text">The United States is a constitutional federal republic...</span>
+                <!-- Origin Status Footnote (Footnote on the card) -->
+                <div id="fc-origin-box" class="mt-2.5 p-2 rounded-xl bg-slate-900/60 border border-slate-800/80 text-[11px] text-slate-400 flex items-start gap-2">
+                  <span id="fc-origin-icon" class="text-slate-400 text-xs shrink-0 mt-0.5">🆕</span>
+                  <div class="leading-tight">
+                    <span id="fc-origin-badge-text" class="font-semibold text-slate-300">New in 128:</span>
+                    <span id="fc-origin-note-text" class="text-slate-400 ml-1">Newly added question in the 128-question test pool.</span>
                   </div>
                 </div>
               </div>
@@ -2096,28 +2096,35 @@
         }
       }
 
-      // Origin Box on Back
+      // Origin Footnote on Back (Subtle footnote underneath the primary Study Tip)
       const originBox = document.getElementById('fc-origin-box');
       const originIcon = document.getElementById('fc-origin-icon');
       const originBadgeText = document.getElementById('fc-origin-badge-text');
       const originNoteText = document.getElementById('fc-origin-note-text');
       if (originBox && originIcon && originBadgeText && originNoteText) {
+        let note = q.originNote || '';
+        let badge = '';
+        let icon = '📋';
         if (q.origin === 'new') {
-          originIcon.textContent = '🆕';
-          originBadgeText.textContent = 'New in 128 Test:';
-          originNoteText.textContent = q.originNote || 'Newly added in the official 128-question civics examination pool.';
-          originBox.classList.remove('hidden');
+          icon = '🆕';
+          badge = 'New in 128 Test:';
+          note = note || 'Newly added to the expanded 128-question civics examination pool.';
         } else if (q.origin === 'amended') {
-          originIcon.textContent = '✏️';
-          originBadgeText.textContent = 'Amended Question:';
-          originNoteText.textContent = q.originNote || 'Wording, scope, or answer count amended from the older 100-question test.';
-          originBox.classList.remove('hidden');
+          icon = '✏️';
+          badge = 'Amended Question:';
+          note = note || 'Wording, scope, or answer count amended from the older 100-question test.';
         } else {
-          originIcon.textContent = '📋';
-          originBadgeText.textContent = 'Standard Retained:';
-          originNoteText.textContent = q.originNote || 'Carried over from the standard 2008 naturalization civics test.';
-          originBox.classList.remove('hidden');
+          icon = '📋';
+          badge = 'Standard Retained:';
+          note = note || 'Carried over from the standard 2008 naturalization civics test.';
         }
+        if (q.is6520) {
+          note += ' (Designated for 65/20 Special Exemption applicants).';
+        }
+        originIcon.textContent = icon;
+        originBadgeText.textContent = badge;
+        originNoteText.textContent = note;
+        originBox.classList.remove('hidden');
       }
 
       // Tip Text

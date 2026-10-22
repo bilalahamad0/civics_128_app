@@ -402,21 +402,21 @@ def create_body_html():
                   </div>
                 </div>
 
-                <!-- Origin classification note -->
-                <div id="fc-origin-box" class="mt-3 p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-xs text-slate-300 flex items-start gap-2">
-                  <span id="fc-origin-icon" class="text-indigo-400 font-bold shrink-0">🆕</span>
+                <!-- Civic Tip / Context Box (Important Learning Focus) -->
+                <div id="fc-tip-box" class="mt-3.5 p-3 rounded-xl bg-amber-950/30 border border-amber-500/30 text-xs text-amber-100 flex items-start gap-2.5 shadow-sm">
+                  <span class="text-amber-400 text-base leading-none shrink-0 mt-0.5">💡</span>
                   <div>
-                    <span id="fc-origin-badge-text" class="font-semibold text-slate-200">New in 128:</span>
-                    <span id="fc-origin-note-text" class="text-slate-300">Newly added question in the 128-question test pool.</span>
+                    <span class="font-bold text-amber-300">Study Tip:</span>
+                    <span id="fc-tip-text" class="text-slate-200 leading-relaxed ml-1">The United States is a constitutional federal republic...</span>
                   </div>
                 </div>
 
-                <!-- Civic Tip / Context Box -->
-                <div id="fc-tip-box" class="mt-3 p-3 rounded-xl bg-slate-800/80 border border-slate-700/80 text-xs text-slate-300 flex items-start gap-2.5">
-                  <span class="text-amber-400 text-base leading-none">💡</span>
-                  <div>
-                    <span class="font-bold text-slate-200">Study Tip:</span>
-                    <span id="fc-tip-text">The United States is a constitutional federal republic...</span>
+                <!-- Origin Status Footnote (Footnote on the card) -->
+                <div id="fc-origin-box" class="mt-2.5 p-2 rounded-xl bg-slate-900/60 border border-slate-800/80 text-[11px] text-slate-400 flex items-start gap-2">
+                  <span id="fc-origin-icon" class="text-slate-400 text-xs shrink-0 mt-0.5">🆕</span>
+                  <div class="leading-tight">
+                    <span id="fc-origin-badge-text" class="font-semibold text-slate-300">New in 128:</span>
+                    <span id="fc-origin-note-text" class="text-slate-400 ml-1">Newly added question in the 128-question test pool.</span>
                   </div>
                 </div>
               </div>

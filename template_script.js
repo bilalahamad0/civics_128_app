@@ -530,28 +530,35 @@
         }
       }
 
-      // Origin Box on Back
+      // Origin Footnote on Back (Subtle footnote underneath the primary Study Tip)
       const originBox = document.getElementById('fc-origin-box');
       const originIcon = document.getElementById('fc-origin-icon');
       const originBadgeText = document.getElementById('fc-origin-badge-text');
       const originNoteText = document.getElementById('fc-origin-note-text');
       if (originBox && originIcon && originBadgeText && originNoteText) {
+        let note = q.originNote || '';
+        let badge = '';
+        let icon = '📋';
         if (q.origin === 'new') {
-          originIcon.textContent = '🆕';
-          originBadgeText.textContent = 'New in 128 Test:';
-          originNoteText.textContent = q.originNote || 'Newly added in the official 128-question civics examination pool.';
-          originBox.classList.remove('hidden');
+          icon = '🆕';
+          badge = 'New in 128 Test:';
+          note = note || 'Newly added to the expanded 128-question civics examination pool.';
         } else if (q.origin === 'amended') {
-          originIcon.textContent = '✏️';
-          originBadgeText.textContent = 'Amended Question:';
-          originNoteText.textContent = q.originNote || 'Wording, scope, or answer count amended from the older 100-question test.';
-          originBox.classList.remove('hidden');
+          icon = '✏️';
+          badge = 'Amended Question:';
+          note = note || 'Wording, scope, or answer count amended from the older 100-question test.';
         } else {
-          originIcon.textContent = '📋';
-          originBadgeText.textContent = 'Standard Retained:';
-          originNoteText.textContent = q.originNote || 'Carried over from the standard 2008 naturalization civics test.';
-          originBox.classList.remove('hidden');
+          icon = '📋';
+          badge = 'Standard Retained:';
+          note = note || 'Carried over from the standard 2008 naturalization civics test.';
         }
+        if (q.is6520) {
+          note += ' (Designated for 65/20 Special Exemption applicants).';
+        }
+        originIcon.textContent = icon;
+        originBadgeText.textContent = badge;
+        originNoteText.textContent = note;
+        originBox.classList.remove('hidden');
       }
 
       // Tip Text
