@@ -1295,8 +1295,17 @@ def create_body_html():
                   </div>
                 </div>
 
-                <!-- Study Tip -->
-                <div id="cw-tip-box" class="p-4 rounded-2xl bg-amber-950/30 border border-amber-500/40 text-amber-200 space-y-1.5 shadow-lg">
+                <!-- Study Tip Placeholder (Active until audio reaches Study Tip) -->
+                <div id="cw-tip-placeholder" class="p-3.5 rounded-2xl border border-dashed border-amber-500/40 bg-amber-950/20 text-amber-300 text-xs flex items-center justify-between cursor-pointer hover:border-amber-400 hover:text-amber-200 transition shadow-sm" title="Click to reveal Study Tip early">
+                  <div class="flex items-center gap-2">
+                    <span class="text-sm">💡</span>
+                    <span class="font-medium">Study Tip reveals when reached in lesson narration...</span>
+                  </div>
+                  <span class="text-[11px] underline font-bold text-amber-400 hover:text-amber-300">Reveal Now ➔</span>
+                </div>
+
+                <!-- Study Tip (Hidden initially, reveals with animation when audio reaches study tip) -->
+                <div id="cw-tip-box" class="hidden p-4 rounded-2xl bg-amber-950/30 border border-amber-500/40 text-amber-200 space-y-1.5 shadow-lg">
                   <div class="flex items-center gap-2 text-xs font-bold text-amber-300 uppercase tracking-wider">
                     <span>💡</span>
                     <span>Study Tip:</span>
