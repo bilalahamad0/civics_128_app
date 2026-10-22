@@ -254,6 +254,11 @@ def create_body_html():
           <span>📊</span>
           <span>4. Readiness & Checklist</span>
         </button>
+        <button id="nav-coursework" class="tab-btn px-4 py-3 font-semibold text-sm rounded-t-xl transition flex items-center gap-2 border-b-2 border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/40 shrink-0">
+          <span>🎓</span>
+          <span>5. Animated Coursework</span>
+          <span class="px-2 py-0.5 text-[10px] bg-gradient-to-r from-amber-500 to-indigo-500 text-white font-black rounded-full shadow-sm animate-pulse">CINEMA</span>
+        </button>
       </nav>
     </div>
   </header>
@@ -1171,6 +1176,381 @@ def create_body_html():
           <button id="btn-reset-data" class="px-4 py-2 rounded-xl bg-rose-950/60 hover:bg-rose-900 text-rose-300 text-xs font-semibold border border-rose-800/40 transition">
             🔄 Reset All Progress
           </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== VIEW 5: ANIMATED COURSEWORK & CLASSROOM ==================== -->
+    <section id="view-coursework" class="view-panel hidden space-y-6">
+      
+      <!-- Coursework Header & Unit Progress Ribbon -->
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-xl space-y-4">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <!-- Left: Unit Info & Badge -->
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span id="cw-unit-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-blue-950 text-blue-300 border border-blue-500/40">Unit 1 of 8</span>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-950 text-indigo-300 border border-indigo-500/30">Guided Naturalization Path</span>
+              <span id="cw-status-badge" class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">Official USCIS 128 Pool</span>
+            </div>
+            <h2 id="cw-unit-title" class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">Principles of American Democracy &amp; The Constitution</h2>
+            <p id="cw-progress-pill" class="text-xs text-slate-400">Lesson 1 of 128 &bull; 0 / 128 Mastered across Curriculum</p>
+          </div>
+
+          <!-- Right: Controls & Selectors -->
+          <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+            <!-- Unit Selector Dropdown -->
+            <div class="space-y-1">
+              <label for="cw-unit-select" class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Jump to Unit:</label>
+              <select id="cw-unit-select" class="bg-slate-800 border border-slate-700 text-slate-100 text-xs rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-[200px] sm:max-w-[240px]">
+                <option value="1">Unit 1: Principles &amp; Constitution (Q1–12)</option>
+                <option value="2">Unit 2: Congress &amp; Legislative Branch (Q13–35)</option>
+                <option value="3">Unit 3: President &amp; Executive Branch (Q36–54)</option>
+                <option value="4">Unit 4: Supreme Court &amp; Judicial Branch (Q55–60)</option>
+                <option value="5">Unit 5: State Government &amp; California (Q61–67)</option>
+                <option value="6">Unit 6: Rights, Freedoms &amp; Responsibilities (Q68–72)</option>
+                <option value="7">Unit 7: Colonial Period &amp; 1800s History (Q73–98)</option>
+                <option value="8">Unit 8: Modern History, Wars &amp; Symbols (Q99–128)</option>
+              </select>
+            </div>
+
+            <!-- Lesson Selector Dropdown -->
+            <div class="space-y-1">
+              <label for="cw-lesson-select" class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Jump to Lesson:</label>
+              <select id="cw-lesson-select" class="bg-slate-800 border border-slate-700 text-slate-100 text-xs rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-[170px] sm:max-w-[200px]">
+                <!-- Populated dynamically with 128 lessons -->
+              </select>
+            </div>
+
+            <!-- Quick Action Buttons -->
+            <div class="flex items-center gap-2 pt-4">
+              <button id="cw-btn-star" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-amber-400 border border-slate-700 transition" title="Star / Bookmark Lesson">
+                <span id="cw-star-icon" class="text-base">☆</span>
+              </button>
+              <button id="cw-btn-mastered" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-emerald-950/80 text-slate-300 hover:text-emerald-300 border border-slate-700 hover:border-emerald-600/50 text-xs font-semibold transition flex items-center gap-1.5" title="Mark as Mastered">
+                <span id="cw-master-check">○</span>
+                <span id="cw-master-label">Master</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Progress Bar Across Whole Coursework -->
+        <div class="space-y-1 pt-1">
+          <div class="flex justify-between text-[11px] text-slate-400 font-medium">
+            <span>Overall Coursework Mastery</span>
+            <span id="cw-progress-percent">0% Completed</span>
+          </div>
+          <div class="w-full bg-slate-800/80 h-2.5 rounded-full overflow-hidden">
+            <div id="cw-overall-progress" class="bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-400 h-full w-0 transition-all duration-500"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- The Animated Blackboard Cinema Stage -->
+      <div id="cw-cinema-stage" class="chalk-wood-frame rounded-3xl p-3 sm:p-5 md:p-6 relative overflow-hidden">
+        
+        <!-- Blackboard Slate Canvas -->
+        <div class="chalkboard-stage rounded-2xl p-5 sm:p-7 md:p-9 relative border border-emerald-900/40 shadow-inner flex flex-col justify-between min-h-[580px]">
+          
+          <!-- Top Blackboard Header Bar -->
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-900/60 pb-3 mb-6">
+            <div class="flex items-center gap-2.5">
+              <span id="cw-chalk-lesson-num" class="chalk-font chalk-cyan text-sm sm:text-lg font-bold tracking-wider">LESSON 1 OF 128</span>
+              <span id="cw-chalk-tag" class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-950/90 text-emerald-300 border border-emerald-600/50">Official 128 Exam</span>
+            </div>
+            <div id="cw-chalk-category" class="chalk-font chalk-white text-xs sm:text-sm opacity-80">
+              American Government &bull; Principles of American Democracy
+            </div>
+          </div>
+
+          <!-- Center Stage Grid: Left Blackboard Content vs Right Professor & Artifact -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch flex-1">
+            
+            <!-- Left Area: Chalk Lesson (Cols 7 on lg) -->
+            <div class="lg:col-span-7 flex flex-col justify-between space-y-5">
+              
+              <!-- Standard Blackboard Content (Question, Answers, Tip) -->
+              <div id="cw-chalk-main-content" class="space-y-5">
+                <!-- Question -->
+                <div class="space-y-1">
+                  <div class="text-[11px] uppercase tracking-wider text-emerald-400/90 font-bold flex items-center gap-1.5">
+                    <span>📌</span>
+                    <span>Official USCIS Examination Question:</span>
+                  </div>
+                  <h3 id="cw-chalk-question" class="chalk-font chalk-white text-xl sm:text-2xl md:text-3xl font-bold leading-relaxed">
+                    What is the form of government of the United States?
+                  </h3>
+                </div>
+
+                <!-- Accepted Answers -->
+                <div class="space-y-2">
+                  <div class="text-[11px] uppercase tracking-wider text-emerald-300/90 font-bold flex items-center gap-1.5">
+                    <span>✓</span>
+                    <span>Accepted Oral Answers:</span>
+                  </div>
+                  <div id="cw-chalk-answers" class="space-y-2">
+                    <!-- Dynamic Answer Pills -->
+                  </div>
+                </div>
+
+                <!-- Professor's Study Tip & Memory Key -->
+                <div id="cw-tip-box" class="p-4 rounded-2xl bg-amber-950/30 border border-amber-500/40 text-amber-200 space-y-1.5 shadow-lg">
+                  <div class="flex items-center gap-2 text-xs font-bold text-amber-300 uppercase tracking-wider">
+                    <span>💡</span>
+                    <span>Professor Civics's Study Tip &amp; Memory Hook:</span>
+                  </div>
+                  <p id="cw-chalk-tip" class="chalk-font chalk-amber text-base sm:text-lg leading-relaxed">
+                    The United States is a constitutional federal republic where citizens elect representatives.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Interactive Pop Quiz Card (Hidden by default, toggled via Pop Quiz button) -->
+              <div id="cw-pop-quiz-box" class="hidden p-5 rounded-2xl bg-slate-900/95 border-2 border-indigo-500/80 shadow-2xl space-y-4">
+                <div class="flex items-center justify-between border-b border-indigo-900/50 pb-2">
+                  <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-indigo-300">
+                    <span class="text-sm">⚡</span>
+                    <span>Pop Quiz: Quick Comprehension Check</span>
+                  </div>
+                  <button id="cw-btn-close-quiz" class="text-slate-400 hover:text-white text-xs px-2 py-1 rounded bg-slate-800">Close ✕</button>
+                </div>
+                <p id="cw-pop-quiz-question" class="text-sm sm:text-base font-bold text-white leading-snug">
+                  What is the form of government of the United States?
+                </p>
+                <div id="cw-pop-quiz-options" class="space-y-2 text-xs sm:text-sm">
+                  <!-- Dynamic Option Buttons -->
+                </div>
+                <div id="cw-pop-quiz-feedback" class="hidden p-3 rounded-xl text-xs font-medium"></div>
+              </div>
+
+            </div>
+
+            <!-- Right Area: Professor Civics Avatar + Floating Historical Artifact (Cols 5 on lg) -->
+            <div class="lg:col-span-5 flex flex-col items-center justify-between space-y-4 bg-black/20 rounded-2xl p-4 border border-white/5">
+              
+              <!-- Professor Civics Speech Bubble -->
+              <div class="w-full relative bg-slate-900/90 border border-indigo-400/40 rounded-2xl p-3.5 text-xs text-indigo-100 shadow-xl">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span class="text-[10px] font-bold text-indigo-300 uppercase tracking-wider">Professor Civics:</span>
+                </div>
+                <div id="cw-prof-bubble" class="italic leading-relaxed text-slate-200">
+                  Welcome to today's lesson! Listen carefully to the official answers and remember the key terms.
+                </div>
+                <!-- Speech Bubble Tail -->
+                <div class="absolute -bottom-2 right-16 w-3 h-3 bg-slate-900 border-r border-b border-indigo-400/40 rotate-45"></div>
+              </div>
+
+              <!-- Animated Professor Civics Vector Avatar SVG -->
+              <div class="w-40 sm:w-48 h-48 sm:h-56 relative flex items-center justify-center">
+                <svg id="cw-prof-svg" class="w-full h-full drop-shadow-2xl" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Glow aura behind teacher -->
+                  <circle cx="100" cy="110" r="85" fill="#3b82f6" opacity="0.12" filter="blur(20px)" />
+                  
+                  <!-- Academic Coat / Torso -->
+                  <path d="M45,230 L55,145 L80,135 L120,135 L145,145 L155,230 Z" fill="#1e293b" />
+                  <path d="M55,145 L85,140 L95,190 L55,230 Z" fill="#0f172a" />
+                  <path d="M145,145 L115,140 L105,190 L145,230 Z" fill="#0f172a" />
+                  
+                  <!-- White Shirt Collar -->
+                  <polygon points="85,135 100,165 115,135" fill="#f8fafc" />
+                  
+                  <!-- Crimson Bowtie -->
+                  <polygon points="90,143 100,150 90,157" fill="#dc2626" />
+                  <polygon points="110,143 100,150 110,157" fill="#dc2626" />
+                  <circle cx="100" cy="150" r="3.5" fill="#b91c1c" />
+
+                  <!-- Golden Academic Pin -->
+                  <circle cx="125" cy="165" r="4" fill="#fbbf24" stroke="#d97706" stroke-width="1" />
+
+                  <!-- Head & Neck -->
+                  <rect x="92" y="115" width="16" height="22" rx="4" fill="#fed7aa" />
+                  <ellipse cx="100" cy="85" rx="36" ry="40" fill="#fed7aa" />
+                  
+                  <!-- Professorial Hair (Silvery Gray) -->
+                  <path d="M64,80 C60,65 70,55 78,52 C85,50 115,50 122,52 C130,55 140,65 136,80 C134,88 136,98 138,105 C132,102 128,95 128,90 C128,85 72,85 72,90 C72,95 68,102 62,105 C64,98 66,88 64,80 Z" fill="#e2e8f0" />
+                  
+                  <!-- Eyebrows -->
+                  <path d="M78,72 Q86,67 94,72" stroke="#64748b" stroke-width="2.5" stroke-linecap="round" fill="none" />
+                  <path d="M106,72 Q114,67 122,72" stroke="#64748b" stroke-width="2.5" stroke-linecap="round" fill="none" />
+
+                  <!-- Spectacles / Glasses (Gold Wireframe) -->
+                  <circle cx="86" cy="82" r="11" fill="none" stroke="#d97706" stroke-width="2.5" />
+                  <circle cx="114" cy="82" r="11" fill="none" stroke="#d97706" stroke-width="2.5" />
+                  <line x1="97" y1="82" x2="103" y2="82" stroke="#d97706" stroke-width="2.5" />
+                  <line x1="75" y1="80" x2="68" y2="76" stroke="#d97706" stroke-width="1.8" />
+                  <line x1="125" y1="80" x2="132" y2="76" stroke="#d97706" stroke-width="1.8" />
+
+                  <!-- Blinking Eyes -->
+                  <g class="eye-blinking">
+                    <circle cx="86" cy="82" r="3.2" fill="#1e293b" />
+                    <circle cx="87.5" cy="80.5" r="1.2" fill="#ffffff" />
+                    <circle cx="114" cy="82" r="3.2" fill="#1e293b" />
+                    <circle cx="115.5" cy="80.5" r="1.2" fill="#ffffff" />
+                  </g>
+
+                  <!-- Distinguished Mustache -->
+                  <path d="M84,98 Q100,103 116,98 Q100,107 84,98 Z" fill="#cbd5e1" />
+
+                  <!-- Animated Speaking Mouth -->
+                  <ellipse id="prof-mouth" cx="100" cy="107" rx="7" ry="3.5" fill="#881337" />
+
+                  <!-- Mortarboard Cap (Graduation / Scholar) -->
+                  <polygon points="100,20 162,38 100,56 38,38" fill="#1e1b4b" stroke="#312e81" stroke-width="2" />
+                  <rect x="76" y="44" width="48" height="15" rx="4" fill="#1e1b4b" />
+                  <!-- Gold Cap Button & Tassel -->
+                  <circle cx="100" cy="38" r="4" fill="#fbbf24" />
+                  <path d="M100,38 Q138,44 144,68" stroke="#f59e0b" stroke-width="2.5" fill="none" />
+                  <circle cx="144" cy="70" r="4" fill="#fbbf24" />
+
+                  <!-- Animated Left Arm Holding Pointer Baton -->
+                  <g id="prof-arm" class="baton-pointing">
+                    <!-- Arm Sleeve -->
+                    <path d="M55,145 L25,125 L35,115 L65,135 Z" fill="#1e293b" />
+                    <!-- Hand -->
+                    <circle cx="24" cy="120" r="7" fill="#fed7aa" />
+                    <!-- Wooden Teaching Pointer Baton -->
+                    <line x1="24" y1="120" x2="-20" y2="70" stroke="#78350f" stroke-width="3.5" stroke-linecap="round" />
+                    <!-- Gold Tip on Baton -->
+                    <circle cx="-20" cy="70" r="3" fill="#fbbf24" />
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Dynamic Artifact Showcase Container -->
+              <div class="w-full bg-slate-950/70 border border-slate-800 rounded-2xl p-3 flex flex-col items-center">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-amber-400 mb-1.5 flex items-center gap-1">
+                  <span>🏛️</span>
+                  <span>Civic Artifact &amp; Historical Evidence:</span>
+                </div>
+                
+                <!-- Dynamic Vector Artifact -->
+                <div id="cw-artifact-container" class="w-full h-32 sm:h-36 flex items-center justify-center relative artifact-float">
+                  <!-- Resolved dynamic SVG inserted here -->
+                </div>
+
+                <div id="cw-artifact-caption" class="text-[11px] text-slate-300 font-medium text-center mt-1 truncate max-w-full">
+                  The U.S. Constitution (1787)
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Bottom Chalk Tray with Chalk Sticks & Felt Eraser -->
+          <div class="mt-6 pt-3 border-t-4 border-[#3d2314] flex items-center justify-between px-2">
+            <!-- Left: Chalk Sticks Resting on Tray -->
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-2.5 bg-slate-100 rounded-sm shadow-sm opacity-90 -rotate-2" title="White Chalk"></div>
+              <div class="w-7 h-2.5 bg-emerald-300 rounded-sm shadow-sm opacity-90 rotate-3" title="Green Chalk"></div>
+              <div class="w-9 h-2.5 bg-amber-300 rounded-sm shadow-sm opacity-90 -rotate-1" title="Amber Chalk"></div>
+            </div>
+            
+            <div class="text-[11px] text-emerald-400/70 chalk-font tracking-wider">
+              ✦ USCIS 128 INTERACTIVE CLASSROOM ✦
+            </div>
+
+            <!-- Right: Felt Eraser on Tray -->
+            <div class="flex items-center">
+              <div class="w-14 h-4 bg-[#854d0e] border border-[#713f12] rounded-sm shadow-md flex flex-col justify-end overflow-hidden" title="Chalkboard Felt Eraser">
+                <div class="w-full h-1.5 bg-[#44403c]"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Live Closed-Captions Subtitle Bar -->
+      <div id="cw-live-caption-bar" class="bg-slate-900 border border-slate-800 rounded-2xl px-4 py-3 flex items-center gap-3 shadow-xl">
+        <span class="px-2 py-0.5 rounded bg-amber-500 text-slate-950 text-xs font-black shrink-0 tracking-wider">CC</span>
+        <div id="cw-live-caption" class="text-xs sm:text-sm text-yellow-300 font-medium tracking-wide flex-1 italic truncate">
+          Click "Play Lesson" to listen to Professor Civics explain Lesson 1.
+        </div>
+      </div>
+
+      <!-- Cinema Media Player Controls Deck -->
+      <div id="cw-player-controls" class="bg-slate-900 border border-slate-800 rounded-3xl p-4 sm:p-5 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+        
+        <!-- Navigation & Playback Controls -->
+        <div class="flex items-center flex-wrap gap-2 sm:gap-3">
+          <!-- Previous Button -->
+          <button id="cw-btn-prev" class="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition flex items-center gap-1.5" title="Previous Lesson (Left Arrow)">
+            <span>◀</span>
+            <span>Prev</span>
+          </button>
+
+          <!-- Play / Pause Master Button -->
+          <button id="cw-btn-play" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-600 hover:from-blue-500 hover:to-emerald-500 text-white text-sm font-bold shadow-lg shadow-blue-900/40 transition flex items-center gap-2">
+            <span id="cw-play-icon" class="text-base">▶</span>
+            <span id="cw-play-text">Play Lesson</span>
+          </button>
+
+          <!-- Replay Button -->
+          <button id="cw-btn-replay" class="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition flex items-center gap-1.5" title="Replay Lesson Audio">
+            <span>🔄</span>
+            <span>Replay</span>
+          </button>
+
+          <!-- Next Button -->
+          <button id="cw-btn-next" class="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition flex items-center gap-1.5" title="Next Lesson (Right Arrow)">
+            <span>Next</span>
+            <span>▶</span>
+          </button>
+        </div>
+
+        <!-- Secondary Controls: Speed, Auto-advance, Pop-Quiz -->
+        <div class="flex items-center flex-wrap gap-2 sm:gap-3">
+          <!-- Auto-Advance Toggle -->
+          <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer bg-slate-950 px-3 py-2 rounded-xl border border-slate-800 hover:border-slate-700 transition">
+            <input type="checkbox" id="cw-toggle-autoadvance" class="rounded text-blue-600 bg-slate-800 border-slate-700">
+            <span>Auto-Advance</span>
+          </label>
+
+          <!-- Narration Speed -->
+          <div class="flex items-center gap-1 bg-slate-950 px-2 py-1.5 rounded-xl border border-slate-800">
+            <span class="text-[11px] text-slate-400 font-medium">Speed:</span>
+            <select id="cw-speed-select" class="bg-slate-800 border-0 text-slate-200 text-xs rounded-lg px-2 py-1 focus:outline-none">
+              <option value="0.8">0.8x</option>
+              <option value="1.0" selected>1.0x</option>
+              <option value="1.2">1.2x</option>
+            </select>
+          </div>
+
+          <!-- Pop Quiz Quick Check Trigger -->
+          <button id="cw-btn-toggle-quiz" class="px-3.5 py-2 rounded-xl bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/50 text-xs font-semibold transition flex items-center gap-1.5 shadow-sm">
+            <span>⚡</span>
+            <span>Pop Quiz</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Coursework Curriculum Syllabus (8 Thematic Units) -->
+      <div id="cw-syllabus-container" class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+              <span>📚</span>
+              <span>128-Question Naturalization Curriculum Syllabus</span>
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5">
+              Structured into 8 comprehensive modules covering all official USCIS exam topics. Click any lesson to load into the classroom.
+            </p>
+          </div>
+          <div class="text-xs text-slate-400">
+            <span>Filter: </span>
+            <button id="cw-filter-all" class="text-blue-400 font-semibold underline">Show All</button>
+          </div>
+        </div>
+
+        <!-- Grid of 8 Units -->
+        <div id="cw-syllabus-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Populated dynamically with Unit Cards -->
         </div>
       </div>
 

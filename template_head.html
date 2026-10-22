@@ -30,7 +30,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Patrick+Hand&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   
   <style>
     body {
@@ -73,6 +73,71 @@
       body {
         min-height: -webkit-fill-available;
       }
+    }
+
+    /* Coursework Classroom & Cinema Styles */
+    .chalkboard-stage {
+      background: radial-gradient(circle at 45% 35%, #1b3829 0%, #11261c 65%, #0a1811 100%);
+      box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.85);
+    }
+    .chalk-wood-frame {
+      background: #3d2314;
+      border: 12px solid #2a160b;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 0, 0, 0.9);
+    }
+    .chalk-font {
+      font-family: 'Patrick Hand', 'Caveat', -apple-system, BlinkMacSystemFont, cursive, sans-serif;
+    }
+    .chalk-white {
+      color: #f8fafc;
+      text-shadow: 0 0 2px rgba(255, 255, 255, 0.5), 1px 1px 2px rgba(0, 0, 0, 0.7);
+    }
+    .chalk-green {
+      color: #86efac;
+      text-shadow: 0 0 2px rgba(134, 239, 172, 0.6), 1px 1px 2px rgba(0, 0, 0, 0.7);
+    }
+    .chalk-amber {
+      color: #fde047;
+      text-shadow: 0 0 2px rgba(253, 224, 71, 0.6), 1px 1px 2px rgba(0, 0, 0, 0.7);
+    }
+    .chalk-cyan {
+      color: #67e8f9;
+      text-shadow: 0 0 2px rgba(103, 232, 249, 0.6), 1px 1px 2px rgba(0, 0, 0, 0.7);
+    }
+    @keyframes mouthTalk {
+      0%, 100% { transform: scaleY(0.2) scaleX(0.9); }
+      25% { transform: scaleY(1.3) scaleX(1.1); }
+      50% { transform: scaleY(0.4) scaleX(0.85); }
+      75% { transform: scaleY(1.4) scaleX(1.15); }
+    }
+    .mouth-talking {
+      animation: mouthTalk 0.22s infinite ease-in-out;
+      transform-origin: 100px 108px;
+    }
+    @keyframes eyeBlink {
+      0%, 93%, 100% { transform: scaleY(1); }
+      96% { transform: scaleY(0.08); }
+    }
+    .eye-blinking {
+      animation: eyeBlink 3.8s infinite;
+      transform-origin: center;
+    }
+    @keyframes batonPoint {
+      0%, 100% { transform: rotate(0deg); }
+      30% { transform: rotate(14deg); }
+      60% { transform: rotate(5deg); }
+      85% { transform: rotate(18deg); }
+    }
+    .baton-pointing {
+      animation: batonPoint 2.4s infinite ease-in-out;
+      transform-origin: 40px 145px;
+    }
+    @keyframes floatArtifact {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-7px) rotate(1deg); }
+    }
+    .artifact-float {
+      animation: floatArtifact 4s ease-in-out infinite;
     }
   </style>
 </head>

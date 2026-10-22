@@ -1,4 +1,4 @@
-const CACHE_NAME = 'civics-128-v2.3-offline';
+const CACHE_NAME = 'civics-128-v2.4-coursework';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
