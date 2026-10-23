@@ -1154,7 +1154,8 @@
 
       updateFlashcardView();
       if (appState.activeTab === 'coursework') {
-        loadCourseworkLesson(appState.courseworkLessonIndex || 0, isCourseworkSpeaking);
+        const wasPlaying = (typeof isCourseworkSpeaking === 'function') ? isCourseworkSpeaking() : false;
+        loadCourseworkLesson(appState.courseworkLessonIndex || 0, wasPlaying);
       }
       if (document.getElementById('subview-catalog') && !document.getElementById('subview-catalog').classList.contains('hidden')) {
         renderCatalogList();
@@ -3398,6 +3399,10 @@
     let speechWatchdogTimeout = null;
     let activeUtterance = null;
 
+    function isCourseworkSpeaking() {
+      return courseworkState === 'playing';
+    }
+
     function updatePlayButtonUI() {
       const icon = document.getElementById('cw-play-icon');
       const text = document.getElementById('cw-play-text');
@@ -3887,10 +3892,27 @@
 
       // Audio & State Reset for New Lesson
       clearAllCourseworkTimers();
+      if ('speechSynthesis' in window) {
+        try { window.speechSynthesis.cancel(); } catch (e) {}
+      }
       courseworkState = 'idle';
       currentLessonPhase = 'none';
       stopCourseworkAnimations();
       updatePlayButtonUI();
+
+      // Update Prev / Next Button disabled & opacity states
+      const prevBtn = document.getElementById('cw-btn-prev');
+      const nextBtn = document.getElementById('cw-btn-next');
+      if (prevBtn) {
+        prevBtn.disabled = (index <= 0);
+        prevBtn.classList.toggle('opacity-40', index <= 0);
+        prevBtn.classList.toggle('cursor-not-allowed', index <= 0);
+      }
+      if (nextBtn) {
+        nextBtn.disabled = (index >= CIVICS_QUESTIONS.length - 1);
+        nextBtn.classList.toggle('opacity-40', index >= CIVICS_QUESTIONS.length - 1);
+        nextBtn.classList.toggle('cursor-not-allowed', index >= CIVICS_QUESTIONS.length - 1);
+      }
 
       const captionEl = document.getElementById('cw-live-caption');
       if (captionEl) {
@@ -4076,24 +4098,34 @@
         document.getElementById('cw-btn-replay')?.addEventListener('click', replayCourseworkLesson);
         document.getElementById('cw-btn-prev')?.addEventListener('click', () => {
           const cur = appState.courseworkLessonIndex || 0;
-          if (cur > 0) loadCourseworkLesson(cur - 1, isCourseworkSpeaking);
+          if (cur > 0) {
+            const wasPlaying = isCourseworkSpeaking();
+            loadCourseworkLesson(cur - 1, wasPlaying);
+          }
         });
         document.getElementById('cw-btn-next')?.addEventListener('click', () => {
           const cur = appState.courseworkLessonIndex || 0;
-          if (cur < CIVICS_QUESTIONS.length - 1) loadCourseworkLesson(cur + 1, isCourseworkSpeaking);
+          if (cur < CIVICS_QUESTIONS.length - 1) {
+            const wasPlaying = isCourseworkSpeaking();
+            loadCourseworkLesson(cur + 1, wasPlaying);
+          }
         });
 
         // Dropdowns
         document.getElementById('cw-lesson-select')?.addEventListener('change', (e) => {
           const idx = parseInt(e.target.value, 10);
-          loadCourseworkLesson(idx, isCourseworkSpeaking);
+          if (!isNaN(idx)) {
+            const wasPlaying = isCourseworkSpeaking();
+            loadCourseworkLesson(idx, wasPlaying);
+          }
         });
 
         document.getElementById('cw-unit-select')?.addEventListener('change', (e) => {
           const unitId = parseInt(e.target.value, 10);
           const unit = COURSEWORK_UNITS.find(u => u.id === unitId);
           if (unit) {
-            loadCourseworkLesson(unit.range[0] - 1, isCourseworkSpeaking);
+            const wasPlaying = isCourseworkSpeaking();
+            loadCourseworkLesson(unit.range[0] - 1, wasPlaying);
           }
         });
 
@@ -4128,7 +4160,7 @@
 
         // Speed change listener
         document.getElementById('cw-speed-select')?.addEventListener('change', () => {
-          if (isCourseworkSpeaking) {
+          if (isCourseworkSpeaking()) {
             replayCourseworkLesson();
           }
         });
@@ -4155,10 +4187,16 @@
 
           if (e.key === 'ArrowLeft') {
             const cur = appState.courseworkLessonIndex || 0;
-            if (cur > 0) loadCourseworkLesson(cur - 1, isCourseworkSpeaking);
+            if (cur > 0) {
+              const wasPlaying = isCourseworkSpeaking();
+              loadCourseworkLesson(cur - 1, wasPlaying);
+            }
           } else if (e.key === 'ArrowRight') {
             const cur = appState.courseworkLessonIndex || 0;
-            if (cur < CIVICS_QUESTIONS.length - 1) loadCourseworkLesson(cur + 1, isCourseworkSpeaking);
+            if (cur < CIVICS_QUESTIONS.length - 1) {
+              const wasPlaying = isCourseworkSpeaking();
+              loadCourseworkLesson(cur + 1, wasPlaying);
+            }
           } else if (e.key === ' ' || e.code === 'Space') {
             e.preventDefault();
             playCourseworkLesson();
