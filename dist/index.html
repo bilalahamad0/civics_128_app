@@ -1601,7 +1601,7 @@
                 </div>
 
                 <!-- Accepted Answers -->
-                <div class="space-y-2">
+                <div id="cw-answers-section" class="space-y-2">
                   <div class="text-[11px] uppercase tracking-wider text-emerald-300/90 font-bold flex items-center gap-1.5">
                     <span>✓</span>
                     <span>Accepted Oral Answers:</span>
@@ -6126,8 +6126,9 @@
       if (masterCheck) masterCheck.textContent = isMastered ? '●' : '○';
       if (masterLabel) masterLabel.textContent = isMastered ? 'Mastered' : 'Master';
 
-      // Close pop quiz
-      document.getElementById('cw-pop-quiz-box')?.classList.add('hidden');
+      // Close pop quiz and restore answers layout
+      closePopQuiz();
+      tipWasRevealedBeforeQuiz = false;
 
       // Sync Progress
       syncCourseworkProgressUI();
@@ -6166,13 +6167,41 @@
       }
     }
 
-    function togglePopQuiz() {
+    let tipWasRevealedBeforeQuiz = false;
+
+    function openPopQuiz() {
       const quizBox = document.getElementById('cw-pop-quiz-box');
       if (!quizBox) return;
 
-      if (!quizBox.classList.contains('hidden')) {
-        quizBox.classList.add('hidden');
-        return;
+      // Pause audio playback so oral answers are not spoken while taking quiz
+      if (courseworkState === 'playing') {
+        pauseCourseworkLesson();
+      }
+
+      // Record whether study tip box was currently revealed
+      const tipBox = document.getElementById('cw-tip-box');
+      tipWasRevealedBeforeQuiz = tipBox ? !tipBox.classList.contains('hidden') : false;
+
+      // Hide Accepted Oral Answers section to prevent revealing answers during quiz
+      const answersSection = document.getElementById('cw-answers-section');
+      if (answersSection) answersSection.classList.add('hidden');
+
+      // Hide Study Tip (both revealed tip box and placeholder)
+      if (tipBox) tipBox.classList.add('hidden');
+      const tipPlaceholder = document.getElementById('cw-tip-placeholder');
+      if (tipPlaceholder) tipPlaceholder.classList.add('hidden');
+
+      // Update Pop Quiz toggle button UI
+      const toggleBtn = document.getElementById('cw-btn-toggle-quiz');
+      if (toggleBtn) {
+        toggleBtn.innerHTML = '<span>✕</span><span>Close Quiz</span>';
+        toggleBtn.className = 'px-3 py-1.5 rounded-xl bg-indigo-600 text-white border border-indigo-400 text-xs font-semibold transition flex items-center gap-1.5 shadow-sm';
+      }
+
+      // Professor encouragement in speech bubble
+      const bubbleEl = document.getElementById('cw-prof-bubble');
+      if (bubbleEl) {
+        bubbleEl.textContent = '⚡ Pop Quiz time! Test your memory without looking at the accepted answers.';
       }
 
       const qIndex = appState.courseworkLessonIndex || 0;
@@ -6227,12 +6256,15 @@
                   <span>Correct! Outstanding comprehension!</span>
                 </div>
                 <p class="text-[11px] text-emerald-200/90">That is the official USCIS accepted naturalization answer.</p>
-                <div class="flex items-center gap-2 pt-1">
+                <div class="flex items-center flex-wrap gap-2 pt-1">
                   <button id="cw-quiz-btn-master" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition">
                     ${appState.mastered[q.id] ? '✓ Already Mastered' : '★ Mark Question as Mastered'}
                   </button>
                   <button id="cw-quiz-btn-next" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition">
                     Next Lesson ▶
+                  </button>
+                  <button id="cw-quiz-btn-close-done" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-xs transition">
+                    Back to Lesson ✕
                   </button>
                 </div>
               `;
@@ -6244,29 +6276,105 @@
                   document.getElementById('cw-master-check').textContent = '●';
                   document.getElementById('cw-master-label').textContent = 'Mastered';
                 }
-                document.getElementById('cw-quiz-btn-master').textContent = '✓ Mastered!';
+                const btnM = document.getElementById('cw-quiz-btn-master');
+                if (btnM) btnM.textContent = '✓ Mastered!';
               });
               document.getElementById('cw-quiz-btn-next')?.addEventListener('click', () => {
+                closePopQuiz();
                 if (qIndex < CIVICS_QUESTIONS.length - 1) {
                   loadCourseworkLesson(qIndex + 1, false);
                 }
               });
+              document.getElementById('cw-quiz-btn-close-done')?.addEventListener('click', () => {
+                closePopQuiz();
+              });
             } else {
               playBeep('wrong');
-              feedbackEl.className = 'p-3.5 rounded-xl bg-rose-950/90 border border-rose-500/60 text-rose-200 space-y-1.5';
+              feedbackEl.className = 'p-3.5 rounded-xl bg-rose-950/90 border border-rose-500/60 text-rose-200 space-y-2';
               feedbackEl.innerHTML = `
                 <div class="flex items-center gap-2 font-bold text-rose-300">
                   <span>⚠️</span>
                   <span>Incorrect. The accepted answer is: "${q.primaryAnswer}".</span>
                 </div>
                 <p class="text-[11px] text-rose-200/90">Study Tip: ${q.explanation}</p>
+                <div class="flex items-center flex-wrap gap-2 pt-1">
+                  <button id="cw-quiz-btn-retry" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition">
+                    Try Again ↺
+                  </button>
+                  <button id="cw-quiz-btn-reveal" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-xs transition">
+                    Review Lesson Answers ➔
+                  </button>
+                </div>
               `;
+              document.getElementById('cw-quiz-btn-retry')?.addEventListener('click', () => {
+                openPopQuiz();
+              });
+              document.getElementById('cw-quiz-btn-reveal')?.addEventListener('click', () => {
+                closePopQuiz();
+              });
             }
           }
         });
       });
 
       quizBox.classList.remove('hidden');
+    }
+
+    function closePopQuiz() {
+      const quizBox = document.getElementById('cw-pop-quiz-box');
+      if (quizBox) quizBox.classList.add('hidden');
+
+      // Unhide Accepted Oral Answers section
+      const answersSection = document.getElementById('cw-answers-section');
+      if (answersSection) answersSection.classList.remove('hidden');
+
+      // Restore Study Tip state
+      const tipBox = document.getElementById('cw-tip-box');
+      const tipPlaceholder = document.getElementById('cw-tip-placeholder');
+      if (tipWasRevealedBeforeQuiz) {
+        if (tipBox) {
+          tipBox.classList.remove('hidden');
+          tipBox.classList.add('tip-reveal-active');
+        }
+        if (tipPlaceholder) tipPlaceholder.classList.add('hidden');
+      } else {
+        if (tipBox) tipBox.classList.add('hidden');
+        if (tipPlaceholder) tipPlaceholder.classList.remove('hidden');
+      }
+
+      // Restore Pop Quiz toggle button UI
+      const toggleBtn = document.getElementById('cw-btn-toggle-quiz');
+      if (toggleBtn) {
+        toggleBtn.innerHTML = '<span>⚡</span><span>Pop Quiz</span>';
+        toggleBtn.className = 'px-3 py-1.5 rounded-xl bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/50 text-xs font-semibold transition flex items-center gap-1.5 shadow-sm';
+      }
+
+      // Restore Professor Civics speech bubble
+      const qIndex = appState.courseworkLessonIndex || 0;
+      const rawQ = CIVICS_QUESTIONS[qIndex];
+      const q = getResolvedQuestion(rawQ, appState.selectedState || 'CA');
+      const bubbleEl = document.getElementById('cw-prof-bubble');
+      if (bubbleEl) {
+        if (q.is6520) {
+          bubbleEl.textContent = `Welcome to Lesson ${q.id}! ★ 65/20 Special Exemption designated question. Listen carefully to the accepted answers.`;
+        } else if (q.isStateSpecific) {
+          const stName = (STATES_DATA[appState.selectedState || 'CA'] || STATES_DATA['CA']).name;
+          bubbleEl.textContent = `Welcome to Lesson ${q.id}! 📍 Official state-specific question for ${stName}.`;
+        } else {
+          bubbleEl.textContent = `Welcome to Lesson ${q.id}! Listen to the question and repeat the accepted oral answers aloud.`;
+        }
+      }
+    }
+
+    function togglePopQuiz() {
+      const quizBox = document.getElementById('cw-pop-quiz-box');
+      if (!quizBox) return;
+
+      if (!quizBox.classList.contains('hidden')) {
+        closePopQuiz();
+      } else {
+        openPopQuiz();
+      }
     }
 
     function renderCourseworkSyllabus() {
@@ -6396,9 +6504,7 @@
 
         // Pop Quiz toggles
         document.getElementById('cw-btn-toggle-quiz')?.addEventListener('click', togglePopQuiz);
-        document.getElementById('cw-btn-close-quiz')?.addEventListener('click', () => {
-          document.getElementById('cw-pop-quiz-box')?.classList.add('hidden');
-        });
+        document.getElementById('cw-btn-close-quiz')?.addEventListener('click', closePopQuiz);
 
         // Speed change listener
         document.getElementById('cw-speed-select')?.addEventListener('change', () => {
