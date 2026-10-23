@@ -1,0 +1,2401 @@
+{
+  "1": {
+    "es": {
+      "question": "¿Cuál es la forma de gobierno de los Estados Unidos?",
+      "answers": [
+        "República",
+        "República federal basada en la Constitución",
+        "Democracia representativa"
+      ],
+      "tip": "Estados Unidos es una república federal constitucional donde los ciudadanos eligen representantes."
+    },
+    "hi": {
+      "question": "संयुक्त राज्य अमेरिका में सरकार का रूप क्या है?",
+      "answers": [
+        "गणराज्य (Republic)",
+        "संविधान-आधारित संघीय गणराज्य",
+        "प्रतिनिधि लोकतंत्र (Representative democracy)"
+      ],
+      "tip": "संयुक्त राज्य अमेरिका एक संवैधानिक संघीय गणराज्य है जहाँ नागरिक प्रतिनिधियों का चुनाव करते हैं।"
+    }
+  },
+  "2": {
+    "es": {
+      "question": "¿Cuál es la ley suprema del país?",
+      "answers": [
+        "La Constitución (de los EE. UU.)"
+      ],
+      "tip": "La Constitución es la ley suprema de la nación; ninguna ley puede contradecirla."
+    },
+    "hi": {
+      "question": "देश का सर्वोच्च कानून क्या है?",
+      "answers": [
+        "(अमेरिकी) संविधान (U.S. Constitution)"
+      ],
+      "tip": "संविधान देश का सर्वोच्च कानून है; कोई भी कानून इसके विरुद्ध नहीं हो सकता।"
+    }
+  },
+  "3": {
+    "es": {
+      "question": "Mencione una cosa que hace la Constitución de los EE. UU.",
+      "answers": [
+        "Establece el gobierno",
+        "Define los poderes del gobierno",
+        "Define las partes del gobierno",
+        "Protege los derechos de las personas"
+      ],
+      "tip": "La Constitución establece la estructura de gobierno y salvaguarda los derechos fundamentales de los ciudadanos."
+    },
+    "hi": {
+      "question": "अमेरिकी संविधान क्या करता है? एक कार्य बताएं।",
+      "answers": [
+        "सरकार का गठन करता है",
+        "सरकार की शक्तियों को परिभाषित करता है",
+        "सरकार के अंगों को परिभाषित करता है",
+        "लोगों के बुनियादी अधिकारों की रक्षा करता है"
+      ],
+      "tip": "संविधान सरकार की संरचना स्थापित करता है और बुनियादी नागरिक अधिकारों की रक्षा करता है।"
+    }
+  },
+  "4": {
+    "es": {
+      "question": "La Constitución de los EE. UU. comienza con las palabras 'Nosotros, el Pueblo'. ¿Qué significa 'Nosotros, el Pueblo'?",
+      "answers": [
+        "Autogobierno",
+        "Soberanía popular",
+        "Consentimiento de los gobernados",
+        "Las personas deben gobernarse a sí mismas",
+        "Ejemplo de contrato social"
+      ],
+      "tip": "'Nosotros, el Pueblo' significa que el poder del gobierno proviene directamente del consentimiento de los ciudadanos."
+    },
+    "hi": {
+      "question": "अमेरिकी संविधान 'हम, संयुक्त राज्य के लोग' (We the People) से शुरू होता है। इसका क्या अर्थ है?",
+      "answers": [
+        "स्वशासन (Self-government)",
+        "लोकप्रिय संप्रभुता (Popular sovereignty)",
+        "शासितों की सहमति",
+        "जनता द्वारा शासन",
+        "सामाजिक अनुबंध का उदाहरण"
+      ],
+      "tip": "'वी द पीपल' का अर्थ है कि सरकार अपनी शक्ति जनता की सहमति से प्राप्त करती है।"
+    }
+  },
+  "5": {
+    "es": {
+      "question": "¿Cómo se hacen los cambios a la Constitución de los EE. UU.?",
+      "answers": [
+        "Enmiendas",
+        "El proceso de enmiendas"
+      ],
+      "tip": "El Artículo V detalla el proceso de enmiendas constitucionales que requiere dos tercios del Congreso y tres cuartos de los estados."
+    },
+    "hi": {
+      "question": "अमेरिकी संविधान में संशोधन कैसे किए जाते हैं?",
+      "answers": [
+        "संशोधन (Amendments)",
+        "संशोधन प्रक्रिया (The amendment process)"
+      ],
+      "tip": "अनुच्छेद 5 में संविधान संशोधन प्रक्रिया का वर्णन है जिसमें कांग्रेस के दो-तिहाई और राज्यों के तीन-चौथाई अनुमोदन की आवश्यकता होती है।"
+    }
+  },
+  "6": {
+    "es": {
+      "question": "¿Qué protege la Carta de Derechos?",
+      "answers": [
+        "Los derechos básicos de los estadounidenses",
+        "Los derechos básicos de las personas que viven en los Estados Unidos"
+      ],
+      "tip": "La Carta de Derechos son las diez primeras enmiendas que garantizan libertades civiles esenciales."
+    },
+    "hi": {
+      "question": "बिल ऑफ राइट्स (अधिकार पत्र) किसकी रक्षा करता है?",
+      "answers": [
+        "अमेरिकियों के बुनियादी अधिकार",
+        "संयुक्त राज्य में रहने वाले सभी लोगों के बुनियादी अधिकार"
+      ],
+      "tip": "बिल ऑफ राइट्स पहले दस संशोधन हैं जो आवश्यक नागरिक स्वतंत्रताओं की गारंटी देते हैं।"
+    }
+  },
+  "7": {
+    "es": {
+      "question": "¿Cuántas enmiendas tiene la Constitución de los EE. UU.?",
+      "answers": [
+        "27 (veintisiete)"
+      ],
+      "tip": "La Constitución contiene 27 enmiendas ratificadas; la 27.ª se ratificó en 1992."
+    },
+    "hi": {
+      "question": "अमेरिकी संविधान में कितने संशोधन हैं?",
+      "answers": [
+        "27 (सत्ताईस)"
+      ],
+      "tip": "अमेरिकी संविधान में 27 संशोधन हैं; 27वां संशोधन 1992 में पारित हुआ था।"
+    }
+  },
+  "8": {
+    "es": {
+      "question": "¿Por qué es importante la Declaración de Independencia?",
+      "answers": [
+        "Dice que los Estados Unidos son libres del control británico",
+        "Dice que todas las personas son creadas iguales",
+        "Identifica los derechos inherentes",
+        "Identifica las libertades individuales"
+      ],
+      "tip": "La Declaración proclamó la soberanía y los derechos inalienables fundamentales como la vida, la libertad y la búsqueda de la felicidad."
+    },
+    "hi": {
+      "question": "स्वतंत्रता की घोषणा (Declaration of Independence) क्यों महत्वपूर्ण है?",
+      "answers": [
+        "यह कहती है कि अमेरिका ब्रिटिश नियंत्रण से स्वतंत्र है",
+        "यह कहती है कि सभी मनुष्य समान बनाए गए हैं",
+        "यह बुनियादी अधिकारों की पहचान करती है",
+        "व्यक्तिगत स्वतंत्रताओं की पहचान करती है"
+      ],
+      "tip": "घोषणापत्र ने सार्वभौमिक मानव अधिकारों और स्वतंत्रता की घोषणा की।"
+    }
+  },
+  "9": {
+    "es": {
+      "question": "¿Qué documento fundacional declaró que las colonias americanas eran libres de Gran Bretaña?",
+      "answers": [
+        "La Declaración de Independencia"
+      ],
+      "tip": "Adoptada el 4 de julio de 1776, rompió formalmente los lazos coloniales con Gran Bretaña."
+    },
+    "hi": {
+      "question": "किस संस्थापक दस्तावेज ने घोषणा की कि अमेरिकी उपनिवेश ब्रिटेन से मुक्त थे?",
+      "answers": [
+        "स्वतंत्रता की घोषणा (Declaration of Independence)"
+      ],
+      "tip": "4 जुलाई 1776 को अपनाई गई इस घोषणा ने ब्रिटेन से औपनिवेशिक संबंध समाप्त कर दिए।"
+    }
+  },
+  "10": {
+    "es": {
+      "question": "Mencione dos ideas importantes de la Declaración de Independencia y la Constitución de los EE. UU.",
+      "answers": [
+        "Igualdad",
+        "Libertad",
+        "Contrato social",
+        "Derechos naturales",
+        "Gobierno limitado",
+        "Autogobierno"
+      ],
+      "tip": "Los ideales fundamentales estadounidenses incluyen igualdad, libertad, autogobierno y derechos inherentes."
+    },
+    "hi": {
+      "question": "स्वतंत्रता की घोषणा और अमेरिकी संविधान के दो महत्वपूर्ण विचार बताएं।",
+      "answers": [
+        "समानता (Equality)",
+        "स्वतंत्रता (Liberty)",
+        "सामाजिक अनुबंध (Social contract)",
+        "प्राकृतिक अधिकार (Natural rights)",
+        "सीमित सरकार",
+        "स्वशासन (Self-government)"
+      ],
+      "tip": "समानता और स्वतंत्रता अमेरिकी लोकतंत्र के दो मुख्य आधार स्तंभ हैं।"
+    }
+  },
+  "11": {
+    "es": {
+      "question": "¿En qué documento fundacional se encuentran las palabras 'Vida, Libertad y la búsqueda de la Felicidad'?",
+      "answers": [
+        "La Declaración de Independencia"
+      ],
+      "tip": "Redactadas por Thomas Jefferson en el preámbulo de la Declaración de Independencia."
+    },
+    "hi": {
+      "question": "'जीवन, स्वतंत्रता और खुशी की खोज' (Life, Liberty, and the pursuit of Happiness) शब्द किस दस्तावेज में हैं?",
+      "answers": [
+        "स्वतंत्रता की घोषणा (Declaration of Independence)"
+      ],
+      "tip": "थॉमस जेफरसन द्वारा स्वतंत्रता की घोषणा के प्रस्तावना में लिखे गए प्रसिद्ध शब्द।"
+    }
+  },
+  "12": {
+    "es": {
+      "question": "¿Cuál es el sistema económico de los Estados Unidos?",
+      "answers": [
+        "Capitalismo",
+        "Economía de libre mercado"
+      ],
+      "tip": "Estados Unidos opera bajo una economía capitalista orientada al libre mercado con propiedad privada."
+    },
+    "hi": {
+      "question": "संयुक्त राज्य अमेरिका की आर्थिक प्रणाली क्या है?",
+      "answers": [
+        "पूंजीवाद (Capitalism)",
+        "मुक्त बाजार अर्थव्यवस्था (Free market economy)"
+      ],
+      "tip": "अमेरिका एक पूंजीवादी और मुक्त बाजार आधारित अर्थव्यवस्था का पालन करता है।"
+    }
+  },
+  "13": {
+    "es": {
+      "question": "¿Qué es el estado de derecho (rule of law)?",
+      "answers": [
+        "Todos deben obedecer la ley",
+        "Los líderes deben obedecer la ley",
+        "El gobierno debe obedecer la ley",
+        "Nadie está por encima de la ley"
+      ],
+      "tip": "El estado de derecho asegura que todas las personas e instituciones están sujetas a la ley por igual."
+    },
+    "hi": {
+      "question": "विधि का शासन (Rule of law) क्या है?",
+      "answers": [
+        "सभी को कानून का पालन करना चाहिए",
+        "नेताओं को कानून का पालन करना चाहिए",
+        "सरकार को कानून का पालन करना चाहिए",
+        "कोई भी कानून से ऊपर नहीं है"
+      ],
+      "tip": "विधि का शासन का अर्थ है कि कानून के समक्ष सभी समान हैं और कोई कानून से ऊपर नहीं है।"
+    }
+  },
+  "14": {
+    "es": {
+      "question": "Muchos documentos influyeron en la Constitución de los EE. UU. Mencione uno.",
+      "answers": [
+        "Declaración de Independencia",
+        "Artículos de la Confederación",
+        "Documentos Federalistas",
+        "Declaración de Derechos de Virginia",
+        "Órdenes Fundamentales de Connecticut",
+        "Pacto del Mayflower",
+        "Gran Ley de Paz Iroquesa"
+      ],
+      "tip": "La Constitución incorporó principios de la Carta Magna, el Pacto del Mayflower y documentos coloniales previos."
+    },
+    "hi": {
+      "question": "कई दस्तावेजों ने अमेरिकी संविधान को प्रभावित किया। किसी एक का नाम बताएं।",
+      "answers": [
+        "स्वतंत्रता की घोषणा (Declaration of Independence)",
+        "परिसंघ के अनुच्छेद (Articles of Confederation)",
+        "फेडरलिस्ट पेपर्स (Federalist Papers)",
+        "वर्जीनिया अधिकारों की घोषणा",
+        "मेफ्लावर कॉम्पैक्ट (Mayflower Compact)"
+      ],
+      "tip": "मेफ्लावर कॉम्पैक्ट और स्वतंत्रता की घोषणा ने संविधान निर्माताओं को गहराई से प्रेरित किया।"
+    }
+  },
+  "15": {
+    "es": {
+      "question": "Hay tres ramas del gobierno. ¿Por qué?",
+      "answers": [
+        "Para que una rama no se vuelva demasiado poderosa",
+        "Frenos y contrapesos",
+        "Separación de poderes"
+      ],
+      "tip": "La separación de poderes y el sistema de frenos y contrapesos previenen la tiranía o el abuso de poder."
+    },
+    "hi": {
+      "question": "सरकार की तीन शाखाएं क्यों हैं?",
+      "answers": [
+        "ताकि कोई एक शाखा बहुत शक्तिशाली न बन जाए",
+        "नियंत्रण और संतुलन (Checks and balances)",
+        "शक्तियों का पृथक्करण (Separation of powers)"
+      ],
+      "tip": "शक्तियों के पृथक्करण से तानाशाही रुकती है और नियंत्रण व संतुलन बना रहता है।"
+    }
+  },
+  "16": {
+    "es": {
+      "question": "Mencione las tres ramas del gobierno.",
+      "answers": [
+        "Legislativa, Ejecutiva y Judicial",
+        "Congreso, Presidente y los Tribunales"
+      ],
+      "tip": "Las ramas son Legislativa (crea leyes), Ejecutiva (hace cumplir leyes) y Judicial (interpreta leyes)."
+    },
+    "hi": {
+      "question": "सरकार की तीन शाखाओं के नाम बताएं।",
+      "answers": [
+        "विधायिका, कार्यपालिका और न्यायपालिका (Legislative, Executive, Judicial)",
+        "कांग्रेस, राष्ट्रपति और अदालतें"
+      ],
+      "tip": "विधायिका कानून बनाती है, कार्यपालिका लागू करती है और न्यायपालिका व्याख्या करती है।"
+    }
+  },
+  "17": {
+    "es": {
+      "question": "¿De qué rama del gobierno está a cargo el Presidente de los Estados Unidos?",
+      "answers": [
+        "Rama Ejecutiva"
+      ],
+      "tip": "El Presidente encabeza el poder Ejecutivo federal bajo el Artículo II de la Constitución."
+    },
+    "hi": {
+      "question": "संयुक्त राज्य अमेरिका का राष्ट्रपति सरकार की किस शाखा का प्रमुख होता है?",
+      "answers": [
+        "कार्यपालिका शाखा (Executive branch)"
+      ],
+      "tip": "राष्ट्रपति अनुच्छेद 2 के तहत संघीय कार्यपालिका का नेतृत्व करते हैं।"
+    }
+  },
+  "18": {
+    "es": {
+      "question": "¿Qué parte del gobierno federal redacta las leyes?",
+      "answers": [
+        "El Congreso (de los EE. UU.)",
+        "Rama Legislativa",
+        "Senado y Cámara de Representantes"
+      ],
+      "tip": "El Congreso bicameral es el único facultado para aprobar legislación federal."
+    },
+    "hi": {
+      "question": "संघीय सरकार का कौन सा हिस्सा कानून बनाता है?",
+      "answers": [
+        "(अमेरिकी) कांग्रेस (U.S. Congress)",
+        "विधायिका शाखा (Legislative branch)",
+        "सीनेट और प्रतिनिधि सभा"
+      ],
+      "tip": "अमेरिकी संसद (कांग्रेस) कानून बनाने वाली सर्वोच्च संघीय संस्था है।"
+    }
+  },
+  "19": {
+    "es": {
+      "question": "¿Cuáles son las dos partes del Congreso de los EE. UU.?",
+      "answers": [
+        "El Senado y la Cámara de Representantes"
+      ],
+      "tip": "El Congreso es bicameral: el Senado (100 miembros) y la Cámara de Representantes (435 miembros)."
+    },
+    "hi": {
+      "question": "अमेरिकी कांग्रेस के दो हिस्से कौन से हैं?",
+      "answers": [
+        "सीनेट और प्रतिनिधि सभा (Senate and House of Representatives)"
+      ],
+      "tip": "अमेरिकी संसद दो सदनों से मिलकर बनी है: सीनेट और प्रतिनिधि सभा।"
+    }
+  },
+  "20": {
+    "es": {
+      "question": "Mencione un poder del Congreso de los EE. UU.",
+      "answers": [
+        "Redactar leyes",
+        "Declarar la guerra",
+        "Hacer el presupuesto federal"
+      ],
+      "tip": "El Congreso tiene la facultad constitucional de aprobar leyes, recaudar impuestos y declarar la guerra."
+    },
+    "hi": {
+      "question": "अमेरिकी कांग्रेस की एक शक्ति बताएं।",
+      "answers": [
+        "कानून बनाना",
+        "युद्ध की घोषणा करना",
+        "संघीय बजट बनाना"
+      ],
+      "tip": "कांग्रेस के पास कानून बनाने, बजट पारित करने और युद्ध घोषित करने की संवैधानिक शक्ति है।"
+    }
+  },
+  "21": {
+    "es": {
+      "question": "¿Cuántos senadores de los EE. UU. hay?",
+      "answers": [
+        "100 (cien)"
+      ],
+      "tip": "Hay exactamente 100 senadores: 2 por cada uno de los 50 estados."
+    },
+    "hi": {
+      "question": "अमेरिकी सीनेट में कितने सीनेटर होते हैं?",
+      "answers": [
+        "100 (एक सौ)"
+      ],
+      "tip": "प्रत्येक राज्य से 2 सीनेटर होते हैं, कुल 50 राज्यों के 100 सीनेटर।"
+    }
+  },
+  "22": {
+    "es": {
+      "question": "¿De cuántos años es el mandato de un senador de los EE. UU.?",
+      "answers": [
+        "6 (seis) años"
+      ],
+      "tip": "Los senadores son elegidos por mandatos escalonados de 6 años."
+    },
+    "hi": {
+      "question": "अमेरिकी सीनेटर का कार्यकाल कितने वर्षों का होता है?",
+      "answers": [
+        "6 (छह) वर्ष"
+      ],
+      "tip": "सीनेटरों का कार्यकाल 6 वर्ष का होता है।"
+    }
+  },
+  "23": {
+    "es": {
+      "question": "¿Quién es uno de los senadores actuales de los EE. UU. por su estado?",
+      "answers": [
+        "Las respuestas varían según el estado (En California: Alex Padilla o Adam Schiff)"
+      ],
+      "tip": "Para California, puede nombrar al senador Alex Padilla o al senador Adam Schiff."
+    },
+    "hi": {
+      "question": "वर्तमान में आपके राज्य के अमेरिकी सीनेटरों में से एक कौन हैं?",
+      "answers": [
+        "उत्तर राज्य के अनुसार भिन्न होते हैं (कैलिफ़ोर्निया के लिए: एलेक्स पाडिला या एडम शिफ)"
+      ],
+      "tip": "कैलिफ़ोर्निया में एलेक्स पाडिला (Alex Padilla) या एडम शिफ (Adam Schiff) का नाम लें।"
+    }
+  },
+  "24": {
+    "es": {
+      "question": "¿Cuántos miembros con derecho a voto hay en la Cámara de Representantes?",
+      "answers": [
+        "435 (cuatrocientos treinta y cinco)"
+      ],
+      "tip": "Fijado por ley en 1911, hay 435 representantes con derecho a voto distribuidos por población."
+    },
+    "hi": {
+      "question": "प्रतिनिधि सभा में मतदान करने वाले कितने सदस्य होते हैं?",
+      "answers": [
+        "435 (चार सौ पैंतीस)"
+      ],
+      "tip": "प्रतिनिधि सभा में कुल 435 सदस्य होते हैं जो जनसंख्या के आधार पर बांटे जाते हैं।"
+    }
+  },
+  "25": {
+    "es": {
+      "question": "¿De cuántos años es el mandato de un miembro de la Cámara de Representantes?",
+      "answers": [
+        "2 (dos) años"
+      ],
+      "tip": "Todos los miembros de la Cámara se eligen cada dos años para mantenerse cercanos a la ciudadanía."
+    },
+    "hi": {
+      "question": "प्रतिनिधि सभा के सदस्य का कार्यकाल कितने वर्षों का होता है?",
+      "answers": [
+        "2 (दो) वर्ष"
+      ],
+      "tip": "प्रतिनिधि सभा के सभी सदस्यों का चुनाव हर 2 साल में होता है।"
+    }
+  },
+  "26": {
+    "es": {
+      "question": "¿Por qué los representantes de los EE. UU. tienen mandatos más cortos que los senadores?",
+      "answers": [
+        "Para seguir más de cerca la opinión pública",
+        "Para responder más rápidamente a los ciudadanos"
+      ],
+      "tip": "Los mandatos de 2 años obligan a los representantes a rendir cuentas frecuentes a sus electores."
+    },
+    "hi": {
+      "question": "अमेरिकी प्रतिनिधियों का कार्यकाल सीनेटरों से छोटा क्यों होता है?",
+      "answers": [
+        "जनता की राय का अधिक बारीकी से पालन करने के लिए",
+        "नागरिकों की इच्छाओं के प्रति तुरंत उत्तरदायी रहने के लिए"
+      ],
+      "tip": "दो वर्ष का कार्यकाल प्रतिनिधियों को जनता के प्रति जवाबदेह बनाए रखता है।"
+    }
+  },
+  "27": {
+    "es": {
+      "question": "¿Cuántos senadores tiene cada estado?",
+      "answers": [
+        "2 (dos)"
+      ],
+      "tip": "Cada estado tiene representación igualitaria en el Senado con exactamente 2 senadores."
+    },
+    "hi": {
+      "question": "प्रत्येक राज्य में कितने सीनेटर होते हैं?",
+      "answers": [
+        "2 (दो)"
+      ],
+      "tip": "प्रत्येक अमेरिकी राज्य से ठीक 2 सीनेटर चुने जाते हैं।"
+    }
+  },
+  "28": {
+    "es": {
+      "question": "¿Por qué cada estado tiene dos senadores?",
+      "answers": [
+        "Representación igualitaria (para estados pequeños)",
+        "El Gran Compromiso (Compromiso de Connecticut)"
+      ],
+      "tip": "El Gran Compromiso de 1787 aseguró que los estados pequeños tuvieran la misma voz en el Senado que los grandes."
+    },
+    "hi": {
+      "question": "प्रत्येक राज्य में दो सीनेटर क्यों होते हैं?",
+      "answers": [
+        "समान प्रतिनिधित्व के लिए (छोटे राज्यों के संरक्षण हेतु)",
+        "महान समझौता (कनेक्टिकट समझौता)"
+      ],
+      "tip": "महान समझौते ने सुनिश्चित किया कि छोटे और बड़े सभी राज्यों का सीनेट में समान प्रतिनिधित्व हो।"
+    }
+  },
+  "29": {
+    "es": {
+      "question": "Nombre a su representante en la Cámara de Representantes de los EE. UU.",
+      "answers": [
+        "Las respuestas varían según el distrito de residencia del solicitante"
+      ],
+      "tip": "Consulte house.gov introduciendo su código postal para identificar a su representante de distrito."
+    },
+    "hi": {
+      "question": "अपने अमेरिकी प्रतिनिधि (House Representative) का नाम बताएं।",
+      "answers": [
+        "उत्तर आवेदक के आवासीय जिले (Zip Code) के अनुसार भिन्न होता है"
+      ],
+      "tip": "अपने ज़िप कोड के आधार पर house.gov पर अपने स्थानीय प्रतिनिधि का नाम जानें।"
+    }
+  },
+  "30": {
+    "es": {
+      "question": "¿Cómo se llama el actual Presidente de la Cámara de Representantes?",
+      "answers": [
+        "Mike Johnson"
+      ],
+      "tip": "Mike Johnson es el Presidente (Speaker) de la Cámara de Representantes desde octubre de 2023."
+    },
+    "hi": {
+      "question": "वर्तमान में प्रतिनिधि सभा के अध्यक्ष (Speaker of the House) का नाम क्या है?",
+      "answers": [
+        "माइक जॉनसन (Mike Johnson)"
+      ],
+      "tip": "माइक जॉनसन अक्टूबर 2023 से प्रतिनिधि सभा के स्पीकर हैं।"
+    }
+  },
+  "31": {
+    "es": {
+      "question": "¿A quién representa un senador de los Estados Unidos?",
+      "answers": [
+        "A todos los ciudadanos de su estado"
+      ],
+      "tip": "A diferencia de los representantes de distrito, los senadores representan al estado entero."
+    },
+    "hi": {
+      "question": "एक अमेरिकी सीनेटर किसका प्रतिनिधित्व करता है?",
+      "answers": [
+        "अपने राज्य के सभी नागरिकों का"
+      ],
+      "tip": "सीनेटर किसी एक जिले का नहीं, बल्कि पूरे राज्य के सभी लोगों का प्रतिनिधित्व करते हैं।"
+    }
+  },
+  "32": {
+    "es": {
+      "question": "¿Quién elige a los senadores de los EE. UU.?",
+      "answers": [
+        "Los ciudadanos de su estado"
+      ],
+      "tip": "La 17.ª Enmienda (1913) estableció la elección directa de senadores por los votantes del estado."
+    },
+    "hi": {
+      "question": "अमेरिकी सीनेटरों का चुनाव कौन करता है?",
+      "answers": [
+        "उनके राज्य के नागरिक (Citizens from their state)"
+      ],
+      "tip": "17वें संशोधन (1913) के बाद से जनता सीधे अपने सीनेटरों को वोट देकर चुनती है।"
+    }
+  },
+  "33": {
+    "es": {
+      "question": "¿A quién representa un miembro de la Cámara de Representantes?",
+      "answers": [
+        "A los ciudadanos de su distrito congresional"
+      ],
+      "tip": "Los representantes sirven a los residentes de su distrito electoral específico."
+    },
+    "hi": {
+      "question": "प्रतिनिधि सभा का सदस्य किसका प्रतिनिधित्व करता है?",
+      "answers": [
+        "अपने संसदीय जिले (Congressional District) के नागरिकों का"
+      ],
+      "tip": "प्रतिनिधि अपने विशिष्ट संसदीय क्षेत्र की जनता का प्रतिनिधित्व करते हैं।"
+    }
+  },
+  "34": {
+    "es": {
+      "question": "¿Quién elige a los miembros de la Cámara de Representantes?",
+      "answers": [
+        "Los ciudadanos de su distrito congresional"
+      ],
+      "tip": "Solo los votantes registrados dentro de ese distrito congresional eligen a su representante."
+    },
+    "hi": {
+      "question": "प्रतिनिधि सभा के सदस्यों का चुनाव कौन करता है?",
+      "answers": [
+        "उनके संसदीय जिले के नागरिक"
+      ],
+      "tip": "जिले के नागरिक सीधे अपने सांसद (प्रतिनिधि) को वोट देते हैं।"
+    }
+  },
+  "35": {
+    "es": {
+      "question": "Algunos estados tienen más representantes que otros. ¿Por qué?",
+      "answers": [
+        "Por la población del estado",
+        "Porque tienen más habitantes",
+        "Porque algunos estados tienen más personas"
+      ],
+      "tip": "El número de representantes de cada estado se basa en el censo decenal de población."
+    },
+    "hi": {
+      "question": "कुछ राज्यों में अन्य राज्यों की तुलना में अधिक प्रतिनिधि क्यों होते हैं?",
+      "answers": [
+        "राज्य की जनसंख्या के कारण",
+        "क्योंकि उनके पास अधिक लोग हैं"
+      ],
+      "tip": "प्रतिनिधियों की संख्या राज्य की आबादी (जनगणना) के अनुपात पर निर्धारित होती है।"
+    }
+  },
+  "36": {
+    "es": {
+      "question": "¿Por cuántos años es elegido el Presidente de los Estados Unidos?",
+      "answers": [
+        "4 (cuatro) años"
+      ],
+      "tip": "El mandato presidencial dura exactamente cuatro años, comenzando el 20 de enero tras la elección."
+    },
+    "hi": {
+      "question": "संयुक्त राज्य अमेरिका का राष्ट्रपति कितने वर्षों के लिए चुना जाता है?",
+      "answers": [
+        "4 (चार) वर्ष"
+      ],
+      "tip": "अमेरिकी राष्ट्रपति का एक कार्यकाल 4 वर्ष का होता है।"
+    }
+  },
+  "37": {
+    "es": {
+      "question": "El Presidente de los EE. UU. solo puede servir dos mandatos. ¿Por qué?",
+      "answers": [
+        "Por la Enmienda 22",
+        "Para evitar que el presidente sea demasiado poderoso"
+      ],
+      "tip": "La Enmienda 22 (1951) limitó formalmente a los presidentes a un máximo de dos mandatos tras FDR."
+    },
+    "hi": {
+      "question": "अमेरिकी राष्ट्रपति केवल दो कार्यकाल ही क्यों सेवा कर सकते हैं?",
+      "answers": [
+        "22वें संशोधन के कारण",
+        "राष्ट्रपति को अत्यधिक शक्तिशाली बनने से रोकने के लिए"
+      ],
+      "tip": "22वें संशोधन (1951) ने राष्ट्रपति पद के लिए अधिकतम दो कार्यकाल की सीमा तय की।"
+    }
+  },
+  "38": {
+    "es": {
+      "question": "¿Cómo se llama el actual Presidente de los Estados Unidos?",
+      "answers": [
+        "Joe Biden",
+        "Donald Trump (o el presidente en ejercicio según la fecha de su examen)"
+      ],
+      "tip": "Nombre al presidente en ejercicio al momento de presentarse a su entrevista natural."
+    },
+    "hi": {
+      "question": "वर्तमान में संयुक्त राज्य अमेरिका के राष्ट्रपति का नाम क्या है?",
+      "answers": [
+        "जो बाइडन (Joe Biden) / डोनाल्ड ट्रम्प (Donald Trump) - साक्षात्कार के समय पदासीन राष्ट्रपति"
+      ],
+      "tip": "साक्षात्कार की तारीख पर पदासीन राष्ट्रपति का नाम बताएं।"
+    }
+  },
+  "39": {
+    "es": {
+      "question": "¿Cómo se llama la actual Vicepresidenta de los Estados Unidos?",
+      "answers": [
+        "Kamala Harris",
+        "JD Vance (o el vicepresidente en funciones al momento del examen)"
+      ],
+      "tip": "Nombre a la persona que ostente el cargo de vicepresidente al momento del examen."
+    },
+    "hi": {
+      "question": "वर्तमान में संयुक्त राज्य अमेरिका के उपराष्ट्रपति का नाम क्या है?",
+      "answers": [
+        "कमला हैरिस (Kamala Harris) / जेडी वेंस (JD Vance) - साक्षात्कार के समय पदासीन"
+      ],
+      "tip": "साक्षात्कार की तारीख पर पदासीन उपराष्ट्रपति का नाम बताएं।"
+    }
+  },
+  "40": {
+    "es": {
+      "question": "Si el Presidente ya no puede servir, ¿quién se convierte en Presidente?",
+      "answers": [
+        "El Vicepresidente"
+      ],
+      "tip": "La Enmienda 25 establece que el Vicepresidente asume inmediatamente la presidencia si queda vacante."
+    },
+    "hi": {
+      "question": "यदि राष्ट्रपति अब सेवा नहीं कर सकते, तो कौन राष्ट्रपति बनता है?",
+      "answers": [
+        "उपराष्ट्रपति (The Vice President)"
+      ],
+      "tip": "संविधान के अनुसार उपराष्ट्रपति तुरंत राष्ट्रपति का पद संभालते हैं।"
+    }
+  },
+  "41": {
+    "es": {
+      "question": "Mencione un poder del Presidente.",
+      "answers": [
+        "Firmar leyes",
+        "Vetar proyectos de ley",
+        "Comandante en Jefe de las Fuerzas Armadas",
+        "Nombrar jueces federales y embajadores",
+        "Dirigir la política exterior"
+      ],
+      "tip": "El Presidente comanda las fuerzas armadas, negocia tratados y firma o veta leyes."
+    },
+    "hi": {
+      "question": "राष्ट्रपति की एक शक्ति का नाम बताएं।",
+      "answers": [
+        "विधेयकों पर हस्ताक्षर कर कानून बनाना",
+        "विधेयकों को वीटो करना",
+        "सेना का कमांडर-इन-चीफ होना",
+        "संघीय न्यायाधीशों की नियुक्ति करना"
+      ],
+      "tip": "राष्ट्रपति सेना के सर्वोच्च सेनापति होते हैं और कानूनों पर वीटो का अधिकार रखते हैं।"
+    }
+  },
+  "42": {
+    "es": {
+      "question": "¿Quién es el Comandante en Jefe de las Fuerzas Armadas de los EE. UU.?",
+      "answers": [
+        "El Presidente (de los Estados Unidos)"
+      ],
+      "tip": "El Artículo II designa al Presidente civil como Comandante en Jefe supremo del ejército y la marina."
+    },
+    "hi": {
+      "question": "अमेरिकी सेना का कमांडर इन चीफ (सर्वोच्च सेनापति) कौन होता है?",
+      "answers": [
+        "(संयुक्त राज्य अमेरिका के) राष्ट्रपति"
+      ],
+      "tip": "राष्ट्रपति सभी सशस्त्र बलों के नागरिक सर्वोच्च कमांडर होते हैं।"
+    }
+  },
+  "43": {
+    "es": {
+      "question": "¿Quién firma los proyectos de ley para convertirlos en leyes?",
+      "answers": [
+        "El Presidente (de los Estados Unidos)"
+      ],
+      "tip": "Una vez aprobados por ambas cámaras del Congreso, los proyectos pasan al Presidente para su promulgación."
+    },
+    "hi": {
+      "question": "विधेयकों को कानून बनाने के लिए उन पर हस्ताक्षर कौन करता है?",
+      "answers": [
+        "(संयुक्त राज्य अमेरिका के) राष्ट्रपति"
+      ],
+      "tip": "संसद से पारित होने के बाद राष्ट्रपति के हस्ताक्षर से ही कोई विधेयक कानून बनता है।"
+    }
+  },
+  "44": {
+    "es": {
+      "question": "¿Quién veta los proyectos de ley?",
+      "answers": [
+        "El Presidente (de los Estados Unidos)"
+      ],
+      "tip": "El Presidente puede rechazar un proyecto de ley mediante el veto presidencial."
+    },
+    "hi": {
+      "question": "विधेयकों को वीटो (अस्वीकार) कौन करता है?",
+      "answers": [
+        "(संयुक्त राज्य अमेरिका के) राष्ट्रपति"
+      ],
+      "tip": "राष्ट्रपति के पास संसद के विधेयकों को वीटो करने की शक्ति होती है।"
+    }
+  },
+  "45": {
+    "es": {
+      "question": "¿Quién nombra a los jueces federales?",
+      "answers": [
+        "El Presidente (de los Estados Unidos)"
+      ],
+      "tip": "El Presidente nomina a los jueces federales y el Senado debe confirmarlos."
+    },
+    "hi": {
+      "question": "संघीय न्यायाधीशों की नियुक्ति कौन करता है?",
+      "answers": [
+        "(संयुक्त राज्य अमेरिका के) राष्ट्रपति"
+      ],
+      "tip": "राष्ट्रपति संघीय न्यायाधीशों को नामित करते हैं और सीनेट उन्हें मंजूरी देती है।"
+    }
+  },
+  "46": {
+    "es": {
+      "question": "La rama ejecutiva tiene muchas partes. Mencione una.",
+      "answers": [
+        "El Presidente",
+        "El Vicepresidente",
+        "El Gabinete",
+        "Departamentos federales y agencias"
+      ],
+      "tip": "El poder ejecutivo abarca la presidencia, el gabinete ministerial y agencias federales (como el FBI o el IRS)."
+    },
+    "hi": {
+      "question": "कार्यपालिका शाखा के कई हिस्से हैं। किसी एक का नाम बताएं।",
+      "answers": [
+        "राष्ट्रपति",
+        "उपराष्ट्रपति",
+        "मंत्रिमंडल (Cabinet)",
+        "संघीय विभाग और एजेंसियां"
+      ],
+      "tip": "राष्ट्रपति, कैबिनेट और संघीय विभाग कार्यपालिका के अभिन्न अंग हैं।"
+    }
+  },
+  "47": {
+    "es": {
+      "question": "¿Qué hace el Gabinete del Presidente?",
+      "answers": [
+        "Asesora al Presidente"
+      ],
+      "tip": "Los secretarios del Gabinete son los principales asesores del mandatario en sus respectivas áreas."
+    },
+    "hi": {
+      "question": "राष्ट्रपति का मंत्रिमंडल (Cabinet) क्या करता है?",
+      "answers": [
+        "राष्ट्रपति को सलाह देता है (Advises the President)"
+      ],
+      "tip": "कैबिनेट मंत्री विभिन्न क्षेत्रों (रक्षा, विदेश आदि) में राष्ट्रपति के मुख्य सलाहकार होते हैं।"
+    }
+  },
+  "48": {
+    "es": {
+      "question": "¿Cuáles son dos puestos a nivel de Gabinete?",
+      "answers": [
+        "Secretario de Estado",
+        "Secretario de Defensa",
+        "Secretario del Tesoro",
+        "Fiscal General",
+        "Vicepresidente"
+      ],
+      "tip": "El Gabinete incluye a los secretarios de Estado, Defensa, Tesoro y al Fiscal General, entre otros 15 departamentos."
+    },
+    "hi": {
+      "question": "कैबिनेट स्तर के दो पदों के नाम बताएं।",
+      "answers": [
+        "विदेश मंत्री (Secretary of State)",
+        "रक्षा मंत्री (Secretary of Defense)",
+        "वित्त मंत्री (Secretary of the Treasury)",
+        "अटॉर्नी जनरल (Attorney General)"
+      ],
+      "tip": "सेक्रेटरी ऑफ स्टेट (विदेश) और सेक्रेटरी ऑफ डिफेंस (रक्षा) प्रमुख कैबिनेट पद हैं।"
+    }
+  },
+  "49": {
+    "es": {
+      "question": "¿Por qué es importante el Colegio Electoral?",
+      "answers": [
+        "Decide quién es elegido Presidente",
+        "Proporciona un compromiso entre la votación popular y la votación del Congreso"
+      ],
+      "tip": "El Colegio Electoral cuenta con 538 electores; se requieren 270 votos electorales para ganar la presidencia."
+    },
+    "hi": {
+      "question": "इलेक्टोरल कॉलेज (Electoral College) क्यों महत्वपूर्ण है?",
+      "answers": [
+        "यह तय करता है कि राष्ट्रपति कौन चुना जाएगा",
+        "यह लोकप्रिय वोट और कांग्रेस के बीच संतुलन बनाता है"
+      ],
+      "tip": "इलेक्टोरल कॉलेज के 538 सदस्यों में से 270 वोट पाकर ही कोई राष्ट्रपति बनता है।"
+    }
+  },
+  "50": {
+    "es": {
+      "question": "¿Cuál es una parte del poder judicial?",
+      "answers": [
+        "La Corte Suprema",
+        "Tribunales federales"
+      ],
+      "tip": "El poder judicial incluye la Corte Suprema, los tribunales de apelaciones y los juzgados federales de distrito."
+    },
+    "hi": {
+      "question": "न्यायपालिका शाखा का एक हिस्सा क्या है?",
+      "answers": [
+        "सर्वोच्च न्यायालय (Supreme Court)",
+        "संघीय अदालतें (Federal courts)"
+      ],
+      "tip": "सुप्रीम कोर्ट और संघीय जिला अदालतें न्यायपालिका के मुख्य अंग हैं।"
+    }
+  },
+  "51": {
+    "es": {
+      "question": "¿Qué hace el poder judicial?",
+      "answers": [
+        "Revisa las leyes",
+        "Explica las leyes",
+        "Resuelve disputas",
+        "Decide si una ley viola la Constitución"
+      ],
+      "tip": "La revisión judicial permite a los tribunales declarar inconstitucionales leyes o acciones ejecutivas."
+    },
+    "hi": {
+      "question": "न्यायपालिका शाखा क्या करती है?",
+      "answers": [
+        "कानूनों की समीक्षा करती है",
+        "कानूनों की व्याख्या करती है",
+        "विवादों का निपटारा करती है",
+        "तय करती है कि क्या कानून संविधान के अनुसार है"
+      ],
+      "tip": "न्यायपालिका कानूनों की व्याख्या करती है और संविधान के उल्लंघन की जांच करती है।"
+    }
+  },
+  "52": {
+    "es": {
+      "question": "¿Cuál es el tribunal más alto de los Estados Unidos?",
+      "answers": [
+        "La Corte Suprema"
+      ],
+      "tip": "La Corte Suprema es la máxima autoridad jurídica y tribunal de última instancia de la nación."
+    },
+    "hi": {
+      "question": "संयुक्त राज्य अमेरिका का सर्वोच्च न्यायालय कौन सा है?",
+      "answers": [
+        "सर्वोच्च न्यायालय (Supreme Court)"
+      ],
+      "tip": "सुप्रीम कोर्ट अमेरिका की सबसे बड़ी और अंतिम अपील की अदालत है।"
+    }
+  },
+  "53": {
+    "es": {
+      "question": "¿Cuántos jueces integran la Corte Suprema?",
+      "answers": [
+        "9 (nueve)"
+      ],
+      "tip": "Desde 1869, la Corte Suprema está compuesta por un Presidente y ocho jueces asociados (total 9)."
+    },
+    "hi": {
+      "question": "सर्वोच्च न्यायालय (Supreme Court) में कितने न्यायाधीश होते हैं?",
+      "answers": [
+        "9 (नौ)"
+      ],
+      "tip": "सुप्रीम कोर्ट में 1 मुख्य न्यायाधीश और 8 अन्य न्यायाधीश, कुल 9 न्यायाधीश होते हैं।"
+    }
+  },
+  "54": {
+    "es": {
+      "question": "¿Cuántos jueces de la Corte Suprema se necesitan generalmente para decidir un caso?",
+      "answers": [
+        "5 (cinco)"
+      ],
+      "tip": "Se requiere una mayoría simple de 5 votos de los 9 jueces para emitir un fallo vinculante."
+    },
+    "hi": {
+      "question": "किसी मामले का फैसला करने के लिए आमतौर पर कितने सुप्रीम कोर्ट न्यायाधीशों की आवश्यकता होती है?",
+      "answers": [
+        "5 (पांच)"
+      ],
+      "tip": "9 में से 5 न्यायाधीशों का साधारण बहुमत फैसला सुनाने के लिए आवश्यक होता है।"
+    }
+  },
+  "55": {
+    "es": {
+      "question": "¿Por cuánto tiempo sirven los jueces de la Corte Suprema?",
+      "answers": [
+        "De por vida",
+        "Hasta que se jubilen o renuncien",
+        "Vitaliciamente"
+      ],
+      "tip": "Bajo el Artículo III, los jueces tienen nombramiento de por vida sujeto a buena conducta."
+    },
+    "hi": {
+      "question": "सुप्रीम कोर्ट के न्यायाधीश कितने समय तक सेवा करते हैं?",
+      "answers": [
+        "आजीवन (For life / Lifetime appointment)",
+        "जब तक वे सेवानिवृत्त न हों"
+      ],
+      "tip": "संविधान के अनुच्छेद 3 के तहत न्यायाधीश आजीवन पद पर रहते हैं।"
+    }
+  },
+  "56": {
+    "es": {
+      "question": "Los jueces de la Corte Suprema sirven de por vida. ¿Por qué?",
+      "answers": [
+        "Para ser independientes de la política",
+        "Para no verse influenciados por partidos o elecciones"
+      ],
+      "tip": "El nombramiento vitalicio aísla a los jueces de presiones políticas y electorales partidistas."
+    },
+    "hi": {
+      "question": "सुप्रीम कोर्ट के न्यायाधीश आजीवन सेवा क्यों करते हैं?",
+      "answers": [
+        "राजनीति से स्वतंत्र रहने के लिए",
+        "चुनावी दबाव और पक्षपात से बचने के लिए"
+      ],
+      "tip": "आजीवन नियुक्ति न्यायपालिका को राजनीतिक दबावों और दलगत राजनीति से मुक्त रखती है।"
+    }
+  },
+  "57": {
+    "es": {
+      "question": "¿Quién es el actual Presidente de la Corte Suprema de los Estados Unidos?",
+      "answers": [
+        "John Roberts",
+        "John G. Roberts, Jr."
+      ],
+      "tip": "John Roberts ocupa el cargo de Presidente (Chief Justice) de la Corte Suprema desde 2005."
+    },
+    "hi": {
+      "question": "वर्तमान में संयुक्त राज्य अमेरिका के मुख्य न्यायाधीश (Chief Justice) कौन हैं?",
+      "answers": [
+        "जॉन रॉबर्ट्स (John Roberts)"
+      ],
+      "tip": "जॉन रॉबर्ट्स 2005 से अमेरिका के मुख्य न्यायाधीश हैं।"
+    }
+  },
+  "58": {
+    "es": {
+      "question": "Mencione un poder que pertenece únicamente al gobierno federal.",
+      "answers": [
+        "Imprimir dinero",
+        "Declarar la guerra",
+        "Crear un ejército",
+        "Celebrar tratados",
+        "Establecer política exterior"
+      ],
+      "tip": "Solo el gobierno federal puede acuñar moneda, declarar guerras formales y firmar tratados internacionales."
+    },
+    "hi": {
+      "question": "केवल संघीय सरकार के पास मौजूद किसी एक शक्ति का नाम बताएं।",
+      "answers": [
+        "मुद्रा (पैसे) छापना",
+        "युद्ध की घोषणा करना",
+        "सेना बनाना",
+        "अंतरराष्ट्रीय संधियां करना"
+      ],
+      "tip": "मुद्रा छापना और युद्ध घोषित करना केवल केंद्र (संघीय) सरकार के अधिकार में है।"
+    }
+  },
+  "59": {
+    "es": {
+      "question": "Mencione un poder que pertenece únicamente a los estados.",
+      "answers": [
+        "Proveer escolarización y educación",
+        "Proveer protección (policía)",
+        "Proveer seguridad (bomberos)",
+        "Otorgar licencias de conducir",
+        "Aprobar zonificación y uso de la tierra"
+      ],
+      "tip": "Los estados regulan las licencias de conducir, la educación pública primaria y secundaria y la policía local."
+    },
+    "hi": {
+      "question": "केवल राज्यों के पास मौजूद किसी एक शक्ति का नाम बताएं।",
+      "answers": [
+        "शिक्षा और स्कूल प्रदान करना",
+        "सुरक्षा (पुलिस) प्रदान करना",
+        "ड्राइविंग लाइसेंस जारी करना",
+        "भूमि उपयोग और ज़ोनिंग"
+      ],
+      "tip": "ड्राइविंग लाइसेंस जारी करना और स्कूली शिक्षा का प्रबंधन राज्यों की शक्ति है।"
+    }
+  },
+  "60": {
+    "es": {
+      "question": "¿Cuál es el propósito de la 10.ª Enmienda?",
+      "answers": [
+        "Establece que los poderes no otorgados al gobierno federal pertenecen a los estados o al pueblo"
+      ],
+      "tip": "La Décima Enmienda consagra el federalismo reservando poderes no delegados a los estados."
+    },
+    "hi": {
+      "question": "10वें संशोधन का क्या उद्देश्य है?",
+      "answers": [
+        "यह बताता है कि जो शक्तियां केंद्र सरकार को नहीं दी गई हैं, वे राज्यों या जनता के पास हैं"
+      ],
+      "tip": "10वां संशोधन राज्यों के अधिकारों और शक्तियों की रक्षा करता है।"
+    }
+  },
+  "61": {
+    "es": {
+      "question": "¿Quién es el gobernador actual de su estado?",
+      "answers": [
+        "Las respuestas varían (En California: Gavin Newsom)"
+      ],
+      "tip": "En California, el gobernador en funciones es Gavin Newsom."
+    },
+    "hi": {
+      "question": "वर्तमान में आपके राज्य के राज्यपाल (Governor) कौन हैं?",
+      "answers": [
+        "उत्तर राज्य के अनुसार भिन्न होते हैं (कैलिफ़ोर्निया के लिए: गेविन न्यूसम / Gavin Newsom)"
+      ],
+      "tip": "कैलिफ़ोर्निया राज्य के राज्यपाल गेविन न्यूसम (Gavin Newsom) हैं।"
+    }
+  },
+  "62": {
+    "es": {
+      "question": "¿Cuál es la capital de su estado?",
+      "answers": [
+        "Las respuestas varían (En California: Sacramento)"
+      ],
+      "tip": "La capital de California es Sacramento (no Los Ángeles ni San Francisco)."
+    },
+    "hi": {
+      "question": "आपके राज्य की राजधानी क्या है?",
+      "answers": [
+        "उत्तर राज्य के अनुसार भिन्न होते हैं (कैलिफ़ोर्निया की राजधानी: सैक्रामेंटो / Sacramento)"
+      ],
+      "tip": "कैलिफ़ोर्निया की राजधानी सैक्रामेंटो है।"
+    }
+  },
+  "63": {
+    "es": {
+      "question": "Hay cuatro enmiendas a la Constitución sobre quién puede votar. Describa una de ellas.",
+      "answers": [
+        "Ciudadanos de 18 años o más pueden votar (Enmienda 26)",
+        "No se puede exigir impuesto al sufragio (Enmienda 24)",
+        "Cualquier ciudadano puede votar sin importar el sexo (Enmienda 19)",
+        "Cualquier ciudadano puede votar sin importar la raza (Enmienda 15)"
+      ],
+      "tip": "Las enmiendas 15, 19, 24 y 26 expandieron el derecho al voto por raza, género, economía y edad (18+)."
+    },
+    "hi": {
+      "question": "संविधान में मतदान के अधिकार पर चार संशोधन हैं। उनमें से किसी एक का वर्णन करें।",
+      "answers": [
+        "18 वर्ष और उससे अधिक आयु के नागरिक वोट दे सकते हैं (26वां संशोधन)",
+        "मतदान कर (Poll tax) पर रोक (24वां संशोधन)",
+        "महिलाएं वोट दे सकती हैं (19वां संशोधन)",
+        "नस्ल या रंग के आधार पर वोट से वंचित नहीं किया जा सकता (15वां संशोधन)"
+      ],
+      "tip": "26वें संशोधन ने मतदान की न्यूनतम आयु 18 वर्ष तय की।"
+    }
+  },
+  "64": {
+    "es": {
+      "question": "¿Quién puede votar en elecciones federales, postularse para cargos federales y servir en un jurado en los Estados Unidos?",
+      "answers": [
+        "Ciudadanos de los Estados Unidos"
+      ],
+      "tip": "El derecho al voto federal y el servicio de jurado están reservados exclusivamente a ciudadanos estadounidenses."
+    },
+    "hi": {
+      "question": "अमेरिका में संघीय चुनावों में वोट देने, चुनाव लड़ने और जूरी में सेवा करने का अधिकार किसे है?",
+      "answers": [
+        "संयुक्त राज्य अमेरिका के नागरिकों को (U.S. Citizens only)"
+      ],
+      "tip": "संघीय मतदान और जूरी सेवा केवल अमेरिकी नागरिकों के लिए आरक्षित अधिकार हैं।"
+    }
+  },
+  "65": {
+    "es": {
+      "question": "¿Cuáles son tres derechos de todas las personas que viven en los Estados Unidos?",
+      "answers": [
+        "Libertad de expresión",
+        "Libertad de culto",
+        "Libertad de reunión",
+        "Libertad de petición al gobierno",
+        "Derecho a portar armas"
+      ],
+      "tip": "La Primera Enmienda protege la libertad de expresión, religión, prensa, reunión y petición."
+    },
+    "hi": {
+      "question": "संयुक्त राज्य अमेरिका में रहने वाले सभी लोगों के तीन अधिकार कौन से हैं?",
+      "answers": [
+        "भाषण की स्वतंत्रता (Freedom of speech)",
+        "धर्म की स्वतंत्रता (Freedom of religion)",
+        "शांतिपूर्ण सभा की स्वतंत्रता (Freedom of assembly)"
+      ],
+      "tip": "पहले संशोधन द्वारा अभिव्यक्ति, धर्म और शांतिपूर्ण सभा की पूर्ण स्वतंत्रता प्राप्त है।"
+    }
+  },
+  "66": {
+    "es": {
+      "question": "¿A qué demostramos lealtad cuando decimos el Juramento a la Bandera (Pledge of Allegiance)?",
+      "answers": [
+        "A los Estados Unidos",
+        "A la bandera"
+      ],
+      "tip": "El juramento rinde homenaje a la bandera y a la República soberana e indivisible que representa."
+    },
+    "hi": {
+      "question": "जब हम निष्ठा की प्रतिज्ञा (Pledge of Allegiance) लेते हैं, तो किसके प्रति वफादारी दिखाते हैं?",
+      "answers": [
+        "संयुक्त राज्य अमेरिका के प्रति",
+        "अमेरिकी ध्वज (झंडे) के प्रति"
+      ],
+      "tip": "प्रतिज्ञा में अमेरिकी ध्वज और राष्ट्र के प्रति निष्ठा व्यक्त की जाती है।"
+    }
+  },
+  "67": {
+    "es": {
+      "question": "Mencione dos promesas que los nuevos ciudadanos hacen en el Juramento de Lealtad (Oath of Allegiance).",
+      "answers": [
+        "Renunciar a la lealtad a otros países",
+        "Defender la Constitución y las leyes de los EE. UU.",
+        "Obedecer las leyes de los EE. UU.",
+        "Prestar servicio militar si es necesario",
+        "Ser leal a los Estados Unidos"
+      ],
+      "tip": "Durante la ceremonia de naturalización, se jura defender la Constitución y renunciar a soberanías extranjeras."
+    },
+    "hi": {
+      "question": "नए नागरिक निष्ठा की शपथ (Oath of Allegiance) में कौन से दो वादे करते हैं?",
+      "answers": [
+        "अन्य देशों के प्रति निष्ठा का त्याग करना",
+        "अमेरिकी संविधान और कानूनों की रक्षा करना",
+        "अमेरिका के कानूनों का पालन करना",
+        "आवश्यक होने पर सेना में सेवा देना"
+      ],
+      "tip": "शपथ में संविधान की रक्षा करने और अमेरिका के प्रति पूर्ण वफादार रहने का वादा किया जाता है।"
+    }
+  },
+  "68": {
+    "es": {
+      "question": "¿Cómo pueden las personas convertirse en ciudadanos de los Estados Unidos?",
+      "answers": [
+        "Naturalización",
+        "Nacer en los Estados Unidos"
+      ],
+      "tip": "La ciudadanía se adquiere al nacer en territorio estadounidense o mediante el proceso de naturalización."
+    },
+    "hi": {
+      "question": "लोग संयुक्त राज्य अमेरिका के नागरिक कैसे बन सकते हैं?",
+      "answers": [
+        "देशीकरण (Naturalization)",
+        "अमेरिका में जन्म लेकर (Birth in the U.S.)"
+      ],
+      "tip": "अमेरिका में जन्म या देशीकरण (Naturalization) की कानूनी प्रक्रिया द्वारा नागरिकता मिलती है।"
+    }
+  },
+  "69": {
+    "es": {
+      "question": "¿Cuáles son dos ejemplos de participación cívica en los Estados Unidos?",
+      "answers": [
+        "Votar",
+        "Postularse para un cargo público",
+        "Unirse a un partido político",
+        "Ayudar con una campaña",
+        "Expresar una opinión a un funcionario electo"
+      ],
+      "tip": "Votar, asistir a asambleas municipales y comunicarse con representantes son formas clave de participación cívica."
+    },
+    "hi": {
+      "question": "संयुक्त राज्य अमेरिका में नागरिक भागीदारी के दो उदाहरण क्या हैं?",
+      "answers": [
+        "मतदान करना (Vote)",
+        "चुनाव लड़ना",
+        "राजनीतिक दल में शामिल होना",
+        "जनप्रतिनिधियों को पत्र लिखना"
+      ],
+      "tip": "वोट देना और सामुदायिक मुद्दों पर भाग लेना लोकतंत्र का मूल कर्तव्य है।"
+    }
+  },
+  "70": {
+    "es": {
+      "question": "¿Cuál es una forma en que los estadounidenses pueden servir a su país?",
+      "answers": [
+        "Votar",
+        "Pagar impuestos",
+        "Servir en las fuerzas armadas",
+        "Postularse para cargos públicos",
+        "Trabajar para el gobierno local, estatal o federal"
+      ],
+      "tip": "El servicio militar, el empleo público o simplemente participar activamente y votar fortalecen la nación."
+    },
+    "hi": {
+      "question": "अमेरिकी अपने देश की सेवा किस एक तरीके से कर सकते हैं?",
+      "answers": [
+        "वोट देना",
+        "कर (टैक्स) चुकाना",
+        "सेना में सेवा करना",
+        "सरकारी सेवा में काम करना"
+      ],
+      "tip": "ईमानदारी से टैक्स देना, वोट करना या सेना में शामिल होना देश सेवा के प्रमुख मार्ग हैं।"
+    }
+  },
+  "71": {
+    "es": {
+      "question": "¿Por qué es importante pagar impuestos federales?",
+      "answers": [
+        "Es requerido por la ley",
+        "Para financiar el gobierno federal",
+        "Para pagar las fuerzas armadas",
+        "Para pagar carreteras e infraestructura pública"
+      ],
+      "tip": "Los impuestos federales financian la defensa nacional, carreteras interestatales, educación y programas vitales."
+    },
+    "hi": {
+      "question": "संघीय कर (Federal taxes) चुकाना क्यों महत्वपूर्ण है?",
+      "answers": [
+        "कानून द्वारा अनिवार्य है",
+        "केंद्र सरकार के कामकाज के लिए",
+        "सेना और बुनियादी ढांचे के वित्तपोषण के लिए"
+      ],
+      "tip": "टैक्स के पैसे से देश की सुरक्षा, सड़कें और सार्वजनिक सेवाएं चलती हैं।"
+    }
+  },
+  "72": {
+    "es": {
+      "question": "Es importante que todos los hombres de 18 a 25 años se inscriban en el Servicio Selectivo. Mencione una razón.",
+      "answers": [
+        "Es requerido por la ley",
+        "Para el reclutamiento militar si es necesario",
+        "Para hacer que el servicio militar sea justo"
+      ],
+      "tip": "La ley federal exige el registro en el Servicio Selectivo dentro de los 30 días posteriores al cumpleaños 18."
+    },
+    "hi": {
+      "question": "18 से 25 वर्ष के सभी पुरुषों के लिए सेलेक्टिव सर्विस में पंजीकरण कराना क्यों महत्वपूर्ण है?",
+      "answers": [
+        "यह कानून द्वारा अनिवार्य है",
+        "जरूरत पड़ने पर सैन्य भर्ती के लिए",
+        "नागरिक कर्तव्य पूरा करने के लिए"
+      ],
+      "tip": "18 से 25 वर्ष के पुरुषों का पंजीकरण कानूनन अनिवार्य है।"
+    }
+  },
+  "73": {
+    "es": {
+      "question": "Los colonos llegaron a América por muchas razones. Mencione una.",
+      "answers": [
+        "Libertad",
+        "Libertad religiosa",
+        "Oportunidad económica",
+        "Para escapar de la persecución"
+      ],
+      "tip": "Los peregrinos y colonos buscaban libertad religiosa, tierras cultivables y prosperidad económica."
+    },
+    "hi": {
+      "question": "उपनिवेशवादी कई कारणों से अमेरिका आए थे। किसी एक का नाम बताएं।",
+      "answers": [
+        "स्वतंत्रता (Freedom)",
+        "धार्मिक स्वतंत्रता",
+        "आर्थिक अवसर",
+        "उत्पीड़न से बचने के लिए"
+      ],
+      "tip": "लोग धार्मिक उत्पीड़न से बचने और आर्थिक अवसरों की तलाश में अमेरिका आए थे।"
+    }
+  },
+  "74": {
+    "es": {
+      "question": "¿Quiénes vivían en América antes de que llegaran los europeos?",
+      "answers": [
+        "Indígenas americanos",
+        "Nativos americanos"
+      ],
+      "tip": "Cientos de naciones indígenas americanas habitaron el continente durante milenios antes de 1492."
+    },
+    "hi": {
+      "question": "यूरोपियों के आने से पहले अमेरिका में कौन रहता था?",
+      "answers": [
+        "अमेरिकी मूल निवासी (American Indians / Native Americans)"
+      ],
+      "tip": "यूरोपियों के आगमन से पहले कई समृद्ध जनजातियां और मूल निवासी यहां रहते थे।"
+    }
+  },
+  "75": {
+    "es": {
+      "question": "¿Qué grupo de personas fue capturado y vendido como esclavos?",
+      "answers": [
+        "Africanos",
+        "Personas de África"
+      ],
+      "tip": "Millones de africanos fueron secuestrados y transportados a la fuerza en el comercio transatlántico de esclavos."
+    },
+    "hi": {
+      "question": "किस समूह के लोगों को बंदी बनाकर गुलामों के रूप में बेचा गया था?",
+      "answers": [
+        "अफ्रीकी लोगों को (Africans / People from Africa)"
+      ],
+      "tip": "अफ्रीका से लोगों को जबरन लाकर गुलाम बनाया गया था।"
+    }
+  },
+  "76": {
+    "es": {
+      "question": "¿Qué guerra libraron los estadounidenses para ganar su independencia de Gran Bretaña?",
+      "answers": [
+        "La Guerra de Independencia (Guerra Revolucionaria Americana)"
+      ],
+      "tip": "La Guerra Revolucionaria duró de 1775 a 1783 y culminó con el Tratado de París."
+    },
+    "hi": {
+      "question": "अमेरिकियों ने ब्रिटेन से स्वतंत्रता प्राप्त करने के लिए कौन सा युद्ध लड़ा?",
+      "answers": [
+        "अमेरिकी क्रांतिकारी युद्ध (American Revolutionary War / War of Independence)"
+      ],
+      "tip": "1775 से 1783 तक चले इस युद्ध में अमेरिका ने ब्रिटेन को हराकर आजादी पाई।"
+    }
+  },
+  "77": {
+    "es": {
+      "question": "Mencione una razón por la cual los estadounidenses declararon su independencia de Gran Bretaña.",
+      "answers": [
+        "Impuestos excesivos (impuestos sin representación)",
+        "El ejército británico permaneció en sus casas (acuartelamiento)",
+        "No tenían autogobierno"
+      ],
+      "tip": "El lema 'impuestos sin representación' y las Leyes Coercitivas impulsaron la revolución."
+    },
+    "hi": {
+      "question": "अमेरिकियों द्वारा ब्रिटेन से स्वतंत्रता की घोषणा करने का कोई एक कारण बताएं।",
+      "answers": [
+        "भारी कर (बिना प्रतिनिधित्व के कराधान / Taxation without representation)",
+        "ब्रिटिश सैनिकों का घरों में ठहरना",
+        "स्वशासन का अभाव"
+      ],
+      "tip": "'बिना प्रतिनिधित्व के कोई टैक्स नहीं' स्वतंत्रता संग्राम का मुख्य नारा था।"
+    }
+  },
+  "78": {
+    "es": {
+      "question": "¿Quién escribió la Declaración de Independencia?",
+      "answers": [
+        "Thomas Jefferson"
+      ],
+      "tip": "Thomas Jefferson fue el autor principal del comité que redactó la histórica declaración en Filadelfia."
+    },
+    "hi": {
+      "question": "स्वतंत्रता की घोषणा (Declaration of Independence) किसने लिखी?",
+      "answers": [
+        "थॉमस जेफरसन (Thomas Jefferson)"
+      ],
+      "tip": "थॉमस जेफरसन ने इस ऐतिहासिक घोषणापत्र का मुख्य मसौदा तैयार किया था।"
+    }
+  },
+  "79": {
+    "es": {
+      "question": "¿Cuándo se adoptó la Declaración de Independencia?",
+      "answers": [
+        "El 4 de julio de 1776"
+      ],
+      "tip": "El Segundo Congreso Continental adoptó formalmente la Declaración el 4 de julio de 1776."
+    },
+    "hi": {
+      "question": "स्वतंत्रता की घोषणा कब अपनाई गई थी?",
+      "answers": [
+        "4 जुलाई 1776 (July 4, 1776)"
+      ],
+      "tip": "4 जुलाई 1776 को फिलाडेल्फिया में घोषणापत्र को आधिकारिक रूप से अपनाया गया।"
+    }
+  },
+  "80": {
+    "es": {
+      "question": "La Revolución Americana tuvo muchos eventos importantes. Mencione uno.",
+      "answers": [
+        "Batalla de Bunker Hill",
+        "Declaración de Independencia",
+        "Washington cruzando el Delaware",
+        "Batalla de Saratoga",
+        "Valley Forge",
+        "Batalla de Yorktown"
+      ],
+      "tip": "La victoria decisive en Yorktown (1781) aseguró la capitulación británica."
+    },
+    "hi": {
+      "question": "अमेरिकी क्रांति में कई महत्वपूर्ण घटनाएं हुईं। किसी एक का नाम बताएं।",
+      "answers": [
+        "बंकर हिल की लड़ाई",
+        "स्वतंत्रता की घोषणा (1776)",
+        "वाशिंगटन का डेलावेयर पार करना",
+        "साराटोगा की लड़ाई",
+        "यॉर्कटाउन की लड़ाई"
+      ],
+      "tip": "यॉर्कटाउन की लड़ाई (1781) में ब्रिटिश सेना के आत्मसमर्पण से युद्ध समाप्त हुआ।"
+    }
+  },
+  "81": {
+    "es": {
+      "question": "Había 13 estados originales. Nombre cinco.",
+      "answers": [
+        "Nueva York",
+        "Nueva Jersey",
+        "Pensilvania",
+        "Virginia",
+        "Massachusetts",
+        "Georgia",
+        "Carolina del Norte",
+        "Carolina del Sur",
+        "Maryland",
+        "Delaware",
+        "Connecticut",
+        "Rhode Island",
+        "Nuevo Hampshire"
+      ],
+      "tip": "Las trece colonias originales bordearon la costa este del Atlántico."
+    },
+    "hi": {
+      "question": "मूल रूप से 13 राज्य थे। किन्हीं पांच के नाम बताएं।",
+      "answers": [
+        "न्यू यॉर्क, न्यू जर्सी, पेंसिल्वेनिया, वर्जीनिया, मैसाचुसेट्स",
+        "जॉर्जिया, डेलावेयर, मैरीलैंड, कनेक्टिकट"
+      ],
+      "tip": "न्यूयॉर्क, पेंसिल्वेनिया, वर्जीनिया और मैसाचुसेट्स प्रमुख 13 मूल राज्यों में से थे।"
+    }
+  },
+  "82": {
+    "es": {
+      "question": "¿Qué documento fundacional fue escrito en 1787?",
+      "answers": [
+        "La Constitución (de los Estados Unidos)"
+      ],
+      "tip": "La Convención Constitucional redactó la Constitución en Filadelfia en el verano de 1787."
+    },
+    "hi": {
+      "question": "1787 में कौन सा संस्थापक दस्तावेज लिखा गया था?",
+      "answers": [
+        "(अमेरिकी) संविधान (U.S. Constitution)"
+      ],
+      "tip": "1787 में फिलाडेल्फिया सम्मेलन में अमेरिकी संविधान का मसौदा तैयार हुआ।"
+    }
+  },
+  "83": {
+    "es": {
+      "question": "Los Documentos Federalistas apoyaron la aprobación de la Constitución. Nombre a uno de los autores.",
+      "answers": [
+        "James Madison",
+        "Alexander Hamilton",
+        "John Jay",
+        "Publius"
+      ],
+      "tip": "Hamilton, Madison y Jay escribieron los 85 ensayos bajo el seudónimo 'Publius'."
+    },
+    "hi": {
+      "question": "फेडरलिस्ट पेपर्स ने संविधान पारित करने का समर्थन किया। लेखकों में से किसी एक का नाम बताएं।",
+      "answers": [
+        "जेम्स मैडिसन (James Madison)",
+        "अलेक्जेंडर हैमिल्टन (Alexander Hamilton)",
+        "जॉन जे (John Jay)"
+      ],
+      "tip": "हैमिल्टन और मैडिसन ने संविधान के समर्थन में ये प्रभावशाली निबंध लिखे।"
+    }
+  },
+  "84": {
+    "es": {
+      "question": "¿Por qué fueron importantes los Documentos Federalistas?",
+      "answers": [
+        "Ayudaron a que la gente apoyara la Constitución de los EE. UU.",
+        "Explicaron cómo funcionaría la Constitución"
+      ],
+      "tip": "Convencieron a los delegados estatales y al público escéptico de ratificar la nueva Constitución."
+    },
+    "hi": {
+      "question": "फेडरलिस्ट पेपर्स क्यों महत्वपूर्ण थे?",
+      "answers": [
+        "इन्होंने लोगों को संविधान का समर्थन करने के लिए प्रेरित किया",
+        "संविधान की कार्यप्रणाली को विस्तार से समझाया"
+      ],
+      "tip": "इन निबंधों ने राज्यों को संविधान को मंजूरी देने के लिए राजी किया।"
+    }
+  },
+  "85": {
+    "es": {
+      "question": "Benjamin Franklin es famoso por muchas cosas. Mencione una.",
+      "answers": [
+        "Diplomático de los EE. UU.",
+        "Miembro más anciano de la Convención Constitucional",
+        "Primer Director General de Correos de los EE. UU.",
+        "Autor de 'Poor Richard's Almanack'",
+        "Inició las primeras bibliotecas gratuitas"
+      ],
+      "tip": "Negoció el tratado de alianza con Francia crucial para la victoria revolucionaria."
+    },
+    "hi": {
+      "question": "बेंजामिन फ्रैंकलिन कई चीजों के लिए प्रसिद्ध हैं। किसी एक का नाम बताएं।",
+      "answers": [
+        "अमेरिकी राजनयिक (U.S. Diplomat)",
+        "संविधान सभा के सबसे बुजुर्ग सदस्य",
+        "पहले पोस्टमास्टर जनरल",
+        "पहली मुफ्त सार्वजनिक लाइब्रेरी शुरू की"
+      ],
+      "tip": "फ्रैंकलिन एक महान वैज्ञानिक, राजनयिक और अमेरिका के संस्थापक पिता थे।"
+    }
+  },
+  "86": {
+    "es": {
+      "question": "George Washington es famoso por muchas cosas. Mencione una.",
+      "answers": [
+        "'Padre de Nuestro País'",
+        "Primer Presidente de los Estados Unidos",
+        "General del Ejército Continental",
+        "Presidente de la Convención Constitucional"
+      ],
+      "tip": "Comandó el Ejército Continental y fue electo unánimemente como el primer Presidente de la nación."
+    },
+    "hi": {
+      "question": "जॉर्ज वाशिंगटन कई चीजों के लिए प्रसिद्ध हैं। किसी एक का नाम बताएं।",
+      "answers": [
+        "'राष्ट्रपिता' (Father of Our Country)",
+        "अमेरिका के पहले राष्ट्रपति",
+        "क्रांतिकारी सेना के जनरल"
+      ],
+      "tip": "वाशिंगटन अमेरिका के पहले राष्ट्रपति और क्रांतिकारी सेना के सर्वोच्च कमांडर थे।"
+    }
+  },
+  "87": {
+    "es": {
+      "question": "Thomas Jefferson es famoso por muchas cosas. Mencione una.",
+      "answers": [
+        "Escribió la Declaración de Independencia",
+        "Tercer Presidente de los Estados Unidos",
+        "Duplicó el tamaño de los Estados Unidos (Compra de Luisiana)"
+      ],
+      "tip": "Redactó la Declaración en 1776 y autorizó la Compra de Luisiana en 1803."
+    },
+    "hi": {
+      "question": "थॉमस जेफरसन कई बातों के लिए प्रसिद्ध हैं। किसी एक का नाम बताएं।",
+      "answers": [
+        "स्वतंत्रता की घोषणा के मुख्य लेखक",
+        "तीसरे अमेरिकी राष्ट्रपति",
+        "लुइसियाना खरीदकर अमेरिका का आकार दोगुना किया"
+      ],
+      "tip": "जेफरसन ने स्वतंत्रता का घोषणापत्र लिखा और तीसरे राष्ट्रपति बने।"
+    }
+  },
+  "88": {
+    "es": {
+      "question": "James Madison es famoso por muchas cosas. Mencione una.",
+      "answers": [
+        "'Padre de la Constitución'",
+        "Cuarto Presidente de los Estados Unidos",
+        "Presidente durante la Guerra de 1812",
+        "Uno de los autores de los Documentos Federalistas"
+      ],
+      "tip": "Su diseño estructural y redacción de la Carta de Derechos le valieron el título de 'Padre de la Constitución'."
+    },
+    "hi": {
+      "question": "जेम्स मैडिसन कई बातों के लिए प्रसिद्ध हैं। किसी एक का नाम बताएं।",
+      "answers": [
+        "'संविधान के जनक' (Father of the Constitution)",
+        "चौथे अमेरिकी राष्ट्रपति",
+        "1812 के युद्ध के दौरान राष्ट्रपति"
+      ],
+      "tip": "मैडिसन को संविधान का मुख्य वास्तुकार (फादर ऑफ द कॉन्स्टिट्यूशन) कहा जाता है।"
+    }
+  },
+  "89": {
+    "es": {
+      "question": "Alexander Hamilton es famoso por muchas cosas. Mencione una.",
+      "answers": [
+        "Primer Secretario del Tesoro",
+        "Uno de los autores de los Documentos Federalistas",
+        "Ayudó a establecer el Primer Banco de los Estados Unidos",
+        "Miembro del Congreso Continental"
+      ],
+      "tip": "Fundó el sistema financiero estadounidense y el Banco Nacional bajo la presidencia de Washington."
+    },
+    "hi": {
+      "question": "अलेक्जेंडर हैमिल्टन कई चीजों के लिए प्रसिद्ध हैं। किसी एक का नाम बताएं।",
+      "answers": [
+        "पहले वित्त मंत्री (First Secretary of the Treasury)",
+        "फेडरलिस्ट पेपर्स के प्रमुख लेखक",
+        "पहला राष्ट्रीय बैंक स्थापित किया"
+      ],
+      "tip": "हैमिल्टन ने अमेरिका की वित्तीय प्रणाली और राष्ट्रीय बैंक की नींव रखी।"
+    }
+  },
+  "90": {
+    "es": {
+      "question": "¿Qué territorio compró Estados Unidos a Francia en 1803?",
+      "answers": [
+        "El Territorio de Luisiana (La Compra de Luisiana)"
+      ],
+      "tip": "Por $15 millones, Jefferson duplicó el territorio nacional abarcando desde el Misisipi hasta las Rocosas."
+    },
+    "hi": {
+      "question": "1803 में अमेरिका ने फ्रांस से कौन सा क्षेत्र खरीदा?",
+      "answers": [
+        "लुइसियाना क्षेत्र (Louisiana Territory / Louisiana Purchase)"
+      ],
+      "tip": "लुइसियाना खरीद से अमेरिका का क्षेत्रफल लगभग दोगुना हो गया।"
+    }
+  },
+  "91": {
+    "es": {
+      "question": "Mencione una guerra librada por los Estados Unidos en el siglo XIX (1800s).",
+      "answers": [
+        "Guerra de 1812",
+        "Guerra México-Estadounidense",
+        "Guerra Civil",
+        "Guerra Hispano-Estadounidense"
+      ],
+      "tip": "Las cuatro grandes guerras del siglo XIX fueron 1812, con México (1846), la Guerra Civil (1861) y con España (1898)."
+    },
+    "hi": {
+      "question": "1800 के दशक (19वीं सदी) में अमेरिका द्वारा लड़े गए किसी एक युद्ध का नाम बताएं।",
+      "answers": [
+        "1812 का युद्ध",
+        "मैक्सिकन-अमेरिकी युद्ध",
+        "गृहयुद्ध (Civil War)",
+        "स्पैनिश-अमेरिकी युद्ध (1898)"
+      ],
+      "tip": "अमेरिकी गृहयुद्ध (1861-1865) इस सदी का सबसे बड़ा संघर्ष था।"
+    }
+  },
+  "92": {
+    "es": {
+      "question": "Nombre la guerra de los EE. UU. entre el Norte y el Sur.",
+      "answers": [
+        "La Guerra Civil"
+      ],
+      "tip": "Librada de 1861 a 1865 entre la Unión del Norte y la Confederación del Sur."
+    },
+    "hi": {
+      "question": "उत्तरी और दक्षिणी राज्यों के बीच हुए अमेरिकी युद्ध का नाम बताएं।",
+      "answers": [
+        "गृहयुद्ध (The Civil War)"
+      ],
+      "tip": "1861 से 1865 तक संघ (उत्तर) और परिसंघ (दक्षिण) के बीच गृहयुद्ध लड़ा गया।"
+    }
+  },
+  "93": {
+    "es": {
+      "question": "La Guerra Civil tuvo muchos eventos importantes. Mencione uno.",
+      "answers": [
+        "Batalla de Fort Sumter",
+        "Batalla de Gettysburg",
+        "Proclamación de Emancipación",
+        "Rendición en Appomattox Court House",
+        "Batalla de Antietam"
+      ],
+      "tip": "Gettysburg (julio de 1863) marcó el punto de inflexión decisivo a favor de la Unión."
+    },
+    "hi": {
+      "question": "गृहयुद्ध में कई महत्वपूर्ण घटनाएं हुईं। किसी एक का नाम बताएं।",
+      "answers": [
+        "फोर्ट समटर की लड़ाई",
+        "गेटीसबर्ग की लड़ाई (Battle of Gettysburg)",
+        "मुक्ति उद्घोषणा (Emancipation Proclamation)",
+        "एपोमैटॉक्स में आत्मसमर्पण"
+      ],
+      "tip": "गेटीसबर्ग की लड़ाई (1863) गृहयुद्ध का सबसे निर्णायक मोड़ साबित हुई।"
+    }
+  },
+  "94": {
+    "es": {
+      "question": "Abraham Lincoln es famoso por muchas cosas. Mencione una.",
+      "answers": [
+        "Liberó a los esclavos (Proclamación de Emancipación)",
+        "Salvó (preservó) la Unión",
+        "Lideró a los Estados Unidos durante la Guerra Civil",
+        "Discurso de Gettysburg"
+      ],
+      "tip": "16.° Presidente que preservó la república indivisible y puso fin a la esclavitud legal."
+    },
+    "hi": {
+      "question": "अब्राहम लिंकन कई चीजों के लिए प्रसिद्ध हैं। किसी एक का नाम बताएं।",
+      "answers": [
+        "गुलामों को मुक्त किया (Emancipation Proclamation)",
+        "देश (यूनियन) को टूटने से बचाया",
+        "गृहयुद्ध के दौरान नेतृत्व किया",
+        "गेटीसबर्ग संबोधन"
+      ],
+      "tip": "अब्राहम लिंकन ने गृहयुद्ध में देश को एकजुट रखा और गुलामी प्रथा को समाप्त किया।"
+    }
+  },
+  "95": {
+    "es": {
+      "question": "¿Qué hizo la Proclamación de Emancipación?",
+      "answers": [
+        "Liberó a los esclavos",
+        "Liberó a los esclavos en la Confederación",
+        "Liberó a los esclavos en los estados del sur"
+      ],
+      "tip": "Emitida el 1 de enero de 1863 por Lincoln, declaró libres a más de tres millones de esclavos confederados."
+    },
+    "hi": {
+      "question": "मुक्ति उद्घोषणा (Emancipation Proclamation) ने क्या किया?",
+      "answers": [
+        "गुलामों को आजाद किया (Freed the slaves)",
+        "दक्षिणी परिसंघ के राज्यों में गुलामों को मुक्त किया"
+      ],
+      "tip": "1863 में लिंकन ने घोषणा जारी कर लाखों दासों को कानूनी स्वतंत्रता दी।"
+    }
+  },
+  "96": {
+    "es": {
+      "question": "¿Qué guerra de los EE. UU. puso fin a la esclavitud?",
+      "answers": [
+        "La Guerra Civil"
+      ],
+      "tip": "La victoria de la Unión en la Guerra Civil facilitó la aprobación de la 13.ª Enmienda que abolió la esclavitud."
+    },
+    "hi": {
+      "question": "किस अमेरिकी युद्ध ने गुलामी को समाप्त किया?",
+      "answers": [
+        "गृहयुद्ध (The Civil War)"
+      ],
+      "tip": "गृहयुद्ध की समाप्ति और 13वें संशोधन ने अमेरिका से दास प्रथा का अंत किया।"
+    }
+  },
+  "97": {
+    "es": {
+      "question": "¿Qué enmienda dice que todas las personas nacidas o naturalizadas en los EE. UU. son ciudadanos?",
+      "answers": [
+        "La Enmienda 14"
+      ],
+      "tip": "Ratificada en 1868, garantizó la ciudadanía por nacimiento y la igual protección de las leyes."
+    },
+    "hi": {
+      "question": "कौन सा संशोधन कहता है कि अमेरिका में जन्मे या देशीकृत सभी व्यक्ति अमेरिकी नागरिक हैं?",
+      "answers": [
+        "14वां संशोधन (14th Amendment)"
+      ],
+      "tip": "14वें संशोधन (1868) ने जन्मसिद्ध नागरिकता और कानूनों के समान संरक्षण का अधिकार दिया।"
+    }
+  },
+  "98": {
+    "es": {
+      "question": "¿Cuándo obtuvieron todos los hombres el derecho al voto?",
+      "answers": [
+        "Después de la Guerra Civil",
+        "Durante la Reconstrucción",
+        "Con la Enmienda 15 (1870)"
+      ],
+      "tip": "La 15.ª Enmienda prohibió restringir el voto por motivos de raza o previa servidumbre."
+    },
+    "hi": {
+      "question": "सभी पुरुषों को मतदान का अधिकार कब मिला?",
+      "answers": [
+        "गृहयुद्ध के बाद",
+        "पुनर्निर्माण काल के दौरान",
+        "15वें संशोधन (1870) द्वारा"
+      ],
+      "tip": "15वें संशोधन (1870) ने नस्ल या रंग के आधार पर वोट देने से रोकने पर प्रतिबंध लगाया।"
+    }
+  },
+  "99": {
+    "es": {
+      "question": "Nombre a una líder del movimiento por los derechos de la mujer en el siglo XIX (1800s).",
+      "answers": [
+        "Susan B. Anthony",
+        "Elizabeth Cady Stanton",
+        "Sojourner Truth",
+        "Lucretia Mott",
+        "Lucy Stone"
+      ],
+      "tip": "Anthony y Stanton organizaron la Convención de Seneca Falls e impulsaron el sufragio femenino."
+    },
+    "hi": {
+      "question": "1800 के दशक में महिला अधिकार आंदोलन की किसी एक नेत्री का नाम बताएं।",
+      "answers": [
+        "सुसान बी. एंथनी (Susan B. Anthony)",
+        "एलिजाबेथ कैडी स्टैंटन",
+        "सोजॉर्नर ट्रुथ (Sojourner Truth)"
+      ],
+      "tip": "सुसान बी. एंथनी ने महिलाओं के मताधिकार के लिए जीवनभर संघर्ष किया।"
+    }
+  },
+  "100": {
+    "es": {
+      "question": "Mencione una guerra librada por los Estados Unidos en el siglo XX (1900s).",
+      "answers": [
+        "Primera Guerra Mundial",
+        "Segunda Guerra Mundial",
+        "Guerra de Corea",
+        "Guerra de Vietnam",
+        "Guerra del Golfo Pérsico"
+      ],
+      "tip": "Las grandes guerras del siglo XX incluyen la Primera Guerra Mundial, la Segunda Guerra Mundial, Corea, Vietnam y el Golfo."
+    },
+    "hi": {
+      "question": "1900 के दशक (20वीं सदी) में अमेरिका द्वारा लड़े गए किसी एक युद्ध का नाम बताएं।",
+      "answers": [
+        "प्रथम विश्व युद्ध",
+        "द्वितीय विश्व युद्ध (World War II)",
+        "कोरियाई युद्ध",
+        "वियतनाम युद्ध",
+        "खाड़ी युद्ध"
+      ],
+      "tip": "द्वितीय विश्व युद्ध (1941-1945) अमेरिका द्वारा लड़ा गया सबसे बड़ा वैश्विक युद्ध था।"
+    }
+  },
+  "101": {
+    "es": {
+      "question": "¿Por qué entró Estados Unidos en la Primera Guerra Mundial?",
+      "answers": [
+        "Porque Alemania atacó barcos mercantes estadounidenses (guerra submarina)",
+        "Para apoyar a las naciones aliadas",
+        "Para hacer que el mundo fuera seguro para la democracia"
+      ],
+      "tip": "El hundimiento de barcos civiles y el telegrama Zimmermann obligaron al presidente Wilson a intervenir en 1917."
+    },
+    "hi": {
+      "question": "संयुक्त राज्य अमेरिका प्रथम विश्व युद्ध में क्यों शामिल हुआ?",
+      "answers": [
+        "क्योंकि जर्मनी ने अमेरिकी जहाजों पर हमला किया (पनडुब्बी युद्ध)",
+        "मित्र राष्ट्रों के समर्थन के लिए",
+        "लोकतंत्र की रक्षा के लिए"
+      ],
+      "tip": "जर्मन पनडुब्बी हमलों और ज़िमरमैन टेलीग्राम के बाद अमेरिका 1917 में युद्ध में उतरा।"
+    }
+  },
+  "102": {
+    "es": {
+      "question": "¿Cuándo obtuvieron todas las mujeres el derecho al voto?",
+      "answers": [
+        "1920",
+        "Con la Enmienda 19",
+        "Después de la Primera Guerra Mundial"
+      ],
+      "tip": "La 19.ª Enmienda fue ratificada el 18 de agosto de 1920 concediendo el sufragio femenino nacional."
+    },
+    "hi": {
+      "question": "सभी महिलाओं को मतदान का अधिकार कब मिला?",
+      "answers": [
+        "1920 में",
+        "19वें संशोधन (19th Amendment) द्वारा",
+        "प्रथम विश्व युद्ध के बाद"
+      ],
+      "tip": "1920 में 19वें संशोधन के पारित होने से महिलाओं को वोट देने का कानूनी अधिकार मिला।"
+    }
+  },
+  "103": {
+    "es": {
+      "question": "¿Qué fue la Gran Depresión?",
+      "answers": [
+        "La recesión económica más prolongada y profunda de la historia moderna"
+      ],
+      "tip": "Crisis económica devastadora con desempleo superior al 25% tras el colapso bursátil de 1929."
+    },
+    "hi": {
+      "question": "द ग्रेट डिप्रेशन (महान मंदी) क्या थी?",
+      "answers": [
+        "आधुनिक इतिहास की सबसे लंबी और गंभीर आर्थिक मंदी"
+      ],
+      "tip": "1929 के स्टॉक मार्केट क्रैश के बाद आई वैश्विक और भीषण आर्थिक मंदी।"
+    }
+  },
+  "104": {
+    "es": {
+      "question": "¿Cuándo comenzó la Gran Depresión?",
+      "answers": [
+        "El colapso bursátil de 1929",
+        "1929"
+      ],
+      "tip": "Inició con el 'Martes Negro' en Wall Street en octubre de 1929 y duró toda la década de 1930."
+    },
+    "hi": {
+      "question": "महान मंदी (Great Depression) कब शुरू हुई थी?",
+      "answers": [
+        "1929 में (शेयर बाजार के पतन के साथ)"
+      ],
+      "tip": "अक्टूबर 1929 में वॉल स्ट्रीट शेयर बाजार क्रैश होने से मंदी शुरू हुई।"
+    }
+  },
+  "105": {
+    "es": {
+      "question": "¿Quién fue presidente durante la Gran Depresión y la Segunda Guerra Mundial?",
+      "answers": [
+        "Franklin Delano Roosevelt",
+        "FDR"
+      ],
+      "tip": "Elegido para cuatro mandatos, implementó el New Deal y guió a los aliados en la guerra."
+    },
+    "hi": {
+      "question": "महान मंदी और द्वितीय विश्व युद्ध के दौरान राष्ट्रपति कौन थे?",
+      "answers": [
+        "फ्रैंकलिन डी. रूजवेल्ट (Franklin D. Roosevelt / FDR)"
+      ],
+      "tip": "रूजवेल्ट (FDR) ने न्यू डील आर्थिक नीतियों और द्वितीय विश्व युद्ध में देश का नेतृत्व किया।"
+    }
+  },
+  "106": {
+    "es": {
+      "question": "¿Por qué entró Estados Unidos en la Segunda Guerra Mundial?",
+      "answers": [
+        "Ataque japonés a Pearl Harbor (7 de diciembre de 1941)",
+        "Para derrotar a la Alemania nazi y a las potencias del Eje"
+      ],
+      "tip": "El ataque sorpresa japonés a Pearl Harbor provocó la inmediata declaración de guerra por parte de EE. UU."
+    },
+    "hi": {
+      "question": "संयुक्त राज्य अमेरिका द्वितीय विश्व युद्ध में क्यों शामिल हुआ?",
+      "answers": [
+        "पर्ल हार्बर पर जापानी हमले के कारण (7 दिसंबर 1941)",
+        "नाजी जर्मनी और धुरी राष्ट्रों को हराने के लिए"
+      ],
+      "tip": "जापान द्वारा पर्ल हार्बर पर हमले के बाद अमेरिका ने द्वितीय विश्व युद्ध में प्रवेश किया।"
+    }
+  },
+  "107": {
+    "es": {
+      "question": "Dwight Eisenhower es famoso por muchas cosas. Mencione una.",
+      "answers": [
+        "General en jefe de las fuerzas aliadas en Europa (Segunda Guerra Mundial)",
+        "Presidente número 34 de los Estados Unidos",
+        "Firmó la Ley del Sistema de Autopistas Interestatales"
+      ],
+      "tip": "Comandó la invasión del Día D en Normandía y luego sirvió dos mandatos presidenciales en los años 50."
+    },
+    "hi": {
+      "question": "ड्वाइट आइजनहावर कई चीजों के लिए प्रसिद्ध हैं। किसी एक का नाम बताएं।",
+      "answers": [
+        "द्वितीय विश्व युद्ध में मित्र देशों की सेना के सर्वोच्च जनरल (डी-डे कमांडर)",
+        "34वें अमेरिकी राष्ट्रपति",
+        "राष्ट्रीय हाईवे प्रणाली (Interstate Highway System) शुरू की"
+      ],
+      "tip": "आइजनहावर डी-डे अभियान के प्रमुख जनरल थे और बाद में राष्ट्रपति बने।"
+    }
+  },
+  "108": {
+    "es": {
+      "question": "¿Quién fue el principal rival de los Estados Unidos durante la Guerra Fría?",
+      "answers": [
+        "La Unión Soviética (URSS / Rusia)"
+      ],
+      "tip": "La rivalidad geopolítica nuclear y de espionaje enfrentó a EE. UU. y la URSS de 1947 a 1991."
+    },
+    "hi": {
+      "question": "शीत युद्ध (Cold War) के दौरान संयुक्त राज्य अमेरिका का मुख्य प्रतिद्वंद्वी कौन था?",
+      "answers": [
+        "सोवियत संघ (Soviet Union / USSR)"
+      ],
+      "tip": "1947 से 1991 तक अमेरिका और सोवियत संघ (रूस) के बीच शीत युद्ध चला।"
+    }
+  },
+  "109": {
+    "es": {
+      "question": "Durante la Guerra Fría, ¿cuál fue una preocupación principal de los Estados Unidos?",
+      "answers": [
+        "El comunismo",
+        "La guerra nuclear"
+      ],
+      "tip": "La política exterior de contención buscaba impedir la expansión global del comunismo soviético."
+    },
+    "hi": {
+      "question": "शीत युद्ध के दौरान अमेरिका की मुख्य चिंता क्या थी?",
+      "answers": [
+        "साम्यवाद का प्रसार (Communism)",
+        "परमाणु युद्ध का खतरा"
+      ],
+      "tip": "कम्युनिस्ट विस्तार को रोकना और परमाणु हथियारों की दौड़ मुख्य चिंता थी।"
+    }
+  },
+  "110": {
+    "es": {
+      "question": "¿Por qué entró Estados Unidos en la Guerra de Corea?",
+      "answers": [
+        "Para detener la propagación del comunismo"
+      ],
+      "tip": "Tras la invasión de Corea del Sur por Corea del Norte en 1950, EE. UU. lideró las fuerzas de la ONU."
+    },
+    "hi": {
+      "question": "संयुक्त राज्य अमेरिका कोरियाई युद्ध में क्यों शामिल हुआ?",
+      "answers": [
+        "साम्यवाद (कम्युनिज्म) के प्रसार को रोकने के लिए"
+      ],
+      "tip": "उत्तर कोरिया द्वारा दक्षिण कोरिया पर आक्रमण के बाद कम्युनिज्म रोकने हेतु अमेरिका युद्ध में आया।"
+    }
+  },
+  "111": {
+    "es": {
+      "question": "¿Por qué entró Estados Unidos en la Guerra de Vietnam?",
+      "answers": [
+        "Para detener la propagación del comunismo"
+      ],
+      "tip": "La doctrina de la teoría del dominó buscaba evitar que el sudeste asiático cayera bajo el comunismo."
+    },
+    "hi": {
+      "question": "संयुक्त राज्य अमेरिका वियतनाम युद्ध में क्यों शामिल हुआ?",
+      "answers": [
+        "साम्यवाद के प्रसार को रोकने के लिए"
+      ],
+      "tip": "एशिया में कम्युनिस्ट प्रभाव रोकने की रणनीति के तहत अमेरिका वियतनाम गया।"
+    }
+  },
+  "112": {
+    "es": {
+      "question": "¿Qué hizo el movimiento por los derechos civiles?",
+      "answers": [
+        "Luchó para poner fin a la discriminación racial",
+        "Luchó por la igualdad de derechos para todos"
+      ],
+      "tip": "Logró la aprobación de la histórica Ley de Derechos Civiles de 1964 y la Ley de Derecho al Voto de 1965."
+    },
+    "hi": {
+      "question": "नागरिक अधिकार आंदोलन (Civil rights movement) ने क्या किया?",
+      "answers": [
+        "नस्लीय भेदभाव को समाप्त करने के लिए लड़ाई लड़ी",
+        "सभी के लिए समान अधिकारों की स्थापना की"
+      ],
+      "tip": "इस आंदोलन ने काले और अल्पसंख्यक नागरिकों के लिए समानता और मताधिकार हासिल किया।"
+    }
+  },
+  "113": {
+    "es": {
+      "question": "Martin Luther King, Jr. es famoso por muchas cosas. Mencione una.",
+      "answers": [
+        "Luchó por los derechos civiles",
+        "Lideró protestas pacíficas no violentas",
+        "Pronunció el discurso 'I Have a Dream'"
+      ],
+      "tip": "Defendió la resistencia no violenta contra la segregación y recibió el Premio Nobel de la Paz en 1964."
+    },
+    "hi": {
+      "question": "मार्टिन लूथर किंग जूनियर कई बातों के लिए प्रसिद्ध हैं। किसी एक का नाम बताएं।",
+      "answers": [
+        "नागरिक अधिकारों के लिए अहिंसक संघर्ष किया",
+        "'आई हैव अ ड्रीम' (I Have a Dream) भाषण दिया",
+        "समानता के लिए शांतिपूर्ण आंदोलन चलाया"
+      ],
+      "tip": "डॉ. किंग ने गांधीजी के अहिंसा के सिद्धांतों पर चलकर ऐतिहासिक अधिकार आंदोलन का नेतृत्व किया।"
+    }
+  },
+  "114": {
+    "es": {
+      "question": "¿Por qué entró Estados Unidos en la Guerra del Golfo Pérsico?",
+      "answers": [
+        "Para expulsar al ejército iraquí de Kuwait",
+        "Para proteger los suministros de petróleo"
+      ],
+      "tip": "En la Operación Tormenta del Desierto (1991), una coalición liderada por EE. UU. liberó a Kuwait de la ocupación iraquí."
+    },
+    "hi": {
+      "question": "संयुक्त राज्य अमेरिका फारस की खाड़ी युद्ध (Gulf War) में क्यों शामिल हुआ?",
+      "answers": [
+        "कुवैत से इराकी सेना को बाहर निकालने के लिए"
+      ],
+      "tip": "इराक द्वारा कुवैत पर अवैध कब्जे को समाप्त करने के लिए 1991 में अमेरिका ने अभियान चलाया।"
+    }
+  },
+  "115": {
+    "es": {
+      "question": "¿Qué evento importante ocurrió el 11 de septiembre de 2001 en los Estados Unidos?",
+      "answers": [
+        "Terroristas atacaron los Estados Unidos (Torres Gemelas y Pentágono)"
+      ],
+      "tip": "Secuestradores de Al-Qaeda estrellaron aviones contra el World Trade Center, el Pentágono y en Pensilvania."
+    },
+    "hi": {
+      "question": "11 सितंबर 2001 को संयुक्त राज्य अमेरिका में कौन सी बड़ी घटना घटी?",
+      "answers": [
+        "आतंकवादियों ने अमेरिका पर हमला किया (वर्ल्ड ट्रेड सेंटर और पेंटागन पर)"
+      ],
+      "tip": "अल-कायदा आतंकवादियों ने 9/11 को ट्विन टावर्स और पेंटागन पर घातक हमला किया।"
+    }
+  },
+  "116": {
+    "es": {
+      "question": "Mencione un conflicto militar de los EE. UU. posterior a los ataques del 11 de septiembre de 2001.",
+      "answers": [
+        "Guerra en Afganistán",
+        "Guerra de Irak"
+      ],
+      "tip": "Estados Unidos lanzó operaciones en Afganistán (2001) e Irak (2003) en la lucha contra el terrorismo."
+    },
+    "hi": {
+      "question": "11 सितंबर 2001 के हमलों के बाद किसी एक अमेरिकी सैन्य संघर्ष का नाम बताएं।",
+      "answers": [
+        "अफगानिस्तान में युद्ध (War in Afghanistan)",
+        "इराक युद्ध (War in Iraq)"
+      ],
+      "tip": "9/11 हमलों के बाद अमेरिका ने अफगानिस्तान और इराक में बड़े सैन्य अभियान चलाए।"
+    }
+  },
+  "117": {
+    "es": {
+      "question": "Nombre una tribu de indígenas americanos en los Estados Unidos.",
+      "answers": [
+        "Cherokee",
+        "Navajo",
+        "Sioux",
+        "Chippewa",
+        "Choctaw",
+        "Pueblo",
+        "Apache",
+        "Iroquois",
+        "Creek",
+        "Blackfeet"
+      ],
+      "tip": "Hay más de 574 tribus indígenas reconocidas a nivel federal en los Estados Unidos."
+    },
+    "hi": {
+      "question": "संयुक्त राज्य अमेरिका में किसी एक अमेरिकी भारतीय जनजाति (American Indian Tribe) का नाम बताएं।",
+      "answers": [
+        "चेरोकी (Cherokee)",
+        "नवाजो (Navajo)",
+        "सियूक्स (Sioux)",
+        "अपाचे (Apache)",
+        "प्यूबलो (Pueblo)"
+      ],
+      "tip": "चेरोकी और नवाजो अमेरिका की सबसे बड़ी मूल निवासी जनजातियों में से हैं।"
+    }
+  },
+  "118": {
+    "es": {
+      "question": "Mencione un ejemplo de innovación estadounidense.",
+      "answers": [
+        "Bombilla eléctrica",
+        "Automóvil / Línea de ensamblaje",
+        "Avión",
+        "Computadora personal",
+        "Internet",
+        "Aterrizaje en la Luna"
+      ],
+      "tip": "Inventores estadounidenses crearon el avión comercial (hermanos Wright), la bombilla (Edison) y el internet moderno."
+    },
+    "hi": {
+      "question": "किसी एक अमेरिकी नवाचार या आविष्कार (American Innovation) का नाम बताएं।",
+      "answers": [
+        "बिजली का बल्ब (Light bulb)",
+        "हवाई जहाज (Airplane)",
+        "पर्सनल कंप्यूटर (PC)",
+        "इंटरनेट (Internet)",
+        "असेंबली लाइन ऑटोमोबाइल"
+      ],
+      "tip": "एडिसन का बल्ब, राइट ब्रदर्स का हवाई जहाज और इंटरनेट प्रमुख अमेरिकी आविष्कार हैं।"
+    }
+  },
+  "119": {
+    "es": {
+      "question": "¿Cuál es la capital de los Estados Unidos?",
+      "answers": [
+        "Washington, D.C."
+      ],
+      "tip": "El Distrito de Columbia es un distrito federal independiente situado entre Maryland y Virginia."
+    },
+    "hi": {
+      "question": "संयुक्त राज्य अमेरिका की राजधानी क्या है?",
+      "answers": [
+        "वाशिंगटन, डी.सी. (Washington, D.C.)"
+      ],
+      "tip": "वाशिंगटन डी.सी. अमेरिका की आधिकारिक राष्ट्रीय राजधानी है।"
+    }
+  },
+  "120": {
+    "es": {
+      "question": "¿Dónde está la Estatua de la Libertad?",
+      "answers": [
+        "Puerto de Nueva York",
+        "Liberty Island (Isla de la Libertad)",
+        "Cerca de Nueva York y Nueva Jersey"
+      ],
+      "tip": "Regalo de Francia en 1886, se erige en Liberty Island en el puerto de Nueva York."
+    },
+    "hi": {
+      "question": "स्टैच्यू ऑफ लिबर्टी (Statue of Liberty) कहाँ स्थित है?",
+      "answers": [
+        "न्यूयॉर्क बंदरगाह (New York Harbor)",
+        "लिबर्टी द्वीप (Liberty Island)"
+      ],
+      "tip": "यह प्रसिद्ध प्रतिमा न्यूयॉर्क हार्बर में लिबर्टी द्वीप पर स्थित है।"
+    }
+  },
+  "121": {
+    "es": {
+      "question": "¿Por qué la bandera de EE. UU. tiene 13 franjas?",
+      "answers": [
+        "Porque representan las 13 colonias originales"
+      ],
+      "tip": "Las 13 franjas alternas (7 rojas y 6 blancas) honran a las trece colonias fundacionales."
+    },
+    "hi": {
+      "question": "अमेरिकी झंडे में 13 धारियां (Stripes) क्यों हैं?",
+      "answers": [
+        "क्योंकि वे मूल 13 उपनिवेशों का प्रतिनिधित्व करती हैं"
+      ],
+      "tip": "लाल और सफेद 13 पट्टियां अमेरिका के मूल 13 संस्थापक राज्यों की याद दिलाती हैं।"
+    }
+  },
+  "122": {
+    "es": {
+      "question": "¿Por qué la bandera de EE. UU. tiene 50 estrellas?",
+      "answers": [
+        "Porque hay 50 estados",
+        "Una estrella por cada estado"
+      ],
+      "tip": "El campo azul contiene 50 estrellas blancas que representan a cada uno de los 50 estados de la Unión."
+    },
+    "hi": {
+      "question": "अमेरिकी झंडे में 50 सितारे (Stars) क्यों हैं?",
+      "answers": [
+        "क्योंकि 50 राज्य हैं",
+        "प्रत्येक राज्य के लिए एक सितारा"
+      ],
+      "tip": "नीले आयत में 50 सितारे अमेरिका के 50 राज्यों का प्रतीक हैं।"
+    }
+  },
+  "123": {
+    "es": {
+      "question": "¿Cómo se llama el himno nacional?",
+      "answers": [
+        "The Star-Spangled Banner (La bandera de estrellas)"
+      ],
+      "tip": "Escrito por Francis Scott Key en 1814 durante la defensa de Fort McHenry en Baltimore."
+    },
+    "hi": {
+      "question": "अमेरिकी राष्ट्रगान का क्या नाम है?",
+      "answers": [
+        "द स्टार-स्पैंगल्ड बैनर (The Star-Spangled Banner)"
+      ],
+      "tip": "फ्रांसिस स्कॉट की द्वारा 1814 में लिखा गया यह आधिकारिक अमेरिकी राष्ट्रगान है।"
+    }
+  },
+  "124": {
+    "es": {
+      "question": "El primer lema de la nación fue 'E Pluribus Unum'. ¿Qué significa?",
+      "answers": [
+        "De muchos, uno",
+        "Todos nos convertimos en uno"
+      ],
+      "tip": "Frase en latín que significa que de diversos estados y orígenes se forjó una sola nación soberana."
+    },
+    "hi": {
+      "question": "राष्ट्र का पहला आदर्श वाक्य 'ई प्लूरिबस यूनम' (E Pluribus Unum) था। इसका क्या अर्थ है?",
+      "answers": [
+        "अनेकता में एकता (Out of many, one)",
+        "अनेक से एक बनना"
+      ],
+      "tip": "लैटिन भाषा के इस वाक्य का अर्थ है कि अनेक राज्यों और संस्कृतियों से मिलकर एक राष्ट्र बना।"
+    }
+  },
+  "125": {
+    "es": {
+      "question": "¿Qué es el Día de la Independencia (Independence Day)?",
+      "answers": [
+        "Un día festivo para celebrar la independencia de Gran Bretaña",
+        "El cumpleaños del país"
+      ],
+      "tip": "Se celebra el 4 de julio en conmemoración de la adopción de la Declaración en 1776."
+    },
+    "hi": {
+      "question": "स्वतंत्रता दिवस (Independence Day) क्या है?",
+      "answers": [
+        "ब्रिटेन से आजादी का जश्न मनाने का राष्ट्रीय अवकाश",
+        "देश का जन्मदिन (Birthday of the country)"
+      ],
+      "tip": "4 जुलाई को देश के जन्मदिन और ब्रिटेन से आजादी के उपलक्ष्य में मनाया जाता है।"
+    }
+  },
+  "126": {
+    "es": {
+      "question": "Mencione tres días feriados nacionales de los Estados Unidos.",
+      "answers": [
+        "Día de la Independencia (4 de julio)",
+        "Día de Acción de Gracias (Thanksgiving)",
+        "Día de los Caídos (Memorial Day)",
+        "Día de Martin Luther King, Jr.",
+        "Día de los Presidentes",
+        "Navidad"
+      ],
+      "tip": "Los feriados nacionales federales incluyen Año Nuevo, Día de MLK, Memorial Day, 4 de julio, Labor Day, Acción de Gracias y Navidad."
+    },
+    "hi": {
+      "question": "संयुक्त राज्य अमेरिका के तीन राष्ट्रीय अवकाशों के नाम बताएं।",
+      "answers": [
+        "स्वतंत्रता दिवस (Independence Day - 4 जुलाई)",
+        "थैंक्सगिविंग डे (Thanksgiving)",
+        "मेमोरियल डे (Memorial Day)",
+        "क्रिसमस (Christmas)"
+      ],
+      "tip": "4 जुलाई, थैंक्सगिविंग और मेमोरियल डे प्रमुख अमेरिकी राष्ट्रीय छुट्टियां हैं।"
+    }
+  },
+  "127": {
+    "es": {
+      "question": "¿Qué es el Día de los Caídos (Memorial Day)?",
+      "answers": [
+        "Un día feriado para honrar a los soldados que murieron en servicio militar"
+      ],
+      "tip": "Se conmemora el último lunes de mayo en memoria de los héroes caídos en servicio a la patria."
+    },
+    "hi": {
+      "question": "मेमोरियल डे (Memorial Day) क्या है?",
+      "answers": [
+        "सैन्य सेवा में शहीद हुए सैनिकों को सम्मानित करने का राष्ट्रीय अवकाश"
+      ],
+      "tip": "मई के आखिरी सोमवार को देश के लिए प्राण न्योछावर करने वाले सैनिकों की याद में मनाया जाता है।"
+    }
+  },
+  "128": {
+    "es": {
+      "question": "¿Qué es el Día de los Veteranos (Veterans Day)?",
+      "answers": [
+        "Un día feriado para honrar a las personas en el ejército de EE. UU.",
+        "Un día feriado para honrar a quienes han servido en el ejército de EE. UU."
+      ],
+      "tip": "Se celebra cada 11 de noviembre para honrar y agradecer a todos los veteranos vivos y fallecidos de las fuerzas armadas."
+    },
+    "hi": {
+      "question": "वेटरन्स डे (Veterans Day) क्या है?",
+      "answers": [
+        "अमेरिकी सेना में सेवा दे चुके सभी सैनिकों और दिग्गजों को सम्मानित करने का दिन"
+      ],
+      "tip": "11 नवंबर को सभी जीवित और पूर्व सैनिकों के सम्मान और आभार में मनाया जाता है।"
+    }
+  }
+}
