@@ -239,7 +239,14 @@
               <div id="stat-starred" class="text-base sm:text-lg font-bold text-amber-400">0</div>
             </div>
             <div class="h-6 w-px bg-slate-700"></div>
-            <div class="text-center px-1.5">
+            <div class="text-center px-1.5" title="Consecutive days practiced">
+              <div class="text-[10px] text-slate-400 uppercase tracking-wider font-medium">Streak</div>
+              <div id="stat-streak" class="text-base sm:text-lg font-bold text-orange-400 flex items-center justify-center gap-0.5">
+                <span>🔥</span><span id="stat-streak-count">1</span><span class="text-xs font-normal text-slate-400">d</span>
+              </div>
+            </div>
+            <div class="h-6 w-px bg-slate-700 hidden sm:block"></div>
+            <div class="text-center px-1.5 hidden sm:block">
               <div class="text-[10px] text-slate-400 uppercase tracking-wider font-medium">Sim Passes</div>
               <div id="stat-passes" class="text-base sm:text-lg font-bold text-blue-400">0</div>
             </div>
@@ -247,6 +254,13 @@
             <div class="text-center px-1.5">
               <div class="text-[10px] text-slate-400 uppercase tracking-wider font-medium">Readiness</div>
               <div id="stat-readiness" class="text-base sm:text-lg font-bold text-indigo-400">0%</div>
+            </div>
+            <!-- Multilingual Language Switcher Pill -->
+            <div class="h-6 w-px bg-slate-700 hidden sm:block"></div>
+            <div class="hidden sm:flex items-center bg-slate-950 border border-slate-800 rounded-xl p-0.5 text-xs font-medium" title="Dual-Language Study Mode">
+              <button id="lang-btn-en" class="lang-switch-btn px-2.5 py-1 rounded-lg bg-blue-600 text-white font-bold transition shadow-sm" data-lang="en" title="English (USCIS Oral Language)">🇺🇸 EN</button>
+              <button id="lang-btn-es" class="lang-switch-btn px-2.5 py-1 rounded-lg text-slate-400 hover:text-slate-200 transition" data-lang="es" title="Español (Explicaciones y Audio)">🇲🇽 ES</button>
+              <button id="lang-btn-hi" class="lang-switch-btn px-2.5 py-1 rounded-lg text-slate-400 hover:text-slate-200 transition" data-lang="hi" title="हिन्दी (स्पष्टीकरण और ऑडियो)">🇮🇳 HI</button>
             </div>
             <button id="btn-open-settings" class="ml-1 p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition border border-slate-700" title="Settings, Audio & Updates">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -284,7 +298,7 @@
   </header>
 
   <!-- MAIN APP CONTAINER -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-28 sm:pb-8">
 
     <!-- ==================== VIEW 1: STUDY & FLASHCARDS ==================== -->
     <section id="view-study" class="view-panel space-y-6">
@@ -305,6 +319,7 @@
           <label for="study-deck-filter" class="text-xs text-slate-400 font-medium">Filter Deck:</label>
           <select id="study-deck-filter" class="bg-slate-800 border border-slate-700 text-slate-200 text-sm rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option value="all">All 128 Questions</option>
+            <option value="trouble">⚠️ Trouble Questions (Frequently Missed)</option>
             <option value="6520">🌟 65/20 Special Exemption (20 Qs)</option>
             <option value="new">🆕 New in 128 Pool (53 Qs)</option>
             <option value="amended">✏️ Amended / Expanded Wording (18 Qs)</option>
@@ -315,6 +330,18 @@
             <option value="American History">📜 American History (Q73–118)</option>
             <option value="Symbols & Holidays">🗽 Symbols & Holidays (Q119–128)</option>
           </select>
+        </div>
+      </div>
+
+      <!-- Mobile Language Switcher Pill -->
+      <div class="flex sm:hidden items-center justify-between gap-2 bg-slate-900/90 border border-slate-800 rounded-2xl p-2 text-xs">
+        <span class="text-[11px] text-slate-400 font-semibold flex items-center gap-1">
+          <span>🌐</span> Dual-Language:
+        </span>
+        <div class="flex items-center bg-slate-950 border border-slate-800/80 rounded-xl p-0.5 text-xs">
+          <button id="mob-lang-btn-en" class="lang-switch-btn px-2.5 py-1 rounded-lg bg-blue-600 text-white font-bold transition shadow-sm" data-lang="en">🇺🇸 EN</button>
+          <button id="mob-lang-btn-es" class="lang-switch-btn px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition" data-lang="es">🇲🇽 ES</button>
+          <button id="mob-lang-btn-hi" class="lang-switch-btn px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition" data-lang="hi">🇮🇳 HI</button>
         </div>
       </div>
 
@@ -361,6 +388,9 @@
                   <span id="fc-state-front" class="hidden px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-950 text-emerald-300 border border-emerald-600/50">
                     📍 California Question
                   </span>
+                  <span id="fc-trouble-badge" class="hidden px-2 py-0.5 rounded-full text-xs font-bold bg-rose-950 text-rose-300 border border-rose-600/50">
+                    ⚠️ Trouble Question
+                  </span>
                 </div>
                 <div class="flex items-center space-x-2 shrink-0" onclick="event.stopPropagation();">
                   <button id="fc-btn-listen-front" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-blue-400 transition" title="Listen to Question (Speech)">
@@ -373,11 +403,19 @@
               </div>
 
               <!-- Question Text -->
-              <div class="my-auto py-8 text-center">
-                <div class="text-xs uppercase font-semibold tracking-wider text-slate-500 mb-2">Oral Interview Question</div>
+              <div class="my-auto py-6 sm:py-8 text-center space-y-3">
+                <div class="text-xs uppercase font-semibold tracking-wider text-slate-500">Oral Interview Question</div>
                 <h2 id="fc-question-text" class="text-2xl sm:text-3xl font-bold text-white leading-snug px-4">
                   What is the form of government of the United States?
                 </h2>
+                <!-- Dual-Language Translated Question Prompt -->
+                <div id="fc-translation-front" class="hidden mt-3 p-3 rounded-2xl bg-slate-950/80 border border-indigo-500/30 text-slate-300 text-sm max-w-xl mx-auto shadow-inner text-center">
+                  <div class="text-[11px] font-bold text-indigo-400 mb-1 flex items-center justify-center gap-1.5">
+                    <span id="fc-trans-flag">🇲🇽</span>
+                    <span id="fc-trans-label">En Español (Conceptual Translation):</span>
+                  </div>
+                  <div id="fc-trans-question" class="italic text-slate-100 font-medium">¿Cuál es la forma de gobierno de los Estados Unidos?</div>
+                </div>
               </div>
 
               <!-- Card Front Footer Prompt -->
@@ -416,6 +454,17 @@
                 <ul id="fc-answers-list" class="space-y-1.5">
                   <!-- Dynamically populated -->
                 </ul>
+
+                <!-- Dual-Language Accepted Answers Box -->
+                <div id="fc-translation-back" class="hidden mt-2.5 p-3 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 text-xs text-indigo-200 space-y-1">
+                  <div class="font-bold text-indigo-300 flex items-center gap-1.5">
+                    <span id="fc-trans-flag-back">🇲🇽</span>
+                    <span id="fc-trans-label-back">Respuestas Aceptadas (Español):</span>
+                  </div>
+                  <div id="fc-trans-answers" class="text-slate-200 space-y-0.5">
+                    <!-- Populated dynamically -->
+                  </div>
+                </div>
 
                 <!-- State-specific dynamic alert banner -->
                 <div id="fc-state-banner" class="hidden mt-3 p-3 rounded-2xl bg-indigo-950/80 border border-indigo-500/60 text-xs text-indigo-200 space-y-1">
@@ -478,6 +527,31 @@
           </select>
         </div>
 
+        <!-- Tactile Quick Jump Palette (Learner Friendly & Mobile Ergonomic) -->
+        <div class="max-w-3xl mx-auto bg-slate-900/80 border border-slate-800 rounded-2xl p-3 sm:p-4 shadow-lg space-y-2.5">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                <span>🎯</span> Quick Jump Palette (1–128)
+              </span>
+              <span id="jump-palette-legend" class="text-[10px] text-slate-400 hidden sm:inline">
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-0.5"></span> Mastered
+                <span class="inline-block w-2 h-2 rounded-full bg-amber-500 ml-1.5 mr-0.5"></span> Starred
+                <span class="inline-block w-2 h-2 rounded-full bg-rose-500 ml-1.5 mr-0.5"></span> Missed
+              </span>
+            </div>
+            <button id="btn-toggle-jump-palette" class="text-xs text-blue-400 hover:underline font-semibold flex items-center gap-1">
+              <span id="label-toggle-palette">Expand All 128</span>
+              <span id="icon-toggle-palette">▼</span>
+            </button>
+          </div>
+
+          <!-- Scrollable / Expandable Chips Grid -->
+          <div id="jump-palette-grid" class="flex flex-wrap gap-1.5 max-h-24 sm:max-h-28 overflow-y-auto transition-all p-1">
+            <!-- Populated dynamically: 128 touch-friendly chips -->
+          </div>
+        </div>
+
       </div>
 
       <!-- SUB-VIEW B: FULL QUESTION CATALOG (128) -->
@@ -492,6 +566,7 @@
           <!-- Quick category pills -->
           <div class="flex items-center gap-2 flex-wrap">
             <button id="catalog-filter-all" class="cat-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-blue-600 text-white">All (128)</button>
+            <button id="catalog-filter-trouble" class="cat-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-rose-300 border border-rose-600/30 hover:bg-slate-700">⚠️ Trouble Qs</button>
             <button id="catalog-filter-6520" class="cat-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-amber-300 border border-amber-600/30 hover:bg-slate-700">🌟 65/20 (20)</button>
             <button id="catalog-filter-new" class="cat-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-indigo-300 border border-indigo-600/30 hover:bg-slate-700">🆕 New in 128 (53)</button>
             <button id="catalog-filter-amended" class="cat-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-amber-300 border border-amber-600/30 hover:bg-slate-700">✏️ Amended (18)</button>
@@ -962,6 +1037,42 @@
             <div class="text-[11px] uppercase font-bold text-slate-400">Representative (Q#29)</div>
             <div id="st-districts" class="text-base font-bold text-purple-400">52 Congressional Districts</div>
             <div class="text-[10px] text-slate-400">Find your rep at house.gov by zip</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4-Tier USCIS Readiness Meter & Action Hub -->
+      <div id="readiness-tier-card" class="bg-gradient-to-r from-slate-900 via-indigo-950/60 to-slate-900 p-6 sm:p-7 rounded-3xl border border-indigo-500/40 shadow-xl space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span id="readiness-tier-icon" class="text-2xl">🌱</span>
+              <h3 id="readiness-tier-title" class="text-lg sm:text-xl font-bold text-white">Tier 1: Getting Started</h3>
+              <span id="readiness-tier-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-950 text-blue-300 border border-blue-500/40">USCIS Level 1</span>
+            </div>
+            <p id="readiness-tier-guidance" class="text-xs text-slate-300 max-w-2xl leading-relaxed">
+              Begin by drilling American Government core principles (Q1–12) and 65/20 special exemption questions.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button id="btn-drill-trouble-hub" class="px-4 py-2.5 rounded-2xl bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/40 text-xs font-bold transition flex items-center gap-2 shadow-sm">
+              <span>⚠️ Drill Trouble Questions</span>
+              <span id="trouble-count-badge" class="px-2 py-0.5 rounded-full bg-rose-950 text-rose-200 text-[10px] font-black border border-rose-500/30">0</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tier Progress & Stats Row -->
+        <div class="pt-3 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
+          <div class="flex items-center gap-3">
+            <span class="text-orange-400 font-bold flex items-center gap-1.5">
+              <span>🔥</span> <span id="hub-streak-label">1 Day Practice Streak</span>
+            </span>
+            <span class="text-slate-600">|</span>
+            <span id="hub-longest-streak-label">Personal Best: 1 Day</span>
+          </div>
+          <div class="text-[11px] text-slate-400">
+            Official USCIS passing score: <strong class="text-emerald-400">12 out of 20 correct (60%)</strong>
           </div>
         </div>
       </div>
@@ -1896,7 +2007,7 @@
   </div>
 
   <!-- TOAST NOTIFICATION CONTAINER -->
-  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+  <div id="toast-container" class="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-50 flex flex-col space-y-2 pointer-events-none"></div>
 
   <!-- CONFIRMATION MODAL -->
   <div id="modal-confirm" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
@@ -1918,4 +2029,28 @@
       <p>Prepared for applicants preparing for their naturalization oral civics examination with California and state-specific answers.</p>
     </div>
   </footer>
+
+  <!-- ==================== MOBILE STICKY BOTTOM DOCK (5 TABS) ==================== -->
+  <nav id="mobile-dock" class="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-xl border-t border-slate-800/90 shadow-2xl px-2 py-1.5 flex items-center justify-around safe-area-pb">
+    <button id="mob-nav-study" class="mob-dock-btn flex-1 flex flex-col items-center justify-center py-1 px-1 rounded-xl text-blue-400 transition" data-tab="study" title="Study & Flashcards">
+      <span class="text-xl leading-none">📖</span>
+      <span class="text-[10px] font-bold mt-1 tracking-tight">Study</span>
+    </button>
+    <button id="mob-nav-coursework" class="mob-dock-btn flex-1 flex flex-col items-center justify-center py-1 px-1 rounded-xl text-slate-400 hover:text-slate-200 transition" data-tab="coursework" title="Animated Cinema Coursework">
+      <span class="text-xl leading-none">🎓</span>
+      <span class="text-[10px] font-bold mt-1 tracking-tight">Cinema</span>
+    </button>
+    <button id="mob-nav-prepare" class="mob-dock-btn flex-1 flex flex-col items-center justify-center py-1 px-1 rounded-xl text-slate-400 hover:text-slate-200 transition" data-tab="prepare" title="Practice Quizzes">
+      <span class="text-xl leading-none">🎯</span>
+      <span class="text-[10px] font-bold mt-1 tracking-tight">Quiz</span>
+    </button>
+    <button id="mob-nav-challenge" class="mob-dock-btn flex-1 flex flex-col items-center justify-center py-1 px-1 rounded-xl text-slate-400 hover:text-slate-200 transition" data-tab="challenge" title="Oral Interview Simulator">
+      <span class="text-xl leading-none">⚔️</span>
+      <span class="text-[10px] font-bold mt-1 tracking-tight">Oral Sim</span>
+    </button>
+    <button id="mob-nav-readiness" class="mob-dock-btn flex-1 flex flex-col items-center justify-center py-1 px-1 rounded-xl text-slate-400 hover:text-slate-200 transition" data-tab="readiness" title="Readiness & Streaks">
+      <span class="text-xl leading-none">📊</span>
+      <span class="text-[10px] font-bold mt-1 tracking-tight">Readiness</span>
+    </button>
+  </nav>
   </div> <!-- /#app-shell -->

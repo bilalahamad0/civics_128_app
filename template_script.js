@@ -1,6 +1,7 @@
     // Embedded Official Database of 128 Questions
     const CIVICS_QUESTIONS = __CIVICS_JSON__;
     const STATES_DATA = __STATES_JSON__;
+    const CIVICS_TRANSLATIONS = typeof __TRANSLATIONS_JSON__ !== 'undefined' ? __TRANSLATIONS_JSON__ : {};
 
     // Firebase Cloud Configuration
     const firebaseConfig = {
@@ -27,6 +28,10 @@
       lastCardId: 1,
       lastDeckFilter: 'all',
       activeTab: 'study',
+      studyLanguage: 'en', // 'en' | 'es' | 'hi'
+      streakCount: 1,
+      longestStreak: 1,
+      lastPracticeDate: '',
       mastered: {},
       starred: {},
       missedCounts: {},
@@ -35,7 +40,7 @@
       speechRate: 1.0,
       speechVoice: null,
       soundFx: true,
-      lastUpdated: '2026-10-21'
+      lastUpdated: '2026-10-23'
     };
 
     // Current Active User Session
@@ -136,6 +141,10 @@
       appState.lastCardId = 1;
       appState.lastDeckFilter = 'all';
       appState.activeTab = 'study';
+      appState.studyLanguage = 'en';
+      appState.streakCount = 1;
+      appState.longestStreak = 1;
+      appState.lastPracticeDate = '';
       appState.mastered = {};
       appState.starred = {};
       appState.missedCounts = {};
@@ -191,6 +200,10 @@
       appState.currentCardIndex = appState.currentCardIndex || 0;
       appState.lastDeckFilter = appState.lastDeckFilter || 'all';
       appState.activeTab = appState.activeTab || 'study';
+      appState.studyLanguage = appState.studyLanguage || 'en';
+      appState.streakCount = appState.streakCount || 1;
+      appState.longestStreak = appState.longestStreak || appState.streakCount || 1;
+      appState.lastPracticeDate = appState.lastPracticeDate || '';
     }
 
     // Dynamic State Question Resolver
@@ -304,19 +317,156 @@
       }
     }
 
-    // Text to Speech
-    function speakText(text) {
+    // Text to Speech with Multilingual Voice Selection
+    function speakText(text, targetLang = null) {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
       const cleanText = text.replace(/\(.*?\)/g, '').replace(/\[.*?\]/g, '').trim();
       const utterance = new SpeechSynthesisUtterance(cleanText);
       utterance.rate = appState.speechRate || 1.0;
-      if (appState.speechVoice) {
-        const voices = window.speechSynthesis.getVoices();
-        const found = voices.find(v => v.name === appState.speechVoice);
-        if (found) utterance.voice = found;
+
+      const lang = targetLang || appState.studyLanguage || 'en';
+      const voices = window.speechSynthesis.getVoices();
+
+      if (lang === 'es') {
+        utterance.lang = 'es-US';
+        const esVoice = voices.find(v => v.lang && (v.lang.startsWith('es') || v.lang === 'es-US' || v.lang === 'es-MX' || v.lang === 'es-ES'));
+        if (esVoice) utterance.voice = esVoice;
+      } else if (lang === 'hi') {
+        utterance.lang = 'hi-IN';
+        const hiVoice = voices.find(v => v.lang && (v.lang.startsWith('hi') || v.lang === 'hi-IN'));
+        if (hiVoice) utterance.voice = hiVoice;
+      } else {
+        utterance.lang = 'en-US';
+        if (appState.speechVoice) {
+          const found = voices.find(v => v.name === appState.speechVoice);
+          if (found) utterance.voice = found;
+        } else if (voices.length > 0) {
+          const enVoice = voices.find(v => v.lang && (v.lang === 'en-US' || v.lang.startsWith('en')) && (v.name.includes('Samantha') || v.name.includes('Alex') || v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('US')));
+          if (enVoice) utterance.voice = enVoice;
+        }
       }
+
       window.speechSynthesis.speak(utterance);
+    }
+
+    // Daily Learning Streak Engine
+    function getTodayDateString() {
+      const d = new Date();
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function getYesterdayDateString() {
+      const d = new Date();
+      d.setDate(d.getDate() - 1);
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function recordPracticeActivity() {
+      const today = getTodayDateString();
+      const yesterday = getYesterdayDateString();
+
+      if (!appState.lastPracticeDate) {
+        appState.streakCount = 1;
+        appState.longestStreak = Math.max(appState.longestStreak || 1, 1);
+        appState.lastPracticeDate = today;
+        saveState();
+        updateStreakUI();
+        return;
+      }
+
+      if (appState.lastPracticeDate === today) {
+        // Already practiced today, keep streak current
+        updateStreakUI();
+        return;
+      }
+
+      if (appState.lastPracticeDate === yesterday) {
+        // Practiced yesterday, increment streak!
+        appState.streakCount = (appState.streakCount || 0) + 1;
+        appState.longestStreak = Math.max(appState.longestStreak || 1, appState.streakCount);
+        appState.lastPracticeDate = today;
+        showToast(`🔥 ${appState.streakCount} Day Study Streak! Keep up the momentum!`, 'success');
+      } else {
+        // Gap of 2+ days, reset to 1
+        appState.streakCount = 1;
+        appState.lastPracticeDate = today;
+      }
+
+      saveState();
+      updateStreakUI();
+    }
+
+    function updateStreakUI() {
+      const streak = appState.streakCount || 1;
+      const longest = appState.longestStreak || streak;
+      const countEl = document.getElementById('stat-streak-count');
+      if (countEl) countEl.textContent = streak;
+      const hubStreak = document.getElementById('hub-streak-label');
+      if (hubStreak) hubStreak.textContent = `${streak} Day Practice Streak`;
+      const hubLongest = document.getElementById('hub-longest-streak-label');
+      if (hubLongest) hubLongest.textContent = `Personal Best: ${longest} Day${longest === 1 ? '' : 's'}`;
+    }
+
+    // 4-Tier USCIS Readiness Calculator
+    function computeReadiness() {
+      const total = CIVICS_QUESTIONS.length;
+      const masteredCount = Object.values(appState.mastered).filter(Boolean).length;
+      const simPasses = Number(appState.simPasses) || 0;
+      const troubleCount = Object.keys(appState.missedCounts).filter(id => appState.missedCounts[id] > 0).length;
+
+      const rawPercent = total > 0 ? Math.round((masteredCount / total) * 100) : 0;
+
+      // 4-Tier USCIS Model
+      let tier = 1;
+      let title = 'Tier 1: Getting Started';
+      let badge = 'USCIS Level 1';
+      let icon = '🌱';
+      let guidance = 'Begin by mastering American Government principles (Q1–12) and 65/20 special exemption questions.';
+      let badgeClass = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-950 text-blue-300 border border-blue-500/40';
+
+      if (rawPercent >= 90 && simPasses >= 2) {
+        tier = 4;
+        title = 'Tier 4: Interview Ready';
+        badge = 'USCIS Master';
+        icon = '🏆';
+        guidance = 'Outstanding! You have mastered over 90% of the 128 question pool and passed multiple oral simulations under timed pressure.';
+        badgeClass = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40';
+      } else if (rawPercent >= 65 || simPasses >= 1) {
+        tier = 3;
+        title = 'Tier 3: Almost Ready';
+        badge = 'USCIS Level 3';
+        icon = '⚡';
+        guidance = 'Strong foundation! Now focus on drilling your trouble questions and taking timed oral mock interviews.';
+        badgeClass = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-950 text-purple-300 border border-purple-500/40';
+      } else if (rawPercent >= 25) {
+        tier = 2;
+        title = 'Tier 2: Building Knowledge';
+        badge = 'USCIS Level 2';
+        icon = '📚';
+        guidance = 'Great progress! Tackle American History (Q73–118) and your state-specific California elected officials.';
+        badgeClass = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-950 text-amber-300 border border-amber-500/40';
+      }
+
+      return {
+        percent: rawPercent,
+        masteredCount,
+        total,
+        simPasses,
+        troubleCount,
+        tier,
+        title,
+        badge,
+        icon,
+        guidance,
+        badgeClass
+      };
     }
 
     // Toast Notifications
@@ -340,22 +490,41 @@
       }, 3500);
     }
 
-    // Top Header Stats
+    // Top Header Stats & 4-Tier Assessment Update
     function updateTopStats() {
-      const total = CIVICS_QUESTIONS.length;
-      const masteredCount = Object.values(appState.mastered).filter(Boolean).length;
+      const r = computeReadiness();
       const starredCount = Object.values(appState.starred).filter(Boolean).length;
-      const readinessPct = Math.round((masteredCount / total) * 100);
 
       const elM = document.getElementById('stat-mastered');
       const elS = document.getElementById('stat-starred');
       const elP = document.getElementById('stat-passes');
       const elR = document.getElementById('stat-readiness');
 
-      if (elM) elM.textContent = `${masteredCount} / ${total}`;
+      if (elM) elM.textContent = `${r.masteredCount} / ${r.total}`;
       if (elS) elS.textContent = `${starredCount}`;
-      if (elP) elP.textContent = `${appState.simPasses || 0}`;
-      if (elR) elR.textContent = `${readinessPct}%`;
+      if (elP) elP.textContent = `${r.simPasses}`;
+      if (elR) elR.textContent = `${r.percent}%`;
+
+      const overallProg = document.getElementById('readiness-overall-pct');
+      if (overallProg) overallProg.textContent = `${r.percent}%`;
+
+      // Update 4-Tier Card in Readiness Hub
+      const tierIcon = document.getElementById('readiness-tier-icon');
+      const tierTitle = document.getElementById('readiness-tier-title');
+      const tierBadge = document.getElementById('readiness-tier-badge');
+      const tierGuidance = document.getElementById('readiness-tier-guidance');
+      const troubleBadge = document.getElementById('trouble-count-badge');
+
+      if (tierIcon) tierIcon.textContent = r.icon;
+      if (tierTitle) tierTitle.textContent = r.title;
+      if (tierBadge) {
+        tierBadge.textContent = r.badge;
+        tierBadge.className = r.badgeClass;
+      }
+      if (tierGuidance) tierGuidance.textContent = r.guidance;
+      if (troubleBadge) troubleBadge.textContent = r.troubleCount;
+
+      updateStreakUI();
 
       // Update Readiness tab progress bars
       const govQs = CIVICS_QUESTIONS.filter(q => q.category === 'American Government');
@@ -389,9 +558,6 @@
       setProg('prog-bar-new', 'prog-label-new', newM, newQs.length);
       setProg('prog-bar-amended', 'prog-label-amended', amendedM, amendedQs.length);
       setProg('prog-bar-state', 'prog-label-state', stateM, stateQs.length);
-
-      const overallProg = document.getElementById('readiness-overall-pct');
-      if (overallProg) overallProg.textContent = `${readinessPct}%`;
 
       renderStarredAndMissedHubs();
     }
@@ -449,6 +615,14 @@
       coursework: document.getElementById('nav-coursework')
     };
 
+    const mobNavButtons = {
+      study: document.getElementById('mob-nav-study'),
+      prepare: document.getElementById('mob-nav-prepare'),
+      challenge: document.getElementById('mob-nav-challenge'),
+      readiness: document.getElementById('mob-nav-readiness'),
+      coursework: document.getElementById('mob-nav-coursework')
+    };
+
     const tabViews = {
       study: document.getElementById('view-study'),
       prepare: document.getElementById('view-prepare'),
@@ -462,6 +636,17 @@
         if (tabViews[id]) tabViews[id].classList.add('hidden');
         if (tabButtons[id]) {
           tabButtons[id].className = 'tab-btn px-4 py-3 font-semibold text-sm rounded-t-xl transition flex items-center gap-2 border-b-2 border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/40 shrink-0';
+        }
+      });
+
+      // Synchronize Mobile Bottom Dock Tabs
+      Object.keys(mobNavButtons).forEach(id => {
+        const btn = mobNavButtons[id];
+        if (!btn) return;
+        if (id === tabId) {
+          btn.className = 'mob-dock-btn flex-1 flex flex-col items-center justify-center py-1 px-1 rounded-xl text-blue-400 font-bold transition';
+        } else {
+          btn.className = 'mob-dock-btn flex-1 flex flex-col items-center justify-center py-1 px-1 rounded-xl text-slate-400 hover:text-slate-200 transition';
         }
       });
 
@@ -486,6 +671,12 @@
       }
     });
 
+    Object.keys(mobNavButtons).forEach(id => {
+      if (mobNavButtons[id]) {
+        mobNavButtons[id].addEventListener('click', () => switchTab(id));
+      }
+    });
+
     // STUDY & FLASHCARDS CONTROLLER
     let currentDeck = [...CIVICS_QUESTIONS];
     let currentCardIndex = 0;
@@ -494,6 +685,16 @@
     function applyStudyDeckFilter(filter, preserveIndex = false) {
       if (filter === 'all') {
         currentDeck = [...CIVICS_QUESTIONS];
+      } else if (filter === 'trouble') {
+        const missedList = CIVICS_QUESTIONS.filter(q => (appState.missedCounts[q.id] || 0) > 0)
+          .sort((a, b) => (appState.missedCounts[b.id] || 0) - (appState.missedCounts[a.id] || 0));
+        if (missedList.length === 0) {
+          showToast('No trouble questions recorded yet! Clean record. Showing all 128 questions.', 'info');
+          currentDeck = [...CIVICS_QUESTIONS];
+        } else {
+          currentDeck = missedList;
+          showToast(`Loaded ${currentDeck.length} Trouble Questions (missed in practice)`, 'warn');
+        }
       } else if (filter === '6520') {
         currentDeck = CIVICS_QUESTIONS.filter(q => q.is6520);
       } else if (filter === 'new') {
@@ -520,6 +721,11 @@
 
       const deckFilterSelect = document.getElementById('study-deck-filter');
       if (deckFilterSelect) deckFilterSelect.value = filter;
+
+      const deckBadge = document.getElementById('fc-deck-badge');
+      if (deckBadge) {
+        deckBadge.textContent = filter === 'trouble' ? '⚠️ Trouble Questions' : (filter === 'all' ? 'All 128' : filter);
+      }
 
       appState.lastDeckFilter = filter;
       if (!preserveIndex) {
@@ -673,9 +879,66 @@
         originBox.classList.remove('hidden');
       }
 
-      // Tip Text
-      const tipText = document.getElementById('fc-tip-text');
-      if (tipText) tipText.textContent = q.explanation;
+      // Record practice activity for streak
+      recordPracticeActivity();
+
+      // Trouble Question Badge
+      const troubleBadge = document.getElementById('fc-trouble-badge');
+      const missCount = appState.missedCounts[q.id] || 0;
+      if (troubleBadge) {
+        if (missCount > 0) {
+          troubleBadge.textContent = `⚠️ Missed ${missCount}x`;
+          troubleBadge.classList.remove('hidden');
+        } else {
+          troubleBadge.classList.add('hidden');
+        }
+      }
+
+      // Dual-Language Translations (Spanish & Hindi)
+      const lang = appState.studyLanguage || 'en';
+      const transData = (typeof CIVICS_TRANSLATIONS !== 'undefined' && CIVICS_TRANSLATIONS) ? CIVICS_TRANSLATIONS[String(q.id)] : null;
+      const frontTransBox = document.getElementById('fc-translation-front');
+      const backTransBox = document.getElementById('fc-translation-back');
+
+      if (lang !== 'en' && transData && transData[lang]) {
+        const t = transData[lang];
+        if (frontTransBox) {
+          frontTransBox.classList.remove('hidden');
+          const flagEl = document.getElementById('fc-trans-flag');
+          const labelEl = document.getElementById('fc-trans-label');
+          const textEl = document.getElementById('fc-trans-question');
+          if (flagEl) flagEl.textContent = lang === 'es' ? '🇲🇽' : '🇮🇳';
+          if (labelEl) labelEl.textContent = lang === 'es' ? 'En Español (Traducción conceptual):' : 'हिन्दी में (अवधारणा अनुवाद):';
+          if (textEl) textEl.textContent = t.question || '';
+        }
+
+        if (backTransBox) {
+          backTransBox.classList.remove('hidden');
+          const flagBackEl = document.getElementById('fc-trans-flag-back');
+          const labelBackEl = document.getElementById('fc-trans-label-back');
+          const answersEl = document.getElementById('fc-trans-answers');
+          if (flagBackEl) flagBackEl.textContent = lang === 'es' ? '🇲🇽' : '🇮🇳';
+          if (labelBackEl) labelBackEl.textContent = lang === 'es' ? 'Respuestas Aceptadas (Español):' : 'स्वीकृत मौखिक उत्तर (हिन्दी):';
+          if (answersEl) {
+            answersEl.innerHTML = (t.answers || []).map(ans => `
+              <div class="flex items-start gap-1.5 text-xs text-slate-200">
+                <span class="text-indigo-400 font-bold shrink-0">•</span>
+                <span>${ans}</span>
+              </div>
+            `).join('');
+          }
+        }
+
+        const tipText = document.getElementById('fc-tip-text');
+        if (tipText) {
+          tipText.innerHTML = `${q.explanation} <span class="block mt-1.5 pt-1.5 border-t border-amber-500/30 italic text-amber-200/95 font-medium">${t.tip}</span>`;
+        }
+      } else {
+        if (frontTransBox) frontTransBox.classList.add('hidden');
+        if (backTransBox) backTransBox.classList.add('hidden');
+        const tipText = document.getElementById('fc-tip-text');
+        if (tipText) tipText.textContent = q.explanation;
+      }
 
       // Master Toggle
       const masterBtn = document.getElementById('fc-btn-master-toggle');
@@ -692,10 +955,13 @@
       // Jump select
       const jumpSelect = document.getElementById('fc-jump-select');
       if (jumpSelect) jumpSelect.value = q.id;
+
+      renderJumpPalette();
     }
 
     function flipCard() {
       playBeep('flip');
+      recordPracticeActivity();
       const flipper = document.getElementById('flashcard-flipper');
       isFlipped = !isFlipped;
       if (flipper) {
@@ -792,14 +1058,123 @@
     document.getElementById('fc-btn-listen-front')?.addEventListener('click', (e) => {
       e.stopPropagation();
       const q = getResolvedQuestion(currentDeck[currentCardIndex], appState.selectedState);
-      speakText(q.question);
+      const lang = appState.studyLanguage || 'en';
+      const transData = (typeof CIVICS_TRANSLATIONS !== 'undefined' && CIVICS_TRANSLATIONS) ? CIVICS_TRANSLATIONS[String(q.id)] : null;
+      if (lang !== 'en' && transData && transData[lang]) {
+        speakText(transData[lang].question, lang);
+      } else {
+        speakText(q.question, 'en');
+      }
     });
 
     document.getElementById('fc-btn-listen-back')?.addEventListener('click', (e) => {
       e.stopPropagation();
       const q = getResolvedQuestion(currentDeck[currentCardIndex], appState.selectedState);
-      const textToSpeak = q.answers.join('. Or, ');
-      speakText(textToSpeak);
+      const lang = appState.studyLanguage || 'en';
+      const transData = (typeof CIVICS_TRANSLATIONS !== 'undefined' && CIVICS_TRANSLATIONS) ? CIVICS_TRANSLATIONS[String(q.id)] : null;
+      if (lang !== 'en' && transData && transData[lang]) {
+        const textToSpeak = (transData[lang].answers || []).join('. O, ');
+        speakText(textToSpeak, lang);
+      } else {
+        const textToSpeak = q.answers.join('. Or, ');
+        speakText(textToSpeak, 'en');
+      }
+    });
+
+    // Tactile Quick Jump Palette Renderer
+    function renderJumpPalette() {
+      const container = document.getElementById('jump-palette-grid');
+      if (!container) return;
+
+      const curId = currentDeck[currentCardIndex] ? currentDeck[currentCardIndex].id : 1;
+
+      container.innerHTML = CIVICS_QUESTIONS.map(q => {
+        const isMastered = !!appState.mastered[q.id];
+        const isStarred = !!appState.starred[q.id];
+        const missCount = appState.missedCounts[q.id] || 0;
+        const isCurrent = q.id === curId;
+
+        let statusClass = 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700';
+        let icon = '';
+
+        if (isMastered) {
+          statusClass = 'bg-emerald-950/70 border-emerald-500/50 text-emerald-300 font-semibold';
+          icon = '✓';
+        } else if (missCount > 0) {
+          statusClass = 'bg-rose-950/70 border-rose-500/50 text-rose-300 font-bold';
+          icon = '⚠️';
+        } else if (isStarred) {
+          statusClass = 'bg-amber-950/70 border-amber-500/50 text-amber-300';
+          icon = '★';
+        }
+
+        const ringClass = isCurrent ? 'ring-2 ring-blue-400 ring-offset-2 ring-offset-slate-950 font-black text-white' : '';
+
+        return `<button type="button" class="jump-chip px-2.5 py-1 rounded-xl border text-xs transition shrink-0 min-w-[36px] text-center ${statusClass} ${ringClass}" onclick="jumpToFlashcard(${q.id})" title="Question #${q.id}${isMastered ? ' (Mastered)' : missCount > 0 ? ` (Missed ${missCount}x)` : ''}">
+          ${q.id} ${icon}
+        </button>`;
+      }).join('');
+    }
+
+    let isPaletteExpanded = false;
+    document.getElementById('btn-toggle-jump-palette')?.addEventListener('click', () => {
+      isPaletteExpanded = !isPaletteExpanded;
+      const grid = document.getElementById('jump-palette-grid');
+      const label = document.getElementById('label-toggle-palette');
+      const icon = document.getElementById('icon-toggle-palette');
+      if (grid) {
+        if (isPaletteExpanded) {
+          grid.classList.remove('max-h-24', 'sm:max-h-28');
+          grid.classList.add('max-h-96');
+          if (label) label.textContent = 'Collapse';
+          if (icon) icon.textContent = '▲';
+        } else {
+          grid.classList.remove('max-h-96');
+          grid.classList.add('max-h-24', 'sm:max-h-28');
+          if (label) label.textContent = 'Expand All 128';
+          if (icon) icon.textContent = '▼';
+        }
+      }
+    });
+
+    // Multilingual Dual-Language Mode Switcher
+    function setStudyLanguage(lang) {
+      if (!['en', 'es', 'hi'].includes(lang)) return;
+      appState.studyLanguage = lang;
+      saveState();
+
+      document.querySelectorAll('.lang-switch-btn').forEach(btn => {
+        const btnLang = btn.dataset.lang;
+        if (btnLang === lang) {
+          btn.className = 'lang-switch-btn px-2.5 py-1 rounded-lg bg-blue-600 text-white font-bold transition shadow-sm';
+        } else {
+          btn.className = 'lang-switch-btn px-2.5 py-1 rounded-lg text-slate-400 hover:text-slate-200 transition';
+        }
+      });
+
+      updateFlashcardView();
+      if (appState.activeTab === 'coursework') {
+        loadCourseworkLesson(appState.courseworkLessonIndex || 0, isCourseworkSpeaking);
+      }
+      if (document.getElementById('subview-catalog') && !document.getElementById('subview-catalog').classList.contains('hidden')) {
+        renderCatalogList();
+      }
+
+      const langNames = { en: 'English (USCIS Oral)', es: 'Español (Bilingual Guide)', hi: 'हिन्दी (द्विभाषी गाइड)' };
+      showToast(`Dual-Language mode set to ${langNames[lang]}`, 'info');
+    }
+
+    document.querySelectorAll('.lang-switch-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const lang = e.currentTarget.dataset.lang;
+        if (lang) setStudyLanguage(lang);
+      });
+    });
+
+    // Drill Trouble Questions Button in Readiness Hub
+    document.getElementById('btn-drill-trouble-hub')?.addEventListener('click', () => {
+      switchTab('study');
+      applyStudyDeckFilter('trouble');
     });
 
     document.getElementById('fc-btn-shuffle')?.addEventListener('click', () => {
@@ -879,6 +1254,7 @@
       if (!container) return;
 
       let list = CIVICS_QUESTIONS.filter(q => {
+        if (catalogFilterType === 'trouble' && (!appState.missedCounts[q.id] || appState.missedCounts[q.id] <= 0)) return false;
         if (catalogFilterType === '6520' && !q.is6520) return false;
         if (catalogFilterType === 'new' && q.origin !== 'new') return false;
         if (catalogFilterType === 'amended' && q.origin !== 'amended') return false;
@@ -896,6 +1272,10 @@
         return true;
       });
 
+      if (catalogFilterType === 'trouble') {
+        list.sort((a, b) => (appState.missedCounts[b.id] || 0) - (appState.missedCounts[a.id] || 0));
+      }
+
       const countLabel = document.getElementById('catalog-count-label');
       if (countLabel) countLabel.textContent = `Showing ${list.length} of ${CIVICS_QUESTIONS.length} questions`;
 
@@ -903,6 +1283,7 @@
         const q = getResolvedQuestion(rawQ, appState.selectedState);
         const isMastered = !!appState.mastered[q.id];
         const isStarred = !!appState.starred[q.id];
+        const missCount = appState.missedCounts[q.id] || 0;
         
         const originPill = q.origin === 'new' 
           ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-950 text-indigo-300 border border-indigo-600/40">🆕 New</span>'
@@ -914,6 +1295,23 @@
           ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-600/40">📍 ${STATES_DATA[appState.selectedState || 'CA'].name}</span>`
           : '';
 
+        const troublePill = missCount > 0
+          ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-950 text-rose-300 border border-rose-600/40">⚠️ Missed ${missCount}x</span>`
+          : '';
+
+        const lang = appState.studyLanguage || 'en';
+        const transData = (typeof CIVICS_TRANSLATIONS !== 'undefined' && CIVICS_TRANSLATIONS) ? CIVICS_TRANSLATIONS[String(q.id)] : null;
+        const transBlock = (lang !== 'en' && transData && transData[lang])
+          ? `<div class="p-2.5 rounded-xl bg-slate-950 border border-indigo-500/30 text-xs text-indigo-200 mt-2">
+              <div class="font-bold flex items-center gap-1.5 text-indigo-300 mb-0.5">
+                <span>${lang === 'es' ? '🇲🇽' : '🇮🇳'}</span>
+                <span>${lang === 'es' ? 'Traducción Conceptual (Español):' : 'अवधारणा अनुवाद (हिन्दी):'}</span>
+              </div>
+              <div class="italic text-slate-100">${transData[lang].question}</div>
+              <div class="text-[11px] text-slate-300 mt-1">${(transData[lang].answers || []).join(' • ')}</div>
+            </div>`
+          : '';
+
         return `
         <div class="p-4 rounded-2xl bg-slate-900 border ${isMastered ? 'border-emerald-500/40' : 'border-slate-800'} hover:border-slate-700 transition space-y-3">
           <div class="flex items-start justify-between gap-3">
@@ -922,10 +1320,12 @@
                 <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-950 text-blue-300 border border-blue-500/30">#${q.id}</span>
                 <span class="text-xs text-slate-400 font-medium">${q.subcategory}</span>
                 ${q.is6520 ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-600/40">★ 65/20</span>' : ''}
+                ${troublePill}
                 ${originPill}
                 ${statePill}
               </div>
               <h4 class="text-base font-bold text-white pt-1">${q.question}</h4>
+              ${transBlock}
             </div>
             <div class="flex items-center space-x-1 shrink-0">
               <button onclick="toggleStar(${q.id})" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 ${isStarred ? 'text-amber-400' : 'text-slate-400'} transition" title="Star question">
@@ -964,6 +1364,7 @@
     // Catalog Filter Buttons
     const catFilterButtons = {
       'catalog-filter-all': 'all',
+      'catalog-filter-trouble': 'trouble',
       'catalog-filter-6520': '6520',
       'catalog-filter-new': 'new',
       'catalog-filter-amended': 'amended',
@@ -3123,12 +3524,24 @@
         utterance.rate = Math.max(0.45, Math.min(1.4, (isNaN(speedVal) ? 1.0 : speedVal) * baseRate));
 
         const voices = window.speechSynthesis.getVoices();
-        if (appState.speechVoice && voices.length > 0) {
-          const found = voices.find(v => v.name === appState.speechVoice);
-          if (found) utterance.voice = found;
-        } else if (voices.length > 0) {
-          const enVoice = voices.find(v => v.lang && (v.lang === 'en-US' || v.lang.startsWith('en')) && (v.name.includes('Samantha') || v.name.includes('Alex') || v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('US')));
-          if (enVoice) utterance.voice = enVoice;
+        const lang = appState.studyLanguage || 'en';
+        if (lang === 'es') {
+          utterance.lang = 'es-US';
+          const esVoice = voices.find(v => v.lang && (v.lang.startsWith('es') || v.lang === 'es-US' || v.lang === 'es-MX' || v.lang === 'es-ES'));
+          if (esVoice) utterance.voice = esVoice;
+        } else if (lang === 'hi') {
+          utterance.lang = 'hi-IN';
+          const hiVoice = voices.find(v => v.lang && (v.lang.startsWith('hi') || v.lang === 'hi-IN'));
+          if (hiVoice) utterance.voice = hiVoice;
+        } else {
+          utterance.lang = 'en-US';
+          if (appState.speechVoice && voices.length > 0) {
+            const found = voices.find(v => v.name === appState.speechVoice);
+            if (found) utterance.voice = found;
+          } else if (voices.length > 0) {
+            const enVoice = voices.find(v => v.lang && (v.lang === 'en-US' || v.lang.startsWith('en')) && (v.name.includes('Samantha') || v.name.includes('Alex') || v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('US')));
+            if (enVoice) utterance.voice = enVoice;
+          }
         }
 
         let completed = false;
@@ -3394,8 +3807,26 @@
       const answersEl = document.getElementById('cw-chalk-answers');
       const tipEl = document.getElementById('cw-chalk-tip');
 
-      if (qEl) qEl.textContent = q.question;
-      if (tipEl) tipEl.textContent = q.explanation;
+      recordPracticeActivity();
+
+      const lang = appState.studyLanguage || 'en';
+      const transData = (typeof CIVICS_TRANSLATIONS !== 'undefined' && CIVICS_TRANSLATIONS) ? CIVICS_TRANSLATIONS[String(q.id)] : null;
+
+      if (qEl) {
+        if (lang !== 'en' && transData && transData[lang]) {
+          qEl.innerHTML = `${q.question} <span class="block text-sm sm:text-base font-normal chalk-cyan mt-1.5 italic">(${lang === 'es' ? '🇲🇽 ' : '🇮🇳 '}${transData[lang].question})</span>`;
+        } else {
+          qEl.textContent = q.question;
+        }
+      }
+
+      if (tipEl) {
+        if (lang !== 'en' && transData && transData[lang] && transData[lang].tip) {
+          tipEl.innerHTML = `${q.explanation} <span class="block mt-1.5 pt-1.5 border-t border-amber-500/20 italic text-amber-200/90 text-sm">(${transData[lang].tip})</span>`;
+        } else {
+          tipEl.textContent = q.explanation;
+        }
+      }
 
       if (answersEl) {
         answersEl.innerHTML = q.answers.map((ans, aIdx) => `

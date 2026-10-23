@@ -1,4 +1,4 @@
-const CACHE_NAME = 'civics-128-v3.1-auto-migration';
+const CACHE_NAME = 'civics-128-v4.0-mobile-multilingual';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -9,7 +9,8 @@ const ASSETS_TO_CACHE = [
   './icon-192.png',
   './icon-512.png',
   './favicon-32x32.png',
-  './favicon-16x16.png'
+  './favicon-16x16.png',
+  './civics_translations.json'
 ];
 
 // Install: Cache critical assets and activate immediately
