@@ -1539,6 +1539,16 @@
               </select>
             </div>
 
+            <!-- Dual-Language Guide Selector -->
+            <div class="space-y-1">
+              <label class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Dual-Language Guide:</label>
+              <div class="flex items-center bg-slate-900 border border-slate-700 rounded-xl p-0.5 text-xs font-medium" title="Dual-Language Study Mode">
+                <button class="lang-switch-btn px-2.5 py-1.5 rounded-lg bg-blue-600 text-white font-bold transition shadow-sm text-xs" data-lang="en" title="English (USCIS Oral Language)">🇺🇸 EN</button>
+                <button class="lang-switch-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition text-xs" data-lang="es" title="Español (Guía Bilingüe)">🇲🇽 ES</button>
+                <button class="lang-switch-btn px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 transition text-xs" data-lang="hi" title="हिन्दी (द्विभाषी गाइड)">🇮🇳 HI</button>
+              </div>
+            </div>
+
             <!-- Quick Action Buttons -->
             <div class="flex items-center gap-2 pt-4">
               <button id="cw-btn-star" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-amber-400 border border-slate-700 transition" title="Star / Bookmark Lesson">
@@ -1591,7 +1601,7 @@
               <div id="cw-chalk-main-content" class="space-y-5">
                 <!-- Question -->
                 <div class="space-y-1">
-                  <div class="text-[11px] uppercase tracking-wider text-emerald-400/90 font-bold flex items-center gap-1.5">
+                  <div id="cw-question-label" class="text-[11px] uppercase tracking-wider text-emerald-400/90 font-bold flex items-center gap-1.5">
                     <span>📌</span>
                     <span>Official USCIS Examination Question:</span>
                   </div>
@@ -1602,7 +1612,7 @@
 
                 <!-- Accepted Answers -->
                 <div id="cw-answers-section" class="space-y-2">
-                  <div class="text-[11px] uppercase tracking-wider text-emerald-300/90 font-bold flex items-center gap-1.5">
+                  <div id="cw-answers-title" class="text-[11px] uppercase tracking-wider text-emerald-300/90 font-bold flex items-center gap-1.5">
                     <span>✓</span>
                     <span>Accepted Oral Answers:</span>
                   </div>
@@ -1615,16 +1625,16 @@
                 <div id="cw-tip-placeholder" class="p-3.5 rounded-2xl border border-dashed border-amber-500/40 bg-amber-950/20 text-amber-300 text-xs flex items-center justify-between cursor-pointer hover:border-amber-400 hover:text-amber-200 transition shadow-sm" title="Click to reveal Study Tip early">
                   <div class="flex items-center gap-2">
                     <span class="text-sm">💡</span>
-                    <span class="font-medium">Study Tip reveals when reached in lesson narration...</span>
+                    <span id="cw-tip-placeholder-text" class="font-medium">Study Tip reveals when reached in lesson narration...</span>
                   </div>
-                  <span class="text-[11px] underline font-bold text-amber-400 hover:text-amber-300">Reveal Now ➔</span>
+                  <span id="cw-tip-reveal-btn" class="text-[11px] underline font-bold text-amber-400 hover:text-amber-300">Reveal Now ➔</span>
                 </div>
 
                 <!-- Study Tip (Hidden initially, reveals with animation when audio reaches study tip) -->
                 <div id="cw-tip-box" class="hidden p-4 rounded-2xl bg-amber-950/30 border border-amber-500/40 text-amber-200 space-y-1.5 shadow-lg">
                   <div class="flex items-center gap-2 text-xs font-bold text-amber-300 uppercase tracking-wider">
                     <span>💡</span>
-                    <span>Study Tip:</span>
+                    <span id="cw-tip-header-text">Study Tip:</span>
                   </div>
                   <p id="cw-chalk-tip" class="chalk-font chalk-amber text-base sm:text-lg leading-relaxed">
                     The United States is a constitutional federal republic where citizens elect representatives.
@@ -1830,6 +1840,16 @@
                   <option value="1.0" selected>1.0x</option>
                   <option value="1.15">1.15x</option>
                 </select>
+              </div>
+
+              <!-- Quick Language Switcher in Video Controls -->
+              <div class="flex items-center bg-slate-900/90 px-1.5 py-1 rounded-xl border border-slate-800 text-xs" title="Select Coursework Dual-Language Guide">
+                <span class="text-[10px] text-slate-400 font-medium mr-1 hidden sm:inline">🌐</span>
+                <div class="flex items-center bg-slate-950 border border-slate-800 rounded-lg p-0.5 text-xs font-medium">
+                  <button class="lang-switch-btn px-2 py-0.5 rounded-md bg-blue-600 text-white font-bold transition text-[11px]" data-lang="en">EN</button>
+                  <button class="lang-switch-btn px-2 py-0.5 rounded-md text-slate-400 hover:text-white transition text-[11px]" data-lang="es">ES</button>
+                  <button class="lang-switch-btn px-2 py-0.5 rounded-md text-slate-400 hover:text-white transition text-[11px]" data-lang="hi">HI</button>
+                </div>
               </div>
 
               <button id="cw-btn-toggle-quiz" class="px-3 py-1.5 rounded-xl bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/50 text-xs font-semibold transition flex items-center gap-1.5 shadow-sm">
@@ -3380,22 +3400,31 @@
     });
 
     // Multilingual Dual-Language Mode Switcher
-    function setStudyLanguage(lang) {
+    function setStudyLanguage(lang, silent = false) {
       if (!['en', 'es', 'hi'].includes(lang)) return;
       appState.studyLanguage = lang;
       saveState();
 
       document.querySelectorAll('.lang-switch-btn').forEach(btn => {
-        const btnLang = btn.dataset.lang;
-        if (btnLang === lang) {
-          btn.className = 'lang-switch-btn px-2.5 py-1 rounded-lg bg-blue-600 text-white font-bold transition shadow-sm';
-        } else {
-          btn.className = 'lang-switch-btn px-2.5 py-1 rounded-lg text-slate-400 hover:text-slate-200 transition';
-        }
+        const isMatch = (btn.dataset.lang === lang);
+        btn.classList.toggle('bg-blue-600', isMatch);
+        btn.classList.toggle('text-white', isMatch);
+        btn.classList.toggle('font-bold', isMatch);
+        btn.classList.toggle('shadow-sm', isMatch);
+        btn.classList.toggle('text-slate-400', !isMatch);
       });
 
       updateFlashcardView();
-      if (appState.activeTab === 'coursework') {
+      if (typeof populateCourseworkUnitSelect === 'function') {
+        populateCourseworkUnitSelect();
+      }
+      if (typeof populateCourseworkLessonSelect === 'function') {
+        populateCourseworkLessonSelect();
+      }
+      if (typeof renderCourseworkSyllabus === 'function') {
+        renderCourseworkSyllabus();
+      }
+      if (typeof loadCourseworkLesson === 'function') {
         const wasPlaying = (typeof isCourseworkSpeaking === 'function') ? isCourseworkSpeaking() : false;
         loadCourseworkLesson(appState.courseworkLessonIndex || 0, wasPlaying);
       }
@@ -3403,8 +3432,10 @@
         renderCatalogList();
       }
 
-      const langNames = { en: 'English (USCIS Oral)', es: 'Español (Bilingual Guide)', hi: 'हिन्दी (द्विभाषी गाइड)' };
-      showToast(`Dual-Language mode set to ${langNames[lang]}`, 'info');
+      if (!silent) {
+        const langNames = { en: 'English (USCIS Oral)', es: 'Español (Guía Bilingüe)', hi: 'हिन्दी (द्विभाषी गाइड)' };
+        showToast(`Dual-Language mode set to ${langNames[lang]}`, 'info');
+      }
     }
 
     document.querySelectorAll('.lang-switch-btn').forEach(btn => {
@@ -4528,6 +4559,7 @@
             loadState();
             updateAuthUI();
             updateTopStats();
+            setStudyLanguage(appState.studyLanguage || 'en', true);
             updateFlashcardView();
             updateReadinessDashboard();
 
@@ -5241,56 +5273,120 @@
         title: "Principles of American Democracy & The Constitution",
         range: [1, 12],
         description: "Form of government, supreme law, Bill of Rights, amendments, and economic system.",
-        icon: "🏛️"
+        icon: "🏛️",
+        es: {
+          title: "Principios de la Democracia y la Constitución",
+          description: "Forma de gobierno, ley suprema, Declaración de Derechos, enmiendas y sistema económico."
+        },
+        hi: {
+          title: "अमेरिकी लोकतंत्र के सिद्धांत और संविधान",
+          description: "सरकार का रूप, सर्वोच्च कानून, बिल ऑफ राइट्स, संशोधन और आर्थिक प्रणाली।"
+        }
       },
       {
         id: 2,
         title: "System of Government – Congress & Lawmaking",
         range: [13, 35],
         description: "Three branches, Legislative Branch, Senate, House of Representatives, and federal powers.",
-        icon: "⚖️"
+        icon: "⚖️",
+        es: {
+          title: "Sistema de Gobierno – Congreso y Creación de Leyes",
+          description: "Tres ramas, Poder Legislativo, Senado, Cámara de Representantes y poderes federales."
+        },
+        hi: {
+          title: "शासन प्रणाली - कांग्रेस और कानून निर्माण",
+          description: "तीन शाखाएं, विधायी शाखा, सीनेट, प्रतिनिधि सभा और संघीय शक्तियां।"
+        }
       },
       {
         id: 3,
         title: "Executive Branch – The Presidency & Cabinet",
         range: [36, 54],
         description: "The President, Vice President, Cabinet, Commander in Chief, and succession.",
-        icon: "🦅"
+        icon: "🦅",
+        es: {
+          title: "Poder Ejecutivo – Presidencia y Gabinete",
+          description: "El Presidente, Vicepresidente, Gabinete, Comandante en Jefe y sucesión presidencial."
+        },
+        hi: {
+          title: "कार्यकारी शाखा - राष्ट्रपति और मंत्रिमंडल",
+          description: "राष्ट्रपति, उपराष्ट्रपति, मंत्रिमंडल, कमांडर इन चीफ और उत्तराधिकार।"
+        }
       },
       {
         id: 4,
         title: "Judicial Branch – Supreme Court & Federal Courts",
         range: [55, 60],
         description: "Judicial review, Supreme Court justices, Chief Justice, and federal judges.",
-        icon: "⚖️"
+        icon: "⚖️",
+        es: {
+          title: "Poder Judicial – Corte Suprema y Tribunales",
+          description: "Revisión judicial, jueces de la Corte Suprema, Juez Presidente y tribunales federales."
+        },
+        hi: {
+          title: "न्यायिक शाखा - सर्वोच्च न्यायालय और अदालतें",
+          description: "न्यायिक समीक्षा, सर्वोच्च न्यायालय के न्यायाधीश, मुख्य न्यायाधीश और अदालतें।"
+        }
       },
       {
         id: 5,
-        title: "State Government & California Leadership",
+        title: "State Government & Local Leadership",
         range: [61, 67],
         description: "State vs Federal powers, Governors, California leaders, and State Capitals.",
-        icon: "📍"
+        icon: "📍",
+        es: {
+          title: "Gobierno Estatal y Liderazgo Local",
+          description: "Poderes estatales vs federales, Gobernadores, líderes estatales y capitales."
+        },
+        hi: {
+          title: "राज्य सरकार और स्थानीय नेतृत्व",
+          description: "राज्य बनाम संघीय शक्तियां, राज्यपाल, राज्य के नेता और राजधानियां।"
+        }
       },
       {
         id: 6,
         title: "Rights, Freedoms & Civic Responsibilities",
         range: [68, 72],
         description: "Voting amendments, civic duties, promises of citizenship, and naturalization rights.",
-        icon: "🗳️"
+        icon: "🗳️",
+        es: {
+          title: "Derechos, Libertades y Responsabilidades Cívicas",
+          description: "Enmiendas del voto, deberes cívicos, promesas de naturalización y derechos."
+        },
+        hi: {
+          title: "अधिकार, स्वतंत्रताएं और नागरिक जिम्मेदारियां",
+          description: "मतदान संशोधन, नागरिक कर्तव्य, नागरिकता के वचन और अधिकार।"
+        }
       },
       {
         id: 7,
         title: "American History – Colonies, Revolution & 1800s",
         range: [73, 98],
         description: "Indigenous peoples, 13 colonies, Independence (1776), Constitution (1787), Civil War, and Lincoln.",
-        icon: "📜"
+        icon: "📜",
+        es: {
+          title: "Historia Americana – Colonias, Revolución y Siglo XIX",
+          description: "Pueblos indígenas, 13 colonias, Independencia (1776), Constitución (1787), Guerra Civil y Lincoln."
+        },
+        hi: {
+          title: "अमेरिकी इतिहास - उपनिवेश, क्रांति और 1800 का दशक",
+          description: "मूल निवासी, 13 उपनिवेश, स्वतंत्रता (1776), संविधान (1787), गृहयुद्ध और लिंकन।"
+        }
       },
       {
         id: 8,
         title: "Modern History, Wars & National Symbols",
         range: [99, 128],
         description: "WWI, WWII, Civil Rights, MLK, 9/11, Flag, Anthem, Statue of Liberty, and Holidays.",
-        icon: "🗽"
+        icon: "🗽",
+        es: {
+          title: "Historia Moderna, Guerras y Símbolos Patrios",
+          description: "Primera y Segunda Guerra Mundial, Derechos Civiles, MLK, 11 de septiembre, Bandera, Himno y Festivos."
+        },
+        hi: {
+          title: "आधुनिक इतिहास, युद्ध और राष्ट्रीय प्रतीक",
+          description: "प्रथम व द्वितीय विश्व युद्ध, नागरिक अधिकार, 9/11, ध्वज, राष्ट्रगान, स्टैच्यू ऑफ लिबर्टी और छुट्टियां।"
+        }
       }
     ];
 
@@ -5650,15 +5746,17 @@
       const text = document.getElementById('cw-play-text');
       if (!icon || !text) return;
 
+      const lang = appState.studyLanguage || 'en';
+
       if (courseworkState === 'playing') {
         icon.textContent = '⏸';
-        text.textContent = 'Pause Lesson';
+        text.textContent = (lang === 'es') ? 'Pausar Lección' : (lang === 'hi') ? 'पाठ रोकें' : 'Pause Lesson';
       } else if (courseworkState === 'paused') {
         icon.textContent = '▶';
-        text.textContent = 'Resume Lesson';
+        text.textContent = (lang === 'es') ? 'Reanudar Lección' : (lang === 'hi') ? 'फिर शुरू करें' : 'Resume Lesson';
       } else {
         icon.textContent = '▶';
-        text.textContent = 'Play Lesson';
+        text.textContent = (lang === 'es') ? 'Reproducir Lección' : (lang === 'hi') ? 'पाठ चलाएं' : 'Play Lesson';
       }
     }
 
@@ -5847,6 +5945,9 @@
       if (!rawQ) return;
       const q = getResolvedQuestion(rawQ, appState.selectedState || 'CA');
 
+      const lang = appState.studyLanguage || 'en';
+      const transData = (typeof CIVICS_TRANSLATIONS !== 'undefined' && CIVICS_TRANSLATIONS) ? CIVICS_TRANSLATIONS[String(q.id)] : null;
+
       const questionEl = document.getElementById('cw-chalk-question');
       const tipBox = document.getElementById('cw-tip-box');
       const tipPlaceholder = document.getElementById('cw-tip-placeholder');
@@ -5871,9 +5972,22 @@
         profMouth?.classList.add('mouth-talking');
 
         const cleanQ = q.question.trim();
-        const speechText = `Lesson ${q.id}. ${cleanQ}`;
+        let speechText = `Lesson ${q.id}. ${cleanQ}`;
+
         if (captionEl) {
-          captionEl.textContent = `Lesson ${q.id}: ${cleanQ}`;
+          if (lang === 'es' && transData && transData.es) {
+            captionEl.textContent = `Lección ${q.id}: ${transData.es.question} • (${cleanQ})`;
+          } else if (lang === 'hi' && transData && transData.hi) {
+            captionEl.textContent = `पाठ ${q.id}: ${transData.hi.question} • (${cleanQ})`;
+          } else {
+            captionEl.textContent = `Lesson ${q.id}: ${cleanQ}`;
+          }
+        }
+
+        if (lang === 'es' && transData && transData.es) {
+          speechText = `Lección ${q.id}. ${transData.es.question}.`;
+        } else if (lang === 'hi' && transData && transData.hi) {
+          speechText = `पाठ ${q.id}. ${transData.hi.question}.`;
         }
 
         speakPhaseUtterance(speechText, () => {
@@ -5884,7 +5998,11 @@
           currentLessonPhase = 'gap1';
 
           if (captionEl) {
-            captionEl.textContent = `Lesson ${q.id}: Question spoken. Think of your oral answer...`;
+            captionEl.textContent = (lang === 'es')
+              ? `Lección ${q.id}: Pregunta hablada. Piense en su respuesta oral...`
+              : (lang === 'hi')
+              ? `पाठ ${q.id}: प्रश्न बोला गया। अपने मौखिक उत्तर पर विचार करें...`
+              : `Lesson ${q.id}: Question spoken. Think of your oral answer...`;
           }
 
           // Generous gap to process question (1600ms)
@@ -5907,12 +6025,28 @@
 
         const answersList = (q.answers && q.answers.length > 0) ? q.answers : [q.primaryAnswer];
         const answersFormatted = answersList.join(', or, ');
-        const speechText = answersList.length > 1
+        let speechText = answersList.length > 1
           ? `Accepted answers are: ${answersFormatted}.`
           : `The accepted answer is: ${answersList[0]}.`;
 
-        if (captionEl) {
-          captionEl.textContent = `Accepted Answer${answersList.length > 1 ? 's' : ''}: ${answersList.join(' | ')}`;
+        if (lang === 'es' && transData && transData.es && transData.es.answers) {
+          const transList = transData.es.answers;
+          speechText = transList.length > 1
+            ? `Las respuestas aceptadas son: ${transList.join(', o, ')}.`
+            : `La respuesta aceptada es: ${transList[0]}.`;
+          if (captionEl) {
+            captionEl.textContent = `Respuestas aceptadas: ${transList.join(' | ')}`;
+          }
+        } else if (lang === 'hi' && transData && transData.hi && transData.hi.answers) {
+          const transList = transData.hi.answers;
+          speechText = `स्वीकृत मौखिक उत्तर हैं: ${transList.join(', या, ')}.`;
+          if (captionEl) {
+            captionEl.textContent = `स्वीकृत मौखिक उत्तर: ${transList.join(' | ')}`;
+          }
+        } else {
+          if (captionEl) {
+            captionEl.textContent = `Accepted Answer${answersList.length > 1 ? 's' : ''}: ${answersList.join(' | ')}`;
+          }
         }
 
         speakPhaseUtterance(speechText, () => {
@@ -5925,7 +6059,11 @@
           currentLessonPhase = 'gap2';
 
           if (captionEl) {
-            captionEl.textContent = `Practice repeating the answer aloud... (Next: Study Tip)`;
+            captionEl.textContent = (lang === 'es')
+              ? `Practique repitiendo la respuesta en voz alta... (Siguiente: Consejo de estudio)`
+              : (lang === 'hi')
+              ? `उत्तर को जोर से दोहराने का अभ्यास करें... (अगला: अध्ययन युक्ति)`
+              : `Practice repeating the answer aloud... (Next: Study Tip)`;
           }
 
           // Generous gap for user to repeat and practice aloud (1800ms)
@@ -5947,10 +6085,16 @@
         profMouth?.classList.add('mouth-talking');
 
         const cleanTip = q.explanation.trim();
-        const speechText = `Study tip: ${cleanTip}`;
+        let speechText = `Study tip: ${cleanTip}`;
 
-        if (captionEl) {
-          captionEl.textContent = `Study Tip: ${cleanTip}`;
+        if (lang === 'es' && transData && transData.es && transData.es.tip) {
+          speechText = `Consejo de estudio: ${transData.es.tip}`;
+          if (captionEl) captionEl.textContent = `Consejo de estudio: ${transData.es.tip}`;
+        } else if (lang === 'hi' && transData && transData.hi && transData.hi.tip) {
+          speechText = `अध्ययन युक्ति: ${transData.hi.tip}`;
+          if (captionEl) captionEl.textContent = `अध्ययन युक्ति: ${transData.hi.tip}`;
+        } else {
+          if (captionEl) captionEl.textContent = `Study Tip: ${cleanTip}`;
         }
 
         speakPhaseUtterance(speechText, () => {
@@ -5965,7 +6109,11 @@
           const autoAdvanceOn = document.getElementById('cw-toggle-autoadvance')?.checked;
           if (autoAdvanceOn && qIndex < CIVICS_QUESTIONS.length - 1) {
             if (captionEl) {
-              captionEl.textContent = `✅ Lesson ${q.id} completed! Auto-advancing in 3 seconds... (Click Pause to stay)`;
+              captionEl.textContent = (lang === 'es')
+                ? `✅ ¡Lección ${q.id} completada! Avanzando en 3 segundos...`
+                : (lang === 'hi')
+                ? `✅ पाठ ${q.id} पूरा हुआ! 3 सेकंड में स्वतः आगे बढ़ रहा है...`
+                : `✅ Lesson ${q.id} completed! Auto-advancing in 3 seconds... (Click Pause to stay)`;
             }
             autoAdvanceTimeout = setTimeout(() => {
               if (courseworkState !== 'paused') {
@@ -5974,7 +6122,11 @@
             }, 3000);
           } else {
             if (captionEl) {
-              captionEl.textContent = `✅ Lesson ${q.id} completed! Try Pop Quiz or advance to Lesson ${q.id + 1}.`;
+              captionEl.textContent = (lang === 'es')
+                ? `✅ ¡Lección ${q.id} completada! Pruebe la Prueba Rápida o avance a la Lección ${q.id + 1}.`
+                : (lang === 'hi')
+                ? `✅ पाठ ${q.id} पूरा हुआ! पॉप क्विज़ आज़माएं या पाठ ${q.id + 1} पर आगे बढ़ें।`
+                : `✅ Lesson ${q.id} completed! Try Pop Quiz or advance to Lesson ${q.id + 1}.`;
             }
           }
         });
@@ -5989,13 +6141,24 @@
       const progEl = document.getElementById('cw-overall-progress');
       const progPctEl = document.getElementById('cw-progress-percent');
       const pillEl = document.getElementById('cw-progress-pill');
+      const lang = appState.studyLanguage || 'en';
 
       if (progEl) progEl.style.width = `${pct}%`;
-      if (progPctEl) progPctEl.textContent = `${pct}% Completed (${totalMastered} / ${totalQs})`;
+      if (progPctEl) {
+        progPctEl.textContent = (lang === 'es')
+          ? `${pct}% Completado (${totalMastered} / ${totalQs})`
+          : (lang === 'hi')
+          ? `${pct}% पूरा हुआ (${totalMastered} / ${totalQs})`
+          : `${pct}% Completed (${totalMastered} / ${totalQs})`;
+      }
 
       const qIndex = appState.courseworkLessonIndex || 0;
       if (pillEl) {
-        pillEl.textContent = `Lesson ${qIndex + 1} of ${totalQs} • ${totalMastered} / ${totalQs} Mastered across Curriculum`;
+        pillEl.textContent = (lang === 'es')
+          ? `Lección ${qIndex + 1} de ${totalQs} • ${totalMastered} / ${totalQs} Dominadas en el Plan de Estudios`
+          : (lang === 'hi')
+          ? `पाठ ${qIndex + 1} / ${totalQs} • ${totalMastered} / ${totalQs} पाठ्यक्रम में महारत हासिल`
+          : `Lesson ${qIndex + 1} of ${totalQs} • ${totalMastered} / ${totalQs} Mastered across Curriculum`;
       }
     }
 
@@ -6009,6 +6172,8 @@
       const rawQ = CIVICS_QUESTIONS[index];
       const q = getResolvedQuestion(rawQ, appState.selectedState || 'CA');
       const unit = getUnitForQuestionId(q.id);
+      const lang = appState.studyLanguage || 'en';
+      const transData = (typeof CIVICS_TRANSLATIONS !== 'undefined' && CIVICS_TRANSLATIONS) ? CIVICS_TRANSLATIONS[String(q.id)] : null;
 
       // Header Unit elements
       const badgeEl = document.getElementById('cw-unit-badge');
@@ -6016,9 +6181,29 @@
       const unitSelect = document.getElementById('cw-unit-select');
       const lessonSelect = document.getElementById('cw-lesson-select');
 
-      if (badgeEl) badgeEl.textContent = `Unit ${unit.id} of 8: ${unit.icon}`;
-      if (titleEl) titleEl.textContent = unit.title;
-      if (unitSelect) unitSelect.value = unit.id;
+      const uTitle = (lang !== 'en' && unit[lang]) ? unit[lang].title : unit.title;
+      if (badgeEl) {
+        badgeEl.textContent = (lang === 'es')
+          ? `Unidad ${unit.id} de 8: ${unit.icon}`
+          : (lang === 'hi')
+          ? `इकाई ${unit.id} / 8: ${unit.icon}`
+          : `Unit ${unit.id} of 8: ${unit.icon}`;
+      }
+      if (titleEl) titleEl.textContent = uTitle;
+      if (unitSelect) {
+        unitSelect.value = unit.id;
+        Array.from(unitSelect.options).forEach((opt, idx) => {
+          const u = COURSEWORK_UNITS[idx];
+          if (u) {
+            const ut = (lang !== 'en' && u[lang]) ? u[lang].title : u.title;
+            opt.textContent = (lang === 'es')
+              ? `Unidad ${u.id}: ${ut} (P${u.range[0]}–${u.range[1]})`
+              : (lang === 'hi')
+              ? `इकाई ${u.id}: ${ut} (प्र${u.range[0]}–${u.range[1]})`
+              : `Unit ${u.id}: ${u.title} (Q${u.range[0]}–${u.range[1]})`;
+          }
+        });
+      }
       if (lessonSelect) lessonSelect.value = index;
 
       // Chalkboard Header
@@ -6026,74 +6211,146 @@
       const tagEl = document.getElementById('cw-chalk-tag');
       const catEl = document.getElementById('cw-chalk-category');
 
-      if (numEl) numEl.textContent = `LESSON ${q.id} OF 128`;
-      if (catEl) catEl.textContent = `${q.category} • ${q.subcategory}`;
+      if (numEl) {
+        numEl.textContent = (lang === 'es')
+          ? `LECCIÓN ${q.id} DE 128`
+          : (lang === 'hi')
+          ? `पाठ ${q.id} / 128`
+          : `LESSON ${q.id} OF 128`;
+      }
+
+      if (catEl) {
+        if (lang === 'es') {
+          catEl.textContent = (q.category === 'American Government') ? `Gobierno de EE. UU. • ${q.subcategory}`
+            : (q.category === 'American History') ? `Historia de EE. UU. • ${q.subcategory}`
+            : `Símbolos y Días Festivos • ${q.subcategory}`;
+        } else if (lang === 'hi') {
+          catEl.textContent = (q.category === 'American Government') ? `अमेरिकी सरकार • ${q.subcategory}`
+            : (q.category === 'American History') ? `अमेरिकी इतिहास • ${q.subcategory}`
+            : `प्रतीक और छुट्टियां • ${q.subcategory}`;
+        } else {
+          catEl.textContent = `${q.category} • ${q.subcategory}`;
+        }
+      }
 
       if (tagEl) {
         if (q.is6520) {
-          tagEl.textContent = '★ 65/20 Special Exemption (Designated Question)';
+          tagEl.textContent = (lang === 'es') ? '★ Exención Especial 65/20' : (lang === 'hi') ? '★ 65/20 विशेष छूट प्रश्न' : '★ 65/20 Special Exemption (Designated Question)';
           tagEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-950/90 text-amber-300 border border-amber-600/50';
         } else if (q.isStateSpecific) {
           const stName = (STATES_DATA[appState.selectedState || 'CA'] || STATES_DATA['CA']).name;
-          tagEl.textContent = `📍 ${stName} State Official Question`;
+          tagEl.textContent = (lang === 'es') ? `📍 Oficial del Estado de ${stName}` : (lang === 'hi') ? `📍 ${stName} राज्य आधिकारिक प्रश्न` : `📍 ${stName} State Official Question`;
           tagEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-950/90 text-emerald-300 border border-emerald-600/50';
         } else if (q.origin === 'new') {
-          tagEl.textContent = '🆕 New in 128 Pool';
+          tagEl.textContent = (lang === 'es') ? '🆕 Nuevo en Banco 128' : (lang === 'hi') ? '🆕 128 पूल में नया' : '🆕 New in 128 Pool';
           tagEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-950/90 text-indigo-300 border border-indigo-600/50';
         } else if (q.origin === 'amended') {
-          tagEl.textContent = '✏️ Amended / Expanded Wording';
+          tagEl.textContent = (lang === 'es') ? '✏️ Redacción Enmendada' : (lang === 'hi') ? '✏️ संशोधित शब्दावली' : '✏️ Amended / Expanded Wording';
           tagEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-950/90 text-amber-300 border border-amber-600/50';
         } else {
-          tagEl.textContent = 'Official 128 Exam';
+          tagEl.textContent = (lang === 'es') ? 'Examen Oficial 128' : (lang === 'hi') ? 'आधिकारिक 128 परीक्षा' : 'Official 128 Exam';
           tagEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-950/90 text-emerald-300 border border-emerald-600/50';
         }
       }
 
       // Chalkboard Question & Answers
+      const qLabelEl = document.getElementById('cw-question-label');
+      if (qLabelEl) {
+        qLabelEl.innerHTML = (lang === 'es')
+          ? `<span>📌</span><span>Pregunta Oficial del Examen USCIS:</span>`
+          : (lang === 'hi')
+          ? `<span>📌</span><span>आधिकारिक यूएससीआईएस परीक्षा प्रश्न:</span>`
+          : `<span>📌</span><span>Official USCIS Examination Question:</span>`;
+      }
+
       const qEl = document.getElementById('cw-chalk-question');
       const answersEl = document.getElementById('cw-chalk-answers');
       const tipEl = document.getElementById('cw-chalk-tip');
 
       recordPracticeActivity();
 
-      const lang = appState.studyLanguage || 'en';
-      const transData = (typeof CIVICS_TRANSLATIONS !== 'undefined' && CIVICS_TRANSLATIONS) ? CIVICS_TRANSLATIONS[String(q.id)] : null;
-
       if (qEl) {
         if (lang !== 'en' && transData && transData[lang]) {
-          qEl.innerHTML = `${q.question} <span class="block text-sm sm:text-base font-normal chalk-cyan mt-1.5 italic">(${lang === 'es' ? '🇲🇽 ' : '🇮🇳 '}${transData[lang].question})</span>`;
+          qEl.innerHTML = `${q.question} <span class="block text-sm sm:text-base font-normal chalk-cyan mt-1.5 italic font-sans">(${lang === 'es' ? '🇲🇽 ' : '🇮🇳 '}${transData[lang].question})</span>`;
         } else {
           qEl.textContent = q.question;
         }
       }
 
+      const ansTitleEl = document.getElementById('cw-answers-title');
+      if (ansTitleEl) {
+        ansTitleEl.innerHTML = (lang === 'es')
+          ? `<span>✓</span><span>Respuestas Orales Aceptadas (USCIS Official):</span>`
+          : (lang === 'hi')
+          ? `<span>✓</span><span>स्वीकृत मौखिक उत्तर (USCIS Official):</span>`
+          : `<span>✓</span><span>Accepted Oral Answers:</span>`;
+      }
+
+      if (answersEl) {
+        const transAnswers = (lang !== 'en' && transData && transData[lang] && transData[lang].answers) ? transData[lang].answers : [];
+        answersEl.innerHTML = q.answers.map((ans, aIdx) => {
+          const transAns = transAnswers[aIdx] || (transAnswers.length === 1 ? transAnswers[0] : null);
+          return `
+          <div class="cw-answer-pill flex items-start gap-2.5 p-2.5 rounded-xl bg-emerald-950/30 border border-emerald-600/30 shadow-sm transition-all duration-300">
+            <span class="text-emerald-400 font-bold text-base leading-none mt-0.5">✓</span>
+            <div class="flex-1">
+              <div class="chalk-font chalk-green text-base sm:text-lg font-semibold leading-snug">${ans}</div>
+              ${(lang !== 'en' && transAns) ? `<div class="chalk-cyan text-xs sm:text-sm font-sans italic mt-1 flex items-center gap-1.5 opacity-90"><span>${lang === 'es' ? '🇲🇽' : '🇮🇳'}</span><span>${transAns}</span></div>` : ''}
+            </div>
+          </div>
+        `;
+        }).join('');
+      }
+
+      const tipPhText = document.getElementById('cw-tip-placeholder-text');
+      if (tipPhText) {
+        tipPhText.textContent = (lang === 'es')
+          ? 'El consejo de estudio se revela durante la narración...'
+          : (lang === 'hi')
+          ? 'अध्ययन युक्ति पाठ के दौरान दिखाई देगी...'
+          : 'Study Tip reveals when reached in lesson narration...';
+      }
+      const tipRevBtn = document.getElementById('cw-tip-reveal-btn');
+      if (tipRevBtn) {
+        tipRevBtn.textContent = (lang === 'es') ? 'Mostrar Ahora ➔' : (lang === 'hi') ? 'अभी देखें ➔' : 'Reveal Now ➔';
+      }
+      const tipHdrText = document.getElementById('cw-tip-header-text');
+      if (tipHdrText) {
+        tipHdrText.textContent = (lang === 'es') ? 'Consejo de Estudio:' : (lang === 'hi') ? 'अध्ययन युक्ति:' : 'Study Tip:';
+      }
+
       if (tipEl) {
         if (lang !== 'en' && transData && transData[lang] && transData[lang].tip) {
-          tipEl.innerHTML = `${q.explanation} <span class="block mt-1.5 pt-1.5 border-t border-amber-500/20 italic text-amber-200/90 text-sm">(${transData[lang].tip})</span>`;
+          tipEl.innerHTML = `${q.explanation} <span class="block mt-2 pt-2 border-t border-amber-500/20 italic text-amber-200/90 text-sm font-sans flex items-start gap-1.5"><span>${lang === 'es' ? '🇲🇽' : '🇮🇳'}</span><span>${transData[lang].tip}</span></span>`;
         } else {
           tipEl.textContent = q.explanation;
         }
       }
 
-      if (answersEl) {
-        answersEl.innerHTML = q.answers.map((ans, aIdx) => `
-          <div class="cw-answer-pill flex items-start gap-2.5 p-2.5 rounded-xl bg-emerald-950/30 border border-emerald-600/30 shadow-sm transition-all duration-300">
-            <span class="text-emerald-400 font-bold text-base leading-none mt-0.5">✓</span>
-            <span class="chalk-font chalk-green text-base sm:text-lg font-semibold leading-snug">${ans}</span>
-          </div>
-        `).join('');
-      }
-
-      // Professor Speech Bubble (Pedagogical mentor guide - Study Tip shown ONLY once on main left panel)
+      // Professor Speech Bubble (Pedagogical mentor guide)
       const bubbleEl = document.getElementById('cw-prof-bubble');
       if (bubbleEl) {
-        if (q.is6520) {
-          bubbleEl.textContent = `Welcome to Lesson ${q.id}! ★ 65/20 Special Exemption designated question. Listen carefully to the accepted answers.`;
-        } else if (q.isStateSpecific) {
-          const stName = (STATES_DATA[appState.selectedState || 'CA'] || STATES_DATA['CA']).name;
-          bubbleEl.textContent = `Welcome to Lesson ${q.id}! 📍 Official state-specific question for ${stName}.`;
+        if (lang === 'es') {
+          bubbleEl.textContent = q.is6520
+            ? `¡Bienvenidos a la Lección ${q.id}! ★ Pregunta con exención especial 65/20. Escuche atentamente las respuestas aceptadas.`
+            : q.isStateSpecific
+            ? `¡Bienvenidos a la Lección ${q.id}! 📍 Pregunta oficial específica para su estado.`
+            : `¡Bienvenidos a la Lección ${q.id}! Escuche la pregunta y repita las respuestas orales aceptadas en voz alta.`;
+        } else if (lang === 'hi') {
+          bubbleEl.textContent = q.is6520
+            ? `पाठ ${q.id} में आपका स्वागत है! ★ 65/20 विशेष छूट प्रश्न। स्वीकृत उत्तरों को ध्यान से सुनें।`
+            : q.isStateSpecific
+            ? `पाठ ${q.id} में आपका स्वागत है! 📍 राज्य-विशिष्ट आधिकारिक प्रश्न।`
+            : `पाठ ${q.id} में आपका स्वागत है! प्रश्न को ध्यान से सुनें और स्वीकृत उत्तरों का मौखिक अभ्यास करें।`;
         } else {
-          bubbleEl.textContent = `Welcome to Lesson ${q.id}! Listen to the question and repeat the accepted oral answers aloud.`;
+          if (q.is6520) {
+            bubbleEl.textContent = `Welcome to Lesson ${q.id}! ★ 65/20 Special Exemption designated question. Listen carefully to the accepted answers.`;
+          } else if (q.isStateSpecific) {
+            const stName = (STATES_DATA[appState.selectedState || 'CA'] || STATES_DATA['CA']).name;
+            bubbleEl.textContent = `Welcome to Lesson ${q.id}! 📍 Official state-specific question for ${stName}.`;
+          } else {
+            bubbleEl.textContent = `Welcome to Lesson ${q.id}! Listen to the question and repeat the accepted oral answers aloud.`;
+          }
         }
       }
 
@@ -6124,7 +6381,15 @@
 
       if (starIcon) starIcon.textContent = isStarred ? '★' : '☆';
       if (masterCheck) masterCheck.textContent = isMastered ? '●' : '○';
-      if (masterLabel) masterLabel.textContent = isMastered ? 'Mastered' : 'Master';
+      if (masterLabel) {
+        if (lang === 'es') {
+          masterLabel.textContent = isMastered ? 'Dominada' : 'Dominar';
+        } else if (lang === 'hi') {
+          masterLabel.textContent = isMastered ? 'महारत प्राप्त' : 'महारत';
+        } else {
+          masterLabel.textContent = isMastered ? 'Mastered' : 'Master';
+        }
+      }
 
       // Close pop quiz and restore answers layout
       closePopQuiz();
@@ -6159,7 +6424,13 @@
 
       const captionEl = document.getElementById('cw-live-caption');
       if (captionEl) {
-        captionEl.textContent = `Lesson ${q.id}: Click "Play Lesson" to listen.`;
+        if (lang === 'es' && transData && transData.es) {
+          captionEl.textContent = `Lección ${q.id}: Haga clic en "Reproducir Lección" para escuchar.`;
+        } else if (lang === 'hi' && transData && transData.hi) {
+          captionEl.textContent = `पाठ ${q.id}: सुनने के लिए "पाठ चलाएं" पर क्लिक करें।`;
+        } else {
+          captionEl.textContent = `Lesson ${q.id}: Click "Play Lesson" to listen.`;
+        }
       }
 
       if (autoPlay) {
@@ -6211,8 +6482,15 @@
       const qTextEl = document.getElementById('cw-pop-quiz-question');
       const optionsEl = document.getElementById('cw-pop-quiz-options');
       const feedbackEl = document.getElementById('cw-pop-quiz-feedback');
+      const transData = (typeof CIVICS_TRANSLATIONS !== 'undefined' && CIVICS_TRANSLATIONS) ? CIVICS_TRANSLATIONS[String(q.id)] : null;
 
-      if (qTextEl) qTextEl.textContent = q.question;
+      if (qTextEl) {
+        if (lang !== 'en' && transData && transData[lang]) {
+          qTextEl.innerHTML = `${q.question} <span class="block text-xs font-normal text-indigo-300 mt-1.5 italic font-sans">(${lang === 'es' ? '🇲🇽 ' : '🇮🇳 '}${transData[lang].question})</span>`;
+        } else {
+          qTextEl.textContent = q.question;
+        }
+      }
       if (feedbackEl) feedbackEl.classList.add('hidden');
 
       const options = [...(q.options || [q.primaryAnswer, 'None of the above', 'All of the above', 'Varies'])];
@@ -6250,21 +6528,30 @@
             if (isCorrect) {
               playBeep('correct');
               feedbackEl.className = 'p-3.5 rounded-xl bg-emerald-950/90 border border-emerald-500/60 text-emerald-200 space-y-2';
+
+              const correctTitle = (lang === 'es') ? '¡Correcto! ¡Excelente comprensión!' : (lang === 'hi') ? 'सही उत्तर! उत्कृष्ट समझ!' : 'Correct! Outstanding comprehension!';
+              const correctSub = (lang === 'es') ? 'Esa es la respuesta oficial aceptada por USCIS.' : (lang === 'hi') ? 'यह आधिकारिक यूएससीआईएस स्वीकृत प्राकृतिककरण उत्तर है।' : 'That is the official USCIS accepted naturalization answer.';
+              const masterBtnText = appState.mastered[q.id]
+                ? ((lang === 'es') ? '✓ Ya Dominada' : (lang === 'hi') ? '✓ पहले से महारत' : '✓ Already Mastered')
+                : ((lang === 'es') ? '★ Marcar como Dominada' : (lang === 'hi') ? '★ प्रश्न को महारत के रूप में चिह्नित करें' : '★ Mark Question as Mastered');
+              const nextBtnText = (lang === 'es') ? 'Siguiente Lección ▶' : (lang === 'hi') ? 'अगला पाठ ▶' : 'Next Lesson ▶';
+              const closeBtnText = (lang === 'es') ? 'Volver a la Lección ✕' : (lang === 'hi') ? 'पाठ पर वापस ✕' : 'Back to Lesson ✕';
+
               feedbackEl.innerHTML = `
                 <div class="flex items-center gap-2 font-bold text-emerald-300">
                   <span>🎉</span>
-                  <span>Correct! Outstanding comprehension!</span>
+                  <span>${correctTitle}</span>
                 </div>
-                <p class="text-[11px] text-emerald-200/90">That is the official USCIS accepted naturalization answer.</p>
+                <p class="text-[11px] text-emerald-200/90">${correctSub}</p>
                 <div class="flex items-center flex-wrap gap-2 pt-1">
                   <button id="cw-quiz-btn-master" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition">
-                    ${appState.mastered[q.id] ? '✓ Already Mastered' : '★ Mark Question as Mastered'}
+                    ${masterBtnText}
                   </button>
                   <button id="cw-quiz-btn-next" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition">
-                    Next Lesson ▶
+                    ${nextBtnText}
                   </button>
                   <button id="cw-quiz-btn-close-done" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-xs transition">
-                    Back to Lesson ✕
+                    ${closeBtnText}
                   </button>
                 </div>
               `;
@@ -6274,10 +6561,10 @@
                 const mBtn = document.getElementById('cw-btn-mastered');
                 if (mBtn) {
                   document.getElementById('cw-master-check').textContent = '●';
-                  document.getElementById('cw-master-label').textContent = 'Mastered';
+                  document.getElementById('cw-master-label').textContent = (lang === 'es') ? 'Dominada' : (lang === 'hi') ? 'महारत प्राप्त' : 'Mastered';
                 }
                 const btnM = document.getElementById('cw-quiz-btn-master');
-                if (btnM) btnM.textContent = '✓ Mastered!';
+                if (btnM) btnM.textContent = (lang === 'es') ? '✓ ¡Dominada!' : (lang === 'hi') ? '✓ महारत प्राप्त!' : '✓ Mastered!';
               });
               document.getElementById('cw-quiz-btn-next')?.addEventListener('click', () => {
                 closePopQuiz();
@@ -6291,18 +6578,30 @@
             } else {
               playBeep('wrong');
               feedbackEl.className = 'p-3.5 rounded-xl bg-rose-950/90 border border-rose-500/60 text-rose-200 space-y-2';
+
+              const wrongTitle = (lang === 'es')
+                ? `Incorrecto. La respuesta aceptada es: "${q.primaryAnswer}".`
+                : (lang === 'hi')
+                ? `गलत उत्तर। स्वीकृत उत्तर है: "${q.primaryAnswer}".`
+                : `Incorrect. The accepted answer is: "${q.primaryAnswer}".`;
+              const tipContent = (lang !== 'en' && transData && transData[lang] && transData[lang].tip)
+                ? transData[lang].tip
+                : q.explanation;
+              const retryBtnText = (lang === 'es') ? 'Reintentar ↺' : (lang === 'hi') ? 'पुनः प्रयास करें ↺' : 'Try Again ↺';
+              const reviewBtnText = (lang === 'es') ? 'Revisar Respuestas ➔' : (lang === 'hi') ? 'उत्तरों की समीक्षा करें ➔' : 'Review Lesson Answers ➔';
+
               feedbackEl.innerHTML = `
                 <div class="flex items-center gap-2 font-bold text-rose-300">
                   <span>⚠️</span>
-                  <span>Incorrect. The accepted answer is: "${q.primaryAnswer}".</span>
+                  <span>${wrongTitle}</span>
                 </div>
-                <p class="text-[11px] text-rose-200/90">Study Tip: ${q.explanation}</p>
+                <p class="text-[11px] text-rose-200/90">💡 ${tipContent}</p>
                 <div class="flex items-center flex-wrap gap-2 pt-1">
                   <button id="cw-quiz-btn-retry" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition">
-                    Try Again ↺
+                    ${retryBtnText}
                   </button>
                   <button id="cw-quiz-btn-reveal" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-xs transition">
-                    Review Lesson Answers ➔
+                    ${reviewBtnText}
                   </button>
                 </div>
               `;
@@ -6344,8 +6643,10 @@
 
       // Restore Pop Quiz toggle button UI
       const toggleBtn = document.getElementById('cw-btn-toggle-quiz');
+      const lang = appState.studyLanguage || 'en';
       if (toggleBtn) {
-        toggleBtn.innerHTML = '<span>⚡</span><span>Pop Quiz</span>';
+        const quizLabel = (lang === 'es') ? 'Mini Cuestionario' : (lang === 'hi') ? 'पॉप क्विज़' : 'Pop Quiz';
+        toggleBtn.innerHTML = `<span>⚡</span><span>${quizLabel}</span>`;
         toggleBtn.className = 'px-3 py-1.5 rounded-xl bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/50 text-xs font-semibold transition flex items-center gap-1.5 shadow-sm';
       }
 
@@ -6355,13 +6656,33 @@
       const q = getResolvedQuestion(rawQ, appState.selectedState || 'CA');
       const bubbleEl = document.getElementById('cw-prof-bubble');
       if (bubbleEl) {
-        if (q.is6520) {
-          bubbleEl.textContent = `Welcome to Lesson ${q.id}! ★ 65/20 Special Exemption designated question. Listen carefully to the accepted answers.`;
-        } else if (q.isStateSpecific) {
-          const stName = (STATES_DATA[appState.selectedState || 'CA'] || STATES_DATA['CA']).name;
-          bubbleEl.textContent = `Welcome to Lesson ${q.id}! 📍 Official state-specific question for ${stName}.`;
+        if (lang === 'es') {
+          if (q.is6520) {
+            bubbleEl.textContent = `¡Bienvenido a la Lección ${q.id}! ★ Pregunta especial 65/20. Escuche con atención las respuestas aceptadas.`;
+          } else if (q.isStateSpecific) {
+            const stName = (STATES_DATA[appState.selectedState || 'CA'] || STATES_DATA['CA']).name;
+            bubbleEl.textContent = `¡Bienvenido a la Lección ${q.id}! 📍 Pregunta oficial específica para ${stName}.`;
+          } else {
+            bubbleEl.textContent = `¡Bienvenido a la Lección ${q.id}! Escuche la pregunta y repita las respuestas orales aceptadas en voz alta.`;
+          }
+        } else if (lang === 'hi') {
+          if (q.is6520) {
+            bubbleEl.textContent = `पाठ ${q.id} में आपका स्वागत है! ★ 65/20 विशेष छूट प्रश्न। स्वीकृत उत्तरों को ध्यान से सुनें।`;
+          } else if (q.isStateSpecific) {
+            const stName = (STATES_DATA[appState.selectedState || 'CA'] || STATES_DATA['CA']).name;
+            bubbleEl.textContent = `पाठ ${q.id} में आपका स्वागत है! 📍 ${stName} के लिए आधिकारिक राज्य-विशिष्ट प्रश्न।`;
+          } else {
+            bubbleEl.textContent = `पाठ ${q.id} में आपका स्वागत है! प्रश्न सुनें और स्वीकृत मौखिक उत्तर जोर से दोहराएं।`;
+          }
         } else {
-          bubbleEl.textContent = `Welcome to Lesson ${q.id}! Listen to the question and repeat the accepted oral answers aloud.`;
+          if (q.is6520) {
+            bubbleEl.textContent = `Welcome to Lesson ${q.id}! ★ 65/20 Special Exemption designated question. Listen carefully to the accepted answers.`;
+          } else if (q.isStateSpecific) {
+            const stName = (STATES_DATA[appState.selectedState || 'CA'] || STATES_DATA['CA']).name;
+            bubbleEl.textContent = `Welcome to Lesson ${q.id}! 📍 Official state-specific question for ${stName}.`;
+          } else {
+            bubbleEl.textContent = `Welcome to Lesson ${q.id}! Listen to the question and repeat the accepted oral answers aloud.`;
+          }
         }
       }
     }
@@ -6381,10 +6702,27 @@
       const grid = document.getElementById('cw-syllabus-grid');
       if (!grid) return;
 
+      const lang = appState.studyLanguage || 'en';
+
       grid.innerHTML = COURSEWORK_UNITS.map(unit => {
         const unitQs = CIVICS_QUESTIONS.filter(q => q.id >= unit.range[0] && q.id <= unit.range[1]);
         const unitMastered = unitQs.filter(q => appState.mastered[q.id]).length;
         const pct = Math.round((unitMastered / unitQs.length) * 100);
+
+        const uTitle = (lang !== 'en' && unit[lang] && unit[lang].title) ? unit[lang].title : unit.title;
+        const uDesc = (lang !== 'en' && unit[lang] && unit[lang].description) ? unit[lang].description : unit.description;
+        const masteredLabel = (lang === 'es')
+          ? `${unitMastered} / ${unitQs.length} Dominadas (${pct}%)`
+          : (lang === 'hi')
+          ? `${unitMastered} / ${unitQs.length} महारत (${pct}%)`
+          : `${unitMastered} / ${unitQs.length} Mastered (${pct}%)`;
+
+        const unitLabel = (lang === 'es') ? `Unidad ${unit.id}` : (lang === 'hi') ? `इकाई ${unit.id}` : `Unit ${unit.id}`;
+        const studyBtnText = (lang === 'es')
+          ? `Estudiar Unidad ${unit.id} (P${unit.range[0]}–${unit.range[1]}) ▶`
+          : (lang === 'hi')
+          ? `इकाई ${unit.id} का अध्ययन करें (प्रश्न ${unit.range[0]}–${unit.range[1]}) ▶`
+          : `Study Unit ${unit.id} (Q${unit.range[0]}–${unit.range[1]}) ▶`;
 
         return `
           <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-indigo-500/50 transition flex flex-col justify-between space-y-3 group">
@@ -6392,14 +6730,14 @@
               <div class="flex items-center justify-between">
                 <span class="text-2xl">${unit.icon}</span>
                 <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${unitMastered === unitQs.length ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/40' : 'bg-slate-900 text-slate-400 border border-slate-800'}">
-                  ${unitMastered} / ${unitQs.length} Mastered (${pct}%)
+                  ${masteredLabel}
                 </span>
               </div>
               <h4 class="text-sm font-bold text-white mt-2 group-hover:text-indigo-300 transition">
-                Unit ${unit.id}: ${unit.title}
+                ${unitLabel}: ${uTitle}
               </h4>
               <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">
-                ${unit.description}
+                ${uDesc}
               </p>
             </div>
 
@@ -6408,7 +6746,7 @@
                 <div class="bg-indigo-500 h-full transition-all duration-300" style="width: ${pct}%"></div>
               </div>
               <button class="cw-btn-study-unit w-full py-1.5 rounded-xl bg-slate-800 hover:bg-indigo-600 text-slate-200 hover:text-white text-xs font-semibold transition" data-start="${unit.range[0] - 1}">
-                Study Unit ${unit.id} (Q${unit.range[0]}–${unit.range[1]}) ▶
+                ${studyBtnText}
               </button>
             </div>
           </div>
@@ -6424,20 +6762,50 @@
       });
     }
 
+    function populateCourseworkUnitSelect() {
+      const select = document.getElementById('cw-unit-select');
+      if (!select) return;
+
+      const lang = appState.studyLanguage || 'en';
+      const curVal = select.value || '1';
+      select.innerHTML = COURSEWORK_UNITS.map(u => {
+        const title = (lang !== 'en' && u[lang] && u[lang].title) ? u[lang].title : u.title;
+        const unitWord = (lang === 'es') ? 'Unidad' : (lang === 'hi') ? 'इकाई' : 'Unit';
+        const qWord = (lang === 'es') ? 'P' : (lang === 'hi') ? 'प्रश्न ' : 'Q';
+        return `<option value="${u.id}">${unitWord} ${u.id}: ${title} (${qWord}${u.range[0]}–${u.range[1]})</option>`;
+      }).join('');
+      select.value = curVal;
+    }
+
     function populateCourseworkLessonSelect() {
       const select = document.getElementById('cw-lesson-select');
-      if (!select || select.options.length > 0) return;
+      if (!select) return;
 
+      const lang = appState.studyLanguage || 'en';
+      const curVal = select.value !== '' ? parseInt(select.value, 10) : (appState.courseworkLessonIndex || 0);
+
+      select.innerHTML = '';
       CIVICS_QUESTIONS.forEach((q, idx) => {
+        const transData = CIVICS_TRANSLATIONS[q.id];
+        let qText = q.question;
+        if (lang !== 'en' && transData && transData[lang]) {
+          qText = `${transData[lang].question}`;
+        }
         const opt = document.createElement('option');
         opt.value = idx;
-        opt.textContent = `Lesson ${q.id}: ${q.question.slice(0, 40)}...`;
+        const lessonPrefix = (lang === 'es') ? 'Lección' : (lang === 'hi') ? 'पाठ' : 'Lesson';
+        opt.textContent = `${lessonPrefix} ${q.id}: ${qText.slice(0, 38)}...`;
         select.appendChild(opt);
       });
+
+      if (!isNaN(curVal) && curVal >= 0 && curVal < CIVICS_QUESTIONS.length) {
+        select.value = curVal;
+      }
     }
 
     let courseworkInitialized = false;
     function initCourseworkView() {
+      populateCourseworkUnitSelect();
       populateCourseworkLessonSelect();
       renderCourseworkSyllabus();
 
@@ -6589,7 +6957,8 @@
       }
 
       initCourseworkView();
-            checkStandaloneStatus();
+      setStudyLanguage(appState.studyLanguage || 'en', true);
+      checkStandaloneStatus();
     });
 
 </script>
